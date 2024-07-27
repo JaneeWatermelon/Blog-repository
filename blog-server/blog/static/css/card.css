@@ -1,0 +1,120 @@
+
+p {
+    font-family: 'normal';
+    font-size: calc(18*0.8px);
+    margin: 0;
+}
+
+h3 {
+    font-family: 'normal';
+    font-size: calc(30*0.8px);
+    margin: 0;
+}
+
+h6 {
+    font-family: 'normal';
+    font-size: calc(15*0.8px);
+    font-weight: bold;
+    margin: 0;
+}
+
+.news_card {
+    position: relative;
+    width: 24%;
+    aspect-ratio: 0.48;
+    border-radius: 10px;
+    background-color: white;
+    overflow: hidden;
+    margin: 0 calc(5*0.8px) calc(10*0.8px);
+}
+
+.news_card:hover {
+    cursor: pointer;
+}
+
+.news_card_header > img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.news_card_header {
+    margin: calc(10*0.8px);
+}
+
+
+
+.news_card_body {
+    margin: calc(10*0.8px);
+    background-color: #BBE1FA;
+    border-radius: 10px;
+    overflow: hidden;
+    height: auto;
+    aspect-ratio: 1;
+
+    position: relative;
+}
+
+.time_and_category {
+    display: flex;
+    justify-content: space-between;
+}
+.time_and_category > p {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.name, .description, .time_and_category {
+    margin: calc(10*0.8px) calc(16*0.8px);
+}
+
+.read_more {
+    height: calc(36*0.8px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, rgb(187, 225, 250, 0.75), rgb(187, 225, 250, 1) 50% 100%);
+
+    position: absolute;
+    bottom: 0;
+}
+
+.read_more > p {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+.news_card_footer {
+    margin: calc(10*0.8px);
+    height: 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.news_card_footer > div {
+    display: flex;
+    height: auto;
+    flex-basis: 33%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#heart {
+    /*height: calc(31*0.8px);*/
+    width: 35%;
+    transition: transform 0.5s ease;
+}
+#heart:hover {
+    transform: scale(1.2);
+}
+#view {
+    /*height: calc(18*0.8px);*/
+    width: 35%;
+}
+#comment {
+    /*height: calc(32*0.8px);*/
+    width: 35%;
+}

@@ -1,0 +1,15 @@
+main {
+    display: flex;
+}
+
+.all_cards {
+    display: flex;
+    width: 80%;
+    flex-wrap: wrap;
+    margin-left: 5px;
+}
+
+.category_div {
+    width: 20%;
+    height: fit-content;
+}

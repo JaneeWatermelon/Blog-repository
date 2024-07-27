@@ -1,0 +1,134 @@
+{% extends 'news/base.html' %}
+
+{% load static %}
+
+{% block css_link %}
+    <link href="{% static 'css/full_card.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block main %}
+<div class="news_card">
+    <div class="card_header">
+        <img src="{% static 'img/korea.jpg' %}">
+        <div class="card_bottom_icons">
+            <div>
+                <img class="heart_icon" src="{% static 'svg/heart_filled.svg' %}">
+                <h6>453</h6>
+            </div>
+            <div>
+                <img class="view_icon" src="{% static 'svg/view.svg' %}">
+                <h6>5,24k</h6>
+            </div>
+            <div>
+                <img class="comment_icon" src="{% static 'svg/comment.svg' %}">
+                <h6>68</h6>
+            </div>
+        </div>
+    </div>
+    <div class="card_body">
+        <div class="time_and_url">
+            <p>Published: 12.06.2024</p>
+            <a href="https://ofont.ru/view/5790"><p>Ссылка на источник</p></a>
+        </div>
+        <div class="category">
+            <p>Category: Life</p>
+        </div>
+        <div class="name">
+            <h3>News paowjpodf ajwpof</h3>
+        </div>
+        <div class="description">
+            <p>Description paowjpodf ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad
+                 fesf se fes fesfjpwaof poawjfp ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp
+                 ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp</p>
+        </div>
+    </div>
+    <div class="card_footer">
+        <button type="button" class="comment_shower choosed_comment">
+            <h3>Comments</h3>
+            <img class="comment_icon" src="{% static 'svg/comment.svg' %}">
+        </button>
+        <div class="all_comments">
+            <div class="leave_comment">
+                <div>
+                    <textarea id="comment_input" placeholder="Введите комментарий" maxlength="1000" rows="1"></textarea>
+                </div>
+                <span></span>
+                <div>
+                    <p>Оставить комментарий</p>
+                </div>
+            </div>
+            <div class="comment">
+                <div class="comment_header">
+                    <img src="{% static 'img/cat.png' %}">
+                    <p>@username</p>
+                    <p>12 minutes ago</p>
+                </div>
+                <div class="comment_body">
+                    <p>My comment My comment My comment My comment My comment My comment My comment My comment
+                        My comment My comment My comment My comment My comment My comment My comment My comment
+                        My comment My comment My comment My comment My comment My comment My comment My comment
+                        My comment My comment My comment My comment My comment My comment My comment My comment
+                        My comment My comment My comment My comment My comment My comment My comment My comment
+                        My comment My comment My comment My comment My comment My comment My comment My comment
+                        My comment My comment My comment My comment My comment My comment My comment My comment
+                    </p>
+                </div>
+                <div class="comment_footer">
+                    <div>
+                        <img id="like" src="{% static 'svg/like.svg' %}">
+                        <p>23</p>
+                    </div>
+                    <div>
+                        <img id="dislike" src="{% static 'svg/like.svg' %}">
+                    </div>
+                </div>
+            </div>
+            <div class="comment">
+                <div class="comment_header">
+                    <img src="{% static 'img/cat.png' %}">
+                    <p>@username</p>
+                    <p>12 minutes ago</p>
+                </div>
+                <div class="comment_body">
+                    <p>My comment My comment My comment My comment My comment My comment My comment My comment
+                        My comment My comment My comment My comment My comment My comment My comment My comment
+                        My comment My comment My comment My comment My comment My comment My comment My comment
+                        My comment My comment My comment My comment My comment My comment My comment My comment
+                        My comment My comment My comment My comment My comment My comment My comment My comment
+                        My comment My comment My comment My comment My comment My comment My comment My comment
+                        My comment My comment My comment My comment My comment My comment My comment My comment
+                    </p>
+                </div>
+                <div class="comment_footer">
+                    <div>
+                        <img id="like" src="{% static 'svg/like.svg' %}">
+                        <p>23</p>
+                    </div>
+                    <div>
+                        <img id="dislike" src="{% static 'svg/like.svg' %}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

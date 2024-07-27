@@ -1,0 +1,27 @@
+{% extends 'news/base.html' %}
+
+{% load static %}
+
+{% block css_link %}
+    <link href="{% static 'css/card.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/recommendations.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block main %}
+<main>
+    <div class="all_cards">
+        {% include 'news/news_card.html' %}
+        {% include 'news/news_card.html' %}
+        {% include 'news/news_card.html' %}
+        {% include 'news/news_card.html' %}
+        {% include 'news/news_card.html' %}
+        {% include 'news/news_card.html' %}
+        {% include 'news/news_card.html' %}
+        {% include 'news/news_card.html' %}
+        {% include 'news/news_card.html' %}
+        {% include 'news/news_card.html' %}
+        {% include 'news/news_card.html' %}
+        {% include 'news/news_card.html' %}
+    </div>
+</main>
+{% endblock %}

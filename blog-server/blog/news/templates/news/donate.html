@@ -1,0 +1,14 @@
+{% extends 'news/base.html' %}
+
+{% load static %}
+
+{% block css_link %}
+    <link href="{% static 'css/donate_form.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/donate.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block main %}
+<main>
+    {% include 'news/donate_form.html' %}
+</main>
+{% endblock %}

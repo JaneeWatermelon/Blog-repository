@@ -1,0 +1,129 @@
+
+
+span {
+    color: #3282B8;
+}
+
+a {
+    text-decoration: none;
+    color: #0F4C75 !important;
+}
+
+p {
+    font-family: 'normal';
+    font-size: calc(18*0.8px);
+    margin: 0;
+}
+
+h5 {
+    font-size: calc(25*0.8px);
+    font-family: 'normal';
+    margin: 0;
+}
+
+.profile_info_card {
+    width: 100%;
+    background-color: white;
+    overflow: auto;
+    border-radius: 10px;
+}
+
+.profile_info_card_header {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.profile_info_card_header > img {
+    height: calc(150*0.8px);
+    width: calc(150*0.8px);
+    outline: 2px solid #3282B8;
+    border-radius: 75px;
+    margin: calc(30*0.8px) 0 calc(10*0.8px) 0;
+}
+
+
+
+.profile_info_card_body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 calc(16*0.8px);
+}
+
+.input_group {
+    display: flex;
+    margin-bottom: calc(16*0.8px);
+    width: 100%;
+    justify-content: space-between;
+}
+
+.input_group:last-child {
+    margin-bottom: calc(28*0.8px);
+}
+
+#email, #username {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.input_bar, .sign_up > button {
+    border: 2px solid #3282B8;
+    border-radius: 10px;
+}
+
+.input_div {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    width: 100%;
+}
+
+.input_div > label {
+    margin-left: calc(10*0.8px);
+}
+
+.input_bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(59*0.8px);
+}
+
+.input_bar > input {
+    width: 100%;
+    outline: none;
+    border: none;
+    margin: calc(10*0.8px);
+    font-size: calc(18*0.8px);
+}
+
+.input_div:first-child, .sign_up:first-child {
+    margin-right: calc(18*0.8px);
+}
+
+.input_div:last-child, .sign_up:last-child {
+    margin-left: calc(18*0.8px);
+}
+
+
+
+.sign_up {
+    width: 100%;
+}
+
+.sign_up > button {
+    background-color: #BBE1FA;
+    height: calc(59*0.8px);
+    width: 100%;
+}
+
+.sign_up > button > h5 {
+    font-weight: bold;
+}
+
+.profile_info_card_footer {
+    display: flex;
+    margin: calc(16*0.8px);
+}

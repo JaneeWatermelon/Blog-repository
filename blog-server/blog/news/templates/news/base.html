@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{% static 'css/base.css' %}" rel="stylesheet" />
+    {% block css_link %}
+    {% endblock %}
+    <style>
+        @font-face {
+            font-family: "cool_font";
+            src: url("{% static 'css/fonts/cool_font.ttf' %}");
+        }
+
+        @font-face {
+            font-family: "second";
+            src: url("{% static 'css/fonts/second.ttf' %}");
+        }
+
+        @font-face {
+            font-family: "normal";
+            src: url("{% static 'css/fonts/for_normal_text.ttf' %}");
+        }
+    </style>
+</head>
+<body>
+    <section id="background_section">
+        <div class="top_gradient_div"></div>
+        <div class="news_hider"></div>
+    </section>
+    <section id="main_section">
+        <div class="top_gradient_div">
+            <div class="top_frame_group">
+                <a><img id="blogus_svg" src="{% static 'svg/blogus.svg' %}"></a>
+                <a><h2>Blogus</h2></a>
+            </div>
+            <div class="top_frame_group">
+                <a><img id="dollar_svg" src="{% static 'svg/dollar.svg' %}"></a>
+                <a><h2>Donate</h2></a>
+            </div>
+            <div class="top_frame_group">
+                <a href="https://ofont.ru/view/5790"><h4>All News</h4></a>
+                <a href="https://ofont.ru/view/5790"><h4>Recomended</h4></a>
+                <a href="https://ofont.ru/view/5790"><h4>Popular</h4></a>
+                <a href="https://ofont.ru/view/5790"><h4>New</h4></a>
+                <a><img id="profile_svg" src="{% static 'svg/profile.svg' %}"></a>
+            </div>
+        </div>
+        <div class="news_hider"></div>
+        {% block main %}
+        {% endblock %}
+    </section>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="{% static 'js/card.js' %}"></script>
+    <script src="{% static 'js/textarea.js' %}"></script>
+</body>
+</html>

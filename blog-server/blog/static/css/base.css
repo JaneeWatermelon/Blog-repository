@@ -1,0 +1,77 @@
+
+
+body {
+    background-color: #BBE1FA;
+    margin: 0;
+}
+
+#background_section {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+#main_section {
+    margin: 0 26px;
+}
+
+a {
+    text-decoration: none;
+}
+
+h2, h4 {
+    color: white;
+    -webkit-text-stroke: 1px black;
+    font-family: 'second';
+}
+
+.choosed_page {
+    color: #BBE1FA;
+}
+
+h2 {
+    font-size: calc(40*0.7px);
+    margin: 0 0 0 16px;
+}
+
+h4 {
+    font-size: calc(25*0.7px);
+    -webkit-text-stroke: 0.75px black;
+    text-stroke: 1px black;
+    margin: 0 0 0 16px;
+}
+
+.top_gradient_div {
+    display: flex;
+    height: 65px;
+    background: linear-gradient(#3282B8, #BBE1FA);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.news_hider {
+    height: 24px;
+    background: linear-gradient(#BBE1FA, rgba(0, 0, 0, 0));
+}
+
+.top_frame_group {
+    display: flex;
+    align-items: center;
+    text-shadow: 0 6px 4px rgba(0, 0, 0, 0.25);
+}
+
+#blogus_svg {
+    height: calc(54*0.7px);
+    filter: drop-shadow(0 6px 4px rgba(0, 0, 0, 0.25));
+}
+#profile_svg {
+    height: calc(40*0.7px);
+    margin-left: 26px;
+    filter: drop-shadow(0 6px 4px rgba(0, 0, 0, 0.25));
+}
+#dollar_svg {
+    height: calc(63*0.7px);
+    filter: drop-shadow(0 6px 4px rgba(0, 0, 0, 0.25));
+}

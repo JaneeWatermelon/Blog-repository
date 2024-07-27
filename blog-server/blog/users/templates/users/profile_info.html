@@ -1,0 +1,57 @@
+{% load static %}
+
+<div class="profile_info_card">
+    <div class="profile_info_card_header">
+        <img src="{% static 'img/cat.png' %}">
+    </div>
+    <div class="profile_info_card_body">
+        <div class="input_group">
+            <div class="input_div">
+                <label for="name"><h5>Name</h5></label>
+                <div class="input_bar">
+                    <input id="name" type="text" placeholder="Type your name">
+                </div>
+            </div>
+            <div class="input_div">
+                <label for="surname"><h5>Surname</h5></label>
+                <div class="input_bar">
+                    <input id="surname" type="text" placeholder="Type your surname">
+                </div>
+            </div>
+        </div>
+        <div class="input_group">
+            <div class="input_div">
+                <label for="email"><h5>Email</h5></label>
+                <div class="input_bar">
+                    <input readonly id="email" type="text" value="myemail@yandex.ru">
+                </div>
+            </div>
+            <div class="input_div">
+                <label for="username"><h5>Username</h5></label>
+                <div class="input_bar">
+                    <input readonly id="username" type="text" value="warer123">
+                </div>
+            </div>
+        </div>
+        <div class="input_group">
+            <div class="input_div">
+                <label><h5>Sign Up: <span>10.11.2023</span></h5></label>
+            </div>
+            <div class="input_div">
+                <label><h5>Verified: <span>Yes</span></h5></label>
+            </div>
+        </div>
+    </div>
+    <div class="profile_info_card_footer">
+        <div class="sign_up">
+            <button>
+                <h5>Log Out</h5>
+            </button>
+        </div>
+        <div class="sign_up">
+            <button>
+                <h5>Save Changes</h5>
+            </button>
+        </div>
+    </div>
+</div>

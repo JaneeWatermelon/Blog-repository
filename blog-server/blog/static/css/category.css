@@ -1,0 +1,85 @@
+
+
+a {
+    text-decoration: none;
+}
+
+p {
+    font-family: 'normal';
+    font-size: calc(18*0.8px);
+    margin: 0;
+    color: black;
+}
+
+h3 {
+    font-family: 'normal';
+    font-size: calc(30*0.8px);
+    margin: 0;
+}
+
+h5 {
+    font-family: 'normal';
+    font-size: calc(25*0.8px);
+    margin: 0;
+}
+
+h6 {
+    font-family: 'normal';
+    font-size: calc(15*0.8px);
+    font-weight: bold;
+    margin: 0;
+}
+
+.choosed_div {
+    background-color: #3282B8 !important;
+}
+
+.choosed_p {
+    color: white !important;
+}
+
+.category_card {
+    /*width: calc(310*0.8px);*/
+    width: 100%;
+    border-radius: 10px;
+    background-color: white;
+    overflow: auto;
+}
+
+.category_card_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(50*0.8px);
+    margin: calc(10*0.8px);
+    background-color: #BBE1FA;
+    text-align: center;
+    border-radius: 10px;
+}
+
+
+
+.category_card_body {
+    margin: calc(10*0.8px);
+}
+
+.name_and_star {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: calc(10*0.8px);
+}
+.name_and_star div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(245*0.8px);
+    height: calc(32*0.8px);
+    background-color: #BBE1FA;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.name_and_star > img {
+    height: calc(27*0.8px);
+    margin-right: calc(4*0.8px);
+}

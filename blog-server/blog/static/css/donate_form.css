@@ -1,0 +1,133 @@
+
+a {
+    text-decoration: none;
+    color: #3282B8;
+}
+
+p {
+    font-family: 'normal';
+    font-size: 18px;
+    margin: 0;
+}
+
+h3 {
+    color: white;
+    -webkit-text-stroke: 1.5px black;
+    font-size: 40px;
+    font-family: 'second';
+    margin: 0;
+}
+
+h5 {
+    font-size: 25px;
+    font-family: 'normal';
+    margin: 0;
+}
+
+.donate_card {
+    width: 706px;
+    background-color: white;
+    overflow: auto;
+    transform: scale(0.8);
+}
+
+.card_header {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.card_header > h3 {
+    margin: 10px;
+    text-shadow: 0 6px 4px rgba(0, 0, 0, 0.25);
+}
+
+
+
+.card_body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 16px  26px 16px;
+}
+
+.title {
+    align-self: flex-start;
+}
+
+.title > h5 {
+    margin: 10px;
+}
+
+.choose_bar_group {
+    display: flex;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.donate_card, .choose_bar, .input_bar, .card_footer > button {
+    border: 2px solid #3282B8;
+    border-radius: 10px;
+}
+
+.choose_bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 33%;
+    margin: 0 8px;
+    height: 59px;
+    background-color: white;
+}
+
+.choose_bar > h5 {
+    font-weight: bold;
+}
+
+
+.choose_bar:first-child {
+    margin-left: 0;
+}
+
+.choose_bar:last-child {
+    margin-right: 0;
+}
+
+
+
+.input_bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 59px;
+}
+
+.input_bar > input {
+    width: 100%;
+    outline: none;
+    border: none;
+    margin: 10px;
+    font-size: 18px;
+}
+
+.card_footer, .card_footer > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card_footer {
+    margin-bottom: 26px;
+}
+
+.card_footer > button {
+    background-color: #D9EE58;
+    height: 59px;
+    width: 319px;
+}
+
+.card_footer > button > h5 {
+    font-weight: bold;
+}

@@ -1,0 +1,34 @@
+main {
+    display: flex;
+}
+
+main > div:first-child {
+    margin-right: calc(13*0.8px);
+}
+
+main > div:last-child {
+    margin-left: calc(13*0.8px);
+}
+
+.all_cards {
+    display: flex;
+    width: 50%;
+    flex-wrap: wrap;
+}
+
+.category_div {
+    width: 50%;
+    float: left;
+}
+
+.cards_div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: 68vh;
+    overflow: overlay;
+}
+
+.cards_div::-webkit-scrollbar {
+    width: 0;
+}
