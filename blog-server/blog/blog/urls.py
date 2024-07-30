@@ -16,10 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 from news.views import All_News_View
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', All_News_View.as_view(), name='all_news'),
+    path('news', include('news.urls', namespace='news')),
+    path('donate', include('donate.urls', namespace='donate')),
+    path('users', include('users.urls', namespace='users')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

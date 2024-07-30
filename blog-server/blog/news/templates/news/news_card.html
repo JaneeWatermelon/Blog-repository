@@ -1,19 +1,19 @@
 {% load static %}
-
+{% for news in object_list %}
 <div class="news_card">
     <div class="news_card_header">
         <img src="{% static 'img/korea.jpg' %}">
     </div>
     <div class="news_card_body">
         <div class="time_and_category">
-            <p>12.06.2024</p>
-            <p>Life</p>
+            <p>{{ news.time }}</p>
+            <p>{{ news.category }}</p>
         </div>
         <div class="name">
-            <h3>News paowjpodf ajwpof</h3>
+            <h3>{{ news.name }}</h3>
         </div>
         <div class="description">
-            <p>Description paowjpodf ajwpof awd wad wad dwadwadd wadwa dwad wadw ad wad wa dwad wad wad wad fesf se fes fesfjpwaof poawjfp</p>
+            <p>{{ news.description }}</p>
         </div>
         <div class="read_more">
             <p>Read more</p>
@@ -22,15 +22,16 @@
     <div class="news_card_footer">
         <div>
             <img id="heart" src="{% static 'svg/heart.svg' %}">
-            <h6>453</h6>
+            <h6>{{ news.likes }}</h6>
         </div>
         <div>
             <img id="view" src="{% static 'svg/view.svg' %}">
-            <h6>5,24k</h6>
+            <h6>{{ news.views }}</h6>
         </div>
         <div>
             <img id="comment" src="{% static 'svg/comment.svg' %}">
-            <h6>68</h6>
+            <h6>{{ news.comments|length }}</h6>
         </div>
     </div>
 </div>
+{% endfor %}

@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 
 from news.views import All_News_View
 
-app_name = 'news'
+app_name = 'users'
 
 urlpatterns = [
 

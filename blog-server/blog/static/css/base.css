@@ -45,15 +45,17 @@ h4 {
 
 .top_gradient_div {
     display: flex;
-    height: 65px;
+    height: 12vh;
     background: linear-gradient(#3282B8, #BBE1FA);
     align-items: center;
     justify-content: space-between;
 }
 
 .news_hider {
-    height: 24px;
-    background: linear-gradient(#BBE1FA, rgba(0, 0, 0, 0));
+    height: 4vh;
+    background: linear-gradient(180deg, #BBE1FA, rgba(0, 0, 0, 0));
+    position: relative;
+    z-index: 1;
 }
 
 .top_frame_group {
