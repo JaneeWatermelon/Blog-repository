@@ -1,5 +1,6 @@
 from django.contrib import admin
-from news.models import News, Category, Comment
+
+from news.models import Category, Comment, News
 
 
 # class CommentAdmin(admin.TabularInline):

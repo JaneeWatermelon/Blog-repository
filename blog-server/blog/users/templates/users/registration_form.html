@@ -1,60 +1,61 @@
-<div class="registration_card">
+<form action="{% url 'users:registration' %}" method="post" class="registration_card">
+    {% csrf_token %}
     <div class="card_header">
         <h3>Registration</h3>
     </div>
     <div class="card_body">
         <div class="input_group">
             <div class="input_div">
-                <label for="name"><h5>Name</h5></label>
+                <label for="{{ form.first_name.id_for_label }}"><h5>Name</h5></label>
                 <div class="input_bar">
-                    <input id="name" type="text" placeholder="Type your name">
+                    {{ form.first_name }}
                 </div>
             </div>
             <div class="input_div">
-                <label for="surname"><h5>Surname</h5></label>
+                <label for="{{ form.last_name.id_for_label }}"><h5>Surname</h5></label>
                 <div class="input_bar">
-                    <input id="surname" type="text" placeholder="Type your surname">
-                </div>
-            </div>
-        </div>
-        <div class="input_group">
-            <div class="input_div">
-                <label for="email"><h5>Email</h5></label>
-                <div class="input_bar">
-                    <input id="email" type="text" placeholder="Type your email">
-                </div>
-            </div>
-            <div class="input_div">
-                <label for="username"><h5>Username</h5></label>
-                <div class="input_bar">
-                    <input id="username" type="text" placeholder="Come up with a username">
+                    {{ form.last_name }}
                 </div>
             </div>
         </div>
         <div class="input_group">
             <div class="input_div">
-                <label for="password1"><h5>Password</h5></label>
+                <label for="{{ form.email.id_for_label }}"><h5>Email</h5></label>
                 <div class="input_bar">
-                    <input id="password1" type="text" placeholder="Come up with a password">
+                    {{ form.email }}
                 </div>
             </div>
             <div class="input_div">
-                <label for="password2"><h5>Password</h5></label>
+                <label for="{{ form.username.id_for_label }}"><h5>Username</h5></label>
                 <div class="input_bar">
-                    <input id="password2" type="text" placeholder="Repeat your password">
+                    {{ form.username }}
+                </div>
+            </div>
+        </div>
+        <div class="input_group">
+            <div class="input_div">
+                <label for="{{ form.password1.id_for_label }}"><h5>Password</h5></label>
+                <div class="input_bar">
+                    {{ form.password1 }}
+                </div>
+            </div>
+            <div class="input_div">
+                <label for="{{ form.password2.id_for_label }}"><h5>Password</h5></label>
+                <div class="input_bar">
+                    {{ form.password2 }}
                 </div>
             </div>
         </div>
         
         <div class="sign_up">
-            <button>
+            <button type="submit">
                 <h5>Sign Up</h5>
             </button>
         </div>
     </div>
     <div class="card_footer">
-        <a>
+        <a href="{% url 'users:login' %}">
             <p>Already have an account? Sign in here</p>
         </a>
     </div>
-</div>
+</form>

@@ -35,8 +35,8 @@
     <section id="main_section">
         <div class="top_gradient_div">
             <div class="top_frame_group">
-                <a><img id="blogus_svg" src="{% static 'svg/blogus.svg' %}"></a>
-                <a><h2>Blogus</h2></a>
+                <a href="{% url 'all_news' %}"><img id="blogus_svg" src="{% static 'svg/blogus.svg' %}"></a>
+                <a href="{% url 'all_news' %}"><h2>Blogus</h2></a>
             </div>
             <div class="top_frame_group">
                 <a><img id="dollar_svg" src="{% static 'svg/dollar.svg' %}"></a>
@@ -47,7 +47,11 @@
                 <a href="https://ofont.ru/view/5790"><h4>Recomended</h4></a>
                 <a href="https://ofont.ru/view/5790"><h4>Popular</h4></a>
                 <a href="https://ofont.ru/view/5790"><h4>New</h4></a>
-                <a><img id="profile_svg" src="{% static 'svg/profile.svg' %}"></a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'users:profile' user.id %}"><img id="profile_svg" style="width: calc(50*0.7px); height: calc(50*0.7px); object-fit: cover; outline: 2px solid #3282B8; border-radius: 50%;" src="{{ user.image.url }}" alt="profile"></a>
+                {% else %}
+                <a href="{% url 'users:login' %}"><img id="profile_svg" src="{% static 'svg/profile.svg' %}" alt="profile"></a>
+                {% endif %}
             </div>
         </div>
         <div class="news_hider"></div>
@@ -55,7 +59,7 @@
         {% endblock %}
     </section>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="{% static 'js/card.js' %}"></script>
-    <script src="{% static 'js/textarea.js' %}"></script>
+    {% block script %}
+    {% endblock %}
 </body>
 </html>

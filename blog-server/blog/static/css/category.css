@@ -68,7 +68,7 @@ h6 {
     justify-content: space-between;
     margin-bottom: calc(10*0.8px);
 }
-.name_and_star div {
+.category_name {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -77,6 +77,7 @@ h6 {
     background-color: #BBE1FA;
     border-radius: 10px;
     text-align: center;
+    border: none;
 }
 
 .name_and_star > img {

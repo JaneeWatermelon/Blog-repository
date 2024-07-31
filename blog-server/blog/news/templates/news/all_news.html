@@ -10,7 +10,7 @@
     <link href="{% static 'css/all_news.css' %}" rel="stylesheet" />
     <style>
         body {
-            overflow: hidden;
+            overflow-y: hidden;
         }
         .news_card {
             top: 4vh;
@@ -38,41 +38,11 @@
         {% include 'news/news_card.html' %}
         {% include 'news/news_card.html' %}
         {% for news in object_list %}
-        <div class="news_card">
-            <div class="news_card_header">
-                <img src="{{ news.image.url }}" onerror="this.onerror=null; this.src='{% static 'img/no_image.png' %}';">
-            </div>
-            <div class="news_card_body">
-                <div class="time_and_category">
-                    <p>{{ news.time|naturaltime }}</p>
-                    <p>{{ news.category }}</p>
-                </div>
-                <div class="name">
-                    <h3>{{ news.name }}</h3>
-                </div>
-                <div class="description">
-                    <p>{{ news.description }}</p>
-                </div>
-                <div class="read_more">
-                    <p>Read more</p>
-                </div>
-            </div>
-            <div class="news_card_footer">
-                <div>
-                    <img id="heart" src="{% static 'svg/heart.svg' %}">
-                    <h6>{{ news.likes|my_int }}</h6>
-                </div>
-                <div>
-                    <img id="view" src="{% static 'svg/view.svg' %}">
-                    <h6>{{ news.views|my_int }}</h6>
-                </div>
-                <div>
-                    <img id="comment" src="{% static 'svg/comment.svg' %}">
-                    <h6>{{ news.comments|length }}</h6>
-                </div>
-            </div>
-        </div>
         {% endfor %}
     </div>
 </main>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'js/card.js' %}"></script>
+    <script src="{% static 'js/change_category.js' %}"></script>
 {% endblock %}

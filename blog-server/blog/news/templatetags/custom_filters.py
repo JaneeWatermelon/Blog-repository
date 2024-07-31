@@ -12,3 +12,12 @@ def my_int(value):
         return f'{round(value / 1000, 1)} t'
     else:
         return value
+
+@register.filter
+def is_star(obj, user):
+    print(user.star_categories_id)
+    if obj.id in user.star_categories_id:
+        return True
+    else:
+        return False
+

@@ -32,13 +32,15 @@ h5 {
     display: flex;
     width: 100%;
     justify-content: center;
+    position: relative;
 }
 
-.profile_info_card_header > img {
+.profile_info_photo {
     height: calc(150*0.8px);
     width: calc(150*0.8px);
     outline: 2px solid #3282B8;
     border-radius: 75px;
+    object-fit: cover;
     margin: calc(30*0.8px) 0 calc(10*0.8px) 0;
 }
 
@@ -119,11 +121,23 @@ h5 {
     width: 100%;
 }
 
-.sign_up > button > h5 {
+.sign_up > button h5 {
     font-weight: bold;
+    color: black;
 }
 
 .profile_info_card_footer {
     display: flex;
     margin: calc(16*0.8px);
+}
+
+.profile_img {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background-color: #BBE1FA;
+}
+
+.profile_img * {
+    display: none;
 }
