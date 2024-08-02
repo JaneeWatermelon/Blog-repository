@@ -84,3 +84,7 @@ h6 {
     height: calc(27*0.8px);
     margin-right: calc(4*0.8px);
 }
+
+.star_icon:hover {
+    cursor: pointer;
+}

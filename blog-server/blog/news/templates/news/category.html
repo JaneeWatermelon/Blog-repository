@@ -7,16 +7,25 @@
     </div>
     <div class="category_card_body">
         <div class="name_and_star">
-            <button id="zero" style="background-color: #D9EE58;" class="choosed_div category_name">
+            <button id="0" style="background-color: #D9EE58;" class="choosed_div category_name">
                 <p class="choosed_p">Все</p>
             </button>
-            <img src="{% static 'svg/star.svg' %}">
+            {% if user|is_zero_star %}
+            <img class="star_icon in_star" src="{% static 'svg/star_filled.svg' %}">
+            {% else %}
+            <img class="star_icon" src="{% static 'svg/star.svg' %}">
+            {% endif %}
         </div>
         {% for category in categories %}
         <div class="name_and_star">
             <button type="button" id="{{ category.id }}" class="category_name">
                 <p>{{ category.name }}</p>
             </button>
+            {% if category|is_star:user %}
+            <img class="star_icon in_star" src="{% static 'svg/star_filled.svg' %}">
+            {% else %}
+            <img class="star_icon" src="{% static 'svg/star.svg' %}">
+            {% endif %}
         </div>
         {% endfor %}
     </div>

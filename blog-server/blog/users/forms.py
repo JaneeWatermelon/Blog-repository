@@ -60,7 +60,7 @@ class ProfileForm(UserChangeForm):
     }))
     image = forms.ImageField(widget=forms.FileInput(attrs={
         'class': 'profile_info_photo',
-        'style': 'position: absolute; opacity: 0;'
+        'style': 'position: absolute; opacity: 0; cursor: pointer;'
     }), required=False)
 
     class Meta:

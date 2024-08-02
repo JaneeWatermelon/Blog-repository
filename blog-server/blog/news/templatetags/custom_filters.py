@@ -16,7 +16,16 @@ def my_int(value):
 @register.filter
 def is_star(obj, user):
     print(user.star_categories_id)
+    print(obj)
     if obj.id in user.star_categories_id:
+        return True
+    else:
+        return False
+
+@register.filter
+def is_zero_star(user):
+    print(user.star_categories_id)
+    if 0 in user.star_categories_id:
         return True
     else:
         return False

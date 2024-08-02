@@ -39,10 +39,10 @@ class All_News_View(TitleMixin, ListView):
 
 def change_category(request):
     if request.method == 'GET':
-        category_id = request.GET.get('id', 'zero')
+        category_id = request.GET.get('id', '0')
         active_categories = request.session.setdefault('active_categories', [])
 
-        if category_id == 'zero':
+        if category_id == '0':
             active_categories = []
         elif int(category_id) not in active_categories:
             active_categories.append(int(category_id))
@@ -85,4 +85,21 @@ def parsing_news(request):
         print('after save')
     return HttpResponseRedirect(reverse('all_news'))
 
+def change_star(request):
+    if request.method == 'GET':
+        print('in get')
+        category_id = request.GET['id']
+        star_category_id = request.user.star_categories_id
+
+        if int(category_id) not in star_category_id:
+            star_category_id.append(int(category_id))
+        else:
+            star_category_id.remove(int(category_id))
+        request.user.star_categories_id = star_category_id
+        request.user.save()
+        print(star_category_id)
+        data = {
+            'star_category_id': star_category_id
+        }
+        return JsonResponse(data)
 
