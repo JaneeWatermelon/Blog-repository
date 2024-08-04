@@ -21,3 +21,20 @@ main {
     width: 20%;
     height: fit-content;
 }
+
+.paginator_block {
+
+}
+
+.paginator_block ul {
+    list-style: none;
+    padding: 0;
+}
+
+.paginator_block li {
+    margin: 10px 0;
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    width: 100%;
+}

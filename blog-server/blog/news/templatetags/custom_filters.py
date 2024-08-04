@@ -15,8 +15,6 @@ def my_int(value):
 
 @register.filter
 def is_star(obj, user):
-    print(user.star_categories_id)
-    print(obj)
     if obj.id in user.star_categories_id:
         return True
     else:
@@ -24,8 +22,27 @@ def is_star(obj, user):
 
 @register.filter
 def is_zero_star(user):
-    print(user.star_categories_id)
     if 0 in user.star_categories_id:
+        return True
+    else:
+        return False
+
+@register.filter
+def is_heart(obj, user):
+    if obj.id in user.liked_news_id:
+        return True
+    else:
+        return False
+
+@register.filter
+def is_liked(obj, user):
+    if obj.id in user.liked_comments_id:
+        return True
+    else:
+        return False
+@register.filter
+def is_disliked(obj, user):
+    if obj.id in user.disliked_comments_id:
         return True
     else:
         return False

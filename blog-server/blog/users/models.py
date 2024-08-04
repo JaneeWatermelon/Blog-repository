@@ -9,3 +9,5 @@ class User(AbstractUser):
     liked_news_id = models.JSONField(default=list)
     viewed_news_id = models.JSONField(default=list)
     star_categories_id = models.JSONField(default=list)
+    liked_comments_id = models.JSONField(default=list)
+    disliked_comments_id = models.JSONField(default=list)

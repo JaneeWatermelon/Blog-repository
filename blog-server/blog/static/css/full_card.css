@@ -32,14 +32,14 @@ h6 {
 }
 
 .card_header > img {
-    width: calc(329*0.8px);
-    height: calc(329*0.8px);
+    width: 100%;
+    /*height: calc(329*0.8px);*/
     object-fit: cover;
     border-radius: 10px;
 }
 .card_header {
     margin: calc(20*0.8px);
-    width: calc(329*0.8px);
+    width: 25%;
     float: left;
 }
 
@@ -77,7 +77,7 @@ h6 {
 
 .heart_icon {
     /*height: 31px;*/
-    width: 40%;
+    width: 30%;
     transition: transform 0.5s ease;
 }
 .heart_icon:hover {
@@ -86,20 +86,21 @@ h6 {
 }
 .view_icon {
     /*height: 18px;*/
-    width: 40%;
+    width: 30%;
 }
 .comment_icon {
     /*height: 32px;*/
-    width: 40%;
+    width: 30%;
 }
 
 
 
 .card_footer {
+    clear: both;
     margin: calc(20*0.8px);
 }
 
-.comment_shower, .all_comments {
+.comment_shower, .foot_comments {
     border: 1px solid #0F4C75;
     border-radius: 10px;
 }
@@ -140,9 +141,14 @@ h6 {
     display: flex;
 }
 
-.leave_comment > div:last-child {
+.leave_comment > button {
     height: calc(48*0.8px);
     display: flex;
+    background-color: #BBE1FA;
+    width: fit-content;
+    margin: calc(10*0.8px) 0;
+    border-radius: 10px;
+    border: none;
 }
 
 .leave_comment > div > textarea {
@@ -154,19 +160,12 @@ h6 {
     overflow-y: hidden;
 }
 
-.leave_comment > div > p {
+.leave_comment > button > p {
     margin: calc(10*0.8px);
 }
 
 .leave_comment > div:first-child > p, .comment_header > p {
     color: rgba(0, 0, 0, 0.5);
-}
-
-.leave_comment > div:last-child {
-    background-color: #BBE1FA;
-    width: fit-content;
-    margin: calc(10*0.8px) 0;
-    border-radius: 10px;
 }
 
 .comment {
@@ -181,6 +180,8 @@ h6 {
 .comment_header > img {
     height: calc(40*0.8px);
     border-radius: calc(20*0.8px);
+    aspect-ratio: 1;
+    object-fit: cover;
 }
 
 .comment_header > p {
@@ -204,11 +205,23 @@ h6 {
     height: calc(23*0.8px);
 }
 
-.comment_footer > div > img:first-child {
+.like {
     margin-right: calc(10*0.8px);
+    transition: transform 0.5s ease;
 }
 
-.comment_footer > div > img:last-child {
+.dislike {
     transform: rotate(180deg);
     margin-left: calc(30*0.8px);
+    transition: transform 0.5s ease;
+}
+
+.like:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.dislike:hover {
+    transform: scale(1.1) rotate(180deg);
+    cursor: pointer;
 }

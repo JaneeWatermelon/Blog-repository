@@ -1,12 +1,12 @@
+from django.contrib import auth
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.shortcuts import render, HttpResponseRedirect
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import HttpResponseRedirect, render
+from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
-from django.contrib import auth
 
 from common.views import TitleMixin
-from users.forms import UserAuthForm, UserRegistrationForm, ProfileForm
+from users.forms import ProfileForm, UserAuthForm, UserRegistrationForm
 from users.models import User
 
 
@@ -40,11 +40,4 @@ class UserProfileView(TitleMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.object.id,))
 
-def change_user(request):
-    for user in User.objects.all():
-        print('in for')
-        user.star_categories_id = list()
-        user.save()
-        print('saved')
-    return HttpResponseRedirect(reverse('all_news'))
 

@@ -22,23 +22,30 @@
 <main>
     <div class="category_div">
         {% include 'news/category.html' %}
+        {% if is_paginated %}
+        <div class="paginator_block">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_all' page_obj.previous_page_number %}">Prev</a></li>
+                {% else %}
+                <li class="page-item disabled"><a class="page-link">Prev</a></li>
+                {% endif %}
+
+                {% for page in paginator.page_range %}
+                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_all' page %}">{{ page }}</a></li>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_all' page_obj.next_page_number %}">Next</a></li>
+                {% else %}
+                <li class="page-item disabled"><a class="page-link">Next</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        {% endif %}
     </div>
     <div class="all_cards">
         {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% for news in object_list %}
-        {% endfor %}
     </div>
 </main>
 {% endblock %}
@@ -46,4 +53,5 @@
     <script src="{% static 'js/card.js' %}"></script>
     <script src="{% static 'js/change_category.js' %}"></script>
     <script id="star_script" src="{% static 'js/star_categories.js' %}"></script>
+    <script src="{% static 'js/heart.js' %}"></script>
 {% endblock %}
