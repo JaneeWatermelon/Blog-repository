@@ -9,11 +9,11 @@
 {% endblock %}
 
 {% block main %}
-<div class="news_card">
+<div class="news_card" data-object-id="{{ object.id }}">
     <div class="card_header">
         <img src="{{ object.image.url }}">
         <div class="card_bottom_icons">
-            <div>
+            <div class="heart_div">
                 {% if object|is_heart:user %}
                 <img id="like_{{ object.id }}" class="heart_icon is_heart" src="{% static 'svg/heart_filled.svg' %}">
                 {% else %}
@@ -21,11 +21,11 @@
                 {% endif %}
                 <h6>{{ object.likes }}</h6>
             </div>
-            <div>
+            <div class="view_div">
                 <img class="view_icon" src="{% static 'svg/view.svg' %}">
                 <h6>{{ object.views }}</h6>
             </div>
-            <div>
+            <div class="comment_div">
                 <img class="comment_icon" src="{% static 'svg/comment.svg' %}">
                 <h6>{{ object.comments_count }}</h6>
             </div>
@@ -47,7 +47,7 @@
         </div>
     </div>
     <div class="card_footer">
-        <button type="button" class="comment_shower choosed_comment">
+        <button type="button" class="comment_shower">
             <h3>Comments</h3>
             <img class="comment_icon" src="{% static 'svg/comment.svg' %}">
         </button>
@@ -73,7 +73,7 @@
                         <p>{{ comment.text }}</p>
                     </div>
                     <div class="comment_footer">
-                        <div>
+                        <div class="like_or_dislike_block">
                             {% if comment|is_liked:user %}
                             <img class="like is_rate" data-comment-id="{{ comment.id }}" src="{% static 'svg/like_filled.svg' %}">
                             {% else %}
@@ -81,7 +81,7 @@
                             {% endif %}
                             <p>{{ comment.likes }}</p>
                         </div>
-                        <div>
+                        <div class="like_or_dislike_block">
                             {% if comment|is_disliked:user %}
                             <img class="dislike is_rate" data-comment-id="{{ comment.id }}" src="{% static 'svg/like_filled.svg' %}">
                             {% else %}
@@ -99,7 +99,8 @@
 
 {% block script %}
     <script src="{% static 'js/heart.js' %}"></script>
+    <script src="{% static 'js/check_view.js' %}"></script>
     <script src="{% static 'js/textarea.js' %}"></script>
     <script src="{% static 'js/leave_comment.js' %}"></script>
-    <script src="{% static 'js/like.js' %}"></script>
+    <script id="script_like" src="{% static 'js/like.js' %}"></script>
 {% endblock %}

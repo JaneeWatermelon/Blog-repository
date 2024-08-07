@@ -7,48 +7,19 @@
     <link href="{% static 'css/profile_adds.css' %}" rel="stylesheet" />
     <link href="{% static 'css/card.css' %}" rel="stylesheet" />
     <link href="{% static 'css/profile.css' %}" rel="stylesheet" />
-    <style>
-        .news_card {
-            width: 33%;
-            margin: 0;
-            margin-bottom: calc(10*0.8px);
-        }
-    </style>
 {% endblock %}
 
 {% block main %}
 <main>
-    <div class="category_div">
+    <div class="profile_info">
         {% include 'users/profile_info.html' %}
     </div>
-    <div class="all_cards">
-        <div class="profile_adds_card">
-            <div class="profile_adds_card_header">
-                <button class="top_bar choosed">
-                    <h5>Liked</h5>
-                </button>
-                <button class="top_bar">
-                    <h5>Viewed</h5>
-                </button>
-            </div>
-            <div class="cards_div">
-                {% include 'news/news_card.html' %}
-                {% include 'news/news_card.html' %}
-                {% include 'news/news_card.html' %}
-                {% include 'news/news_card.html' %}
-                {% include 'news/news_card.html' %}
-                {% include 'news/news_card.html' %}
-                {% include 'news/news_card.html' %}
-                {% include 'news/news_card.html' %}
-            </div>
-<!--            <div class="profile_adds_card_body">-->
-<!--                <div>-->
-<!--                    <h5>Ой, здесь пока пусто.</h5>-->
-<!--                    <h5>Тут отображаются просмотренные новости.</h5>-->
-<!--                </div>-->
-<!--                <img src="{% static 'svg/sad_smile.svg' %}">-->
-<!--            </div>-->
-        </div>
+    <div class="profile_adds">
+        {% include 'users/profile_adds.html' %}
     </div>
 </main>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'js/change_avatar.js' %}"></script>
+    <script src="{% static 'js/see_news_in_profile.js' %}"></script>
 {% endblock %}

@@ -1,27 +1,33 @@
 {% extends 'news/base.html' %}
 
 {% load static %}
+{% load humanize %}
+{% load custom_filters %}
 
 {% block css_link %}
     <link href="{% static 'css/card.css' %}" rel="stylesheet" />
     <link href="{% static 'css/recommendations.css' %}" rel="stylesheet" />
+    <style>
+        body {
+            overflow-y: hidden;
+        }
+        .news_card {
+            top: 4vh;
+        }
+        #recommended > h4 {
+            font-size: 25px;
+        }
+    </style>
 {% endblock %}
 
 {% block main %}
 <main>
     <div class="all_cards">
         {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
-        {% include 'news/news_card.html' %}
     </div>
 </main>
+{% endblock %}
+{% block script %}
+    <script src="{% static 'js/card.js' %}"></script>
+    <script src="{% static 'js/heart.js' %}"></script>
 {% endblock %}

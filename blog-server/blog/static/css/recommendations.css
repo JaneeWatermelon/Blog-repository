@@ -7,4 +7,33 @@ main {
     width: 100%;
     flex-wrap: wrap;
     margin-left: 5px;
+    overflow: overlay;
+    height: 88vh;
+    position: relative;
+    top: -4vh;
+}
+
+.all_cards::-webkit-scrollbar {
+    width: 0;
+}
+
+.paginator_block {
+
+}
+
+.paginator_block ul {
+    list-style: none;
+    padding: 0;
+}
+
+.paginator_block li {
+    margin: 10px 0;
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.paginator_block a {
+    color: #3282B8;
 }

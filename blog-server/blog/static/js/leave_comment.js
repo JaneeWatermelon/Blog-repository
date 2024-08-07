@@ -20,7 +20,7 @@ $(document).ready(function(){
             $(".leave_comment > button").prop('disabled', false);
         }
     })
-    $(".leave_comment > button").on('click', function(){
+    $(".foot_comments").on('click', '.leave_comment > button', function(){
         console.log('clicked');
         let news_id = $(".leave_comment textarea").attr('id');
         console.log(news_id);
@@ -33,7 +33,7 @@ $(document).ready(function(){
            },
            success: function(response) {
                 $(".foot_comments").load(window.location.href + " .foot_comments > *");
-                $(".card_bottom_icons").load(window.location.href + " .card_bottom_icons > *");
+                $(".comment_div").load(window.location.href + " .comment_div > *");
            },
            error: function(xhr, status, error) {
                console.log("category changed with error");

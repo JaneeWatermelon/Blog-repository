@@ -23,12 +23,14 @@ from common.views import TitleMixin
 from news.models import Category, Comment, News
 from users.models import User
 
+import difflib
+from rutermextract import TermExtractor
 
 class All_News_View(TitleMixin, ListView):
     template_name = "news/all_news.html"
     title = 'All News'
     model = News
-    paginate_by = 3
+    paginate_by = 30
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
@@ -48,6 +50,30 @@ class All_News_View(TitleMixin, ListView):
     def reload_queryset(self):
         self.object_list = self.get_queryset()
 
+class Recommended_News_View(TitleMixin, ListView):
+    template_name = "news/recommendations.html"
+    title = 'Recommended News'
+    model = News
+    paginate_by = 30
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        result = queryset.filter(pk=0)
+
+        user = self.request.user
+        sorted_tags = {k: v for k, v in sorted(user.recommended_tags.items(), key=lambda item: item[1], reverse=True)}
+        random_news = News.objects.all().order_by('?')
+
+        for news in random_news:
+            for news_tag in news.tags:
+                for user_tag in list(sorted_tags.keys())[:10]:
+                    matcher_result = difflib.SequenceMatcher(isjunk=None, a=user_tag, b=news_tag, autojunk=True).quick_ratio()
+                    if matcher_result >= 0.7:
+                        result = result.union(News.objects.filter(pk=news.id))
+                        break
+        return result
+    # def reload_queryset(self):
+    #     self.object_list = self.get_queryset()
+
 class Full_Card_View(TitleMixin, DetailView):
     model = News
     title = 'Detail News'
@@ -55,12 +81,15 @@ class Full_Card_View(TitleMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        context['comments'] = Comment.objects.filter(news=self.object)
+        context['comments'] = Comment.objects.filter(news=self.object).order_by('-time')
         return context
 
 def heart_news(request):
+
     if request.method == 'GET':
         user = request.user
+        # user.recommended_tags = {}
+        print(user.recommended_tags)
 
         news_id = int(request.GET['id'][5:])
         news = News.objects.get(pk=news_id)
@@ -68,10 +97,21 @@ def heart_news(request):
 
         if news_id in user.liked_news_id:
             print('in if')
+            for tag in news.tags:
+                if tag in user.recommended_tags:
+                    if user.recommended_tags[tag] == 1:
+                        user.recommended_tags.pop(tag)
+                    else:
+                        user.recommended_tags[tag] -= 1
             news.likes -= 1
             user.liked_news_id.remove(news_id)
         else:
             print('in else')
+            for tag in news.tags:
+                if tag in user.recommended_tags:
+                    user.recommended_tags[tag] += 1
+                else:
+                    user.recommended_tags[tag] = 1
             news.likes += 1
             user.liked_news_id.append(news_id)
         news.save()
@@ -80,7 +120,6 @@ def heart_news(request):
             "id": news_id
         }
         return JsonResponse(data)
-
 
 def change_category(request):
     if request.method == 'GET':
@@ -101,7 +140,6 @@ def change_category(request):
         current_list_view.reload_queryset()
         return JsonResponse(data)
 
-
 def change_star(request):
     if request.method == 'GET':
         category_id = request.GET['id']
@@ -118,6 +156,13 @@ def change_star(request):
         }
         return JsonResponse(data)
 
+def try_get_key_words(title, description):
+    term_extractor = TermExtractor()
+    text = title + ' ' + description
+    result_list = []
+    for term in term_extractor(text, nested=True):
+        result_list.append(term.normalized)
+    return result_list
 def parsing_genshin(request):
     option = webdriver.ChromeOptions()
     option.add_argument('headless')
@@ -136,37 +181,31 @@ def parsing_genshin(request):
     for news in blocks:
         print('in news')
         url = news.find_element(By.TAG_NAME, 'a').get_attribute('href')
-        news_info = news.find_element(By.CLASS_NAME, 'news__info')
-        name = news_info.find_element(By.TAG_NAME, 'h3').get_attribute('innerHTML')
-        description = news_info.find_element(By.TAG_NAME, 'p').get_attribute('innerHTML')
+        if not News.objects.filter(url=url):
+            news_info = news.find_element(By.CLASS_NAME, 'news__info')
+            name = news_info.find_element(By.TAG_NAME, 'h3').get_attribute('innerHTML')
+            description = news_info.find_element(By.TAG_NAME, 'p').get_attribute('innerHTML')
 
-        image_url = news.find_element(By.TAG_NAME,'img').get_attribute('src')
-        image_bytes = requests.get(image_url).content
-        next_id = 1 if not News.objects.last() else News.objects.last().id + 1
-        image_name = f'{next_id}.jpg'
-        image_file = ContentFile(image_bytes, name=image_name)
-        saved_image_path = default_storage.save(f'news_images/{category.name}/{image_name}', image_file)
+            image_url = news.find_element(By.TAG_NAME,'img').get_attribute('src')
+            image_bytes = requests.get(image_url).content
+            next_id = 1 if not News.objects.last() else News.objects.last().id + 1
+            image_name = f'{next_id}.jpg'
+            image_file = ContentFile(image_bytes, name=image_name)
+            saved_image_path = default_storage.save(f'news_images/{category.name}/{image_name}', image_file)
+            tags = (try_get_key_words(name, description)[:10])
 
-        result_news = News(
-            name=name,
-            description=description,
-            url=url,
-            category=category,
-            image=saved_image_path
-        )
-        result_news.save()
-        print('saved')
-    # name = browser.find_element('xpath', '/html/body/div[1]/div/div/div[3]/div/div[2]/ul[3]/li[1]/a/div/h3').get_attribute('innerHTML')
-    # description = browser.find_element('xpath', '/html/body/div[1]/div/div/div[3]/div/div[2]/ul[3]/li[1]/a/div/p').get_attribute('innerHTML')
-    # url = browser.find_element('xpath', '/html/body/div[1]/div/div/div[3]/div/div[2]/ul[3]/li[1]/a').get_attribute('href')
-    #
-    # image_url = browser.find_element('xpath', '/html/body/div[1]/div/div/div[3]/div/div[2]/ul[3]/li[1]/a/img').get_attribute('src')
-    # image_bytes = requests.get(image_url).content
-    # next_id = News.objects.last().id+1
-    # image_name = f'{next_id}.jpg'
-    # image_file = ContentFile(image_bytes, name=image_name)
-    # saved_image_path = default_storage.save(f'news_images/{category.name}/{image_name}', image_file)
-
+            result_news = News(
+                name=name,
+                description=description,
+                url=url,
+                category=category,
+                image=saved_image_path,
+                tags=tags
+            )
+            result_news.save()
+            print('saved')
+        else:
+            break
     return HttpResponseRedirect(reverse('all_news'))
 
 def clear_hearts_from_users_and_news(request):
@@ -229,6 +268,9 @@ def rate_comment(request):
                 user.liked_comments_id.remove(comment_id)
             else:
                 print('in else')
+                if comment_id in user.disliked_comments_id:
+                    comment.dislikes -= 1
+                    user.disliked_comments_id.remove(comment_id)
                 comment.likes += 1
                 user.liked_comments_id.append(comment_id)
         else:
@@ -238,6 +280,9 @@ def rate_comment(request):
                 user.disliked_comments_id.remove(comment_id)
             else:
                 print('in else')
+                if comment_id in user.liked_comments_id:
+                    comment.likes -= 1
+                    user.liked_comments_id.remove(comment_id)
                 comment.dislikes += 1
                 user.disliked_comments_id.append(comment_id)
         comment.save()
@@ -245,5 +290,20 @@ def rate_comment(request):
         data = {
             "id": comment_id
         }
+        return JsonResponse(data)
+
+def check_view(request):
+    if request.method == "GET":
+        news_id = int(request.GET['id'])
+        user = request.user
+
+        if news_id not in user.viewed_news_id:
+            user.viewed_news_id.append(news_id)
+            user.save()
+            news = News.objects.get(pk=news_id)
+            news.views += 1
+            news.save()
+
+        data = {}
         return JsonResponse(data)
 

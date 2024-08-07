@@ -38,3 +38,7 @@ main {
     text-align: center;
     width: 100%;
 }
+
+.paginator_block a {
+    color: #3282B8;
+}

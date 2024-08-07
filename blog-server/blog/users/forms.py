@@ -60,6 +60,8 @@ class ProfileForm(UserChangeForm):
     }))
     image = forms.ImageField(widget=forms.FileInput(attrs={
         'class': 'profile_info_photo',
+        'id': 'new_avatar',
+        'onchange': 'readURL(this);',
         'style': 'position: absolute; opacity: 0; cursor: pointer;'
     }), required=False)
 

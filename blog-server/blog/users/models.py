@@ -6,8 +6,10 @@ class User(AbstractUser):
     image = models.ImageField(upload_to='users_images', blank=True, null=True, default='profilo.jpg')
     email = models.EmailField(unique=True)
     is_verified = models.BooleanField(default=False)
+
     liked_news_id = models.JSONField(default=list)
     viewed_news_id = models.JSONField(default=list)
     star_categories_id = models.JSONField(default=list)
     liked_comments_id = models.JSONField(default=list)
     disliked_comments_id = models.JSONField(default=list)
+    recommended_tags = models.JSONField(default=dict)

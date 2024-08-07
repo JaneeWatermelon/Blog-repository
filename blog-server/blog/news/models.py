@@ -22,7 +22,7 @@ class News(models.Model):
     comments_count = models.PositiveIntegerField(default=0)
     time = models.DateTimeField(auto_now_add=True)
 
-    tags = models.JSONField(blank=True, null=True)
+    tags = models.JSONField(default=list)
 
     def __str__(self):
         return str(self.id)

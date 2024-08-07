@@ -4,7 +4,7 @@
     {% csrf_token %}
     <div class="profile_info_card_header">
         {{ form.image }}
-        <img class="profile_info_photo" src="{{ user.image.url }}">
+        <img id="old_avatar" class="profile_info_photo" src="{{ user.image.url }}">
     </div>
     <div class="profile_info_card_body">
         <div class="input_group">
@@ -37,7 +37,7 @@
         </div>
         <div class="input_group">
             <div class="input_div">
-                <label><h5>Sign Up: <span>{{ user.date_joined }}</span></h5></label>
+                <label><h5>Sign Up: <span>{{ user.date_joined.date }}</span></h5></label>
             </div>
             <div class="input_div">
                 <label><h5>Verified: <span>{% if user.is_verified %}Yes{% else %}No{% endif %}</span></h5></label>

@@ -10,14 +10,14 @@ main > div:last-child {
     margin-left: calc(13*0.8px);
 }
 
-.all_cards {
+.profile_adds {
     display: flex;
-    width: 50%;
+    width: 40%;
     flex-wrap: wrap;
 }
 
-.category_div {
-    width: 50%;
+.profile_info {
+    width: 60%;
     float: left;
 }
 
@@ -31,4 +31,10 @@ main > div:last-child {
 
 .cards_div::-webkit-scrollbar {
     width: 0;
+}
+
+.news_card {
+    width: 49%;
+    margin: 0;
+    margin-bottom: calc(10*0.8px);
 }

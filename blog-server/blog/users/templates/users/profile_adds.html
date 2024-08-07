@@ -2,18 +2,43 @@
 
 <div class="profile_adds_card">
     <div class="profile_adds_card_header">
-        <div class="top_bar choosed">
+        <button class="top_bar like choosed">
             <h5>Liked</h5>
-        </div>
-        <div class="top_bar">
+        </button>
+        <button class="top_bar view">
             <h5>Viewed</h5>
-        </div>
+        </button>
     </div>
-    <div class="profile_adds_card_body">
-        <div>
-            <h5>Ой, здесь пока пусто.</h5>
-            <h5>Тут отображаются просмотренные новости.</h5>
-        </div>
-        <img src="{% static 'svg/sad_smile.svg' %}">
+    <div class="profile_adds_card_middle">
+        {% if type == 'like' %}
+            {% if user.liked_news_id %}
+            <div class="cards_div">
+                {% include 'news/news_card.html' %}
+            </div>
+            {% else %}
+            <div class="profile_adds_card_body">
+                <div>
+                    <h5>Ой, здесь пока пусто.</h5>
+                    <h5>Нажмите на сердечко под новостью, чтобы добавить её в “Понравившиеся”.</h5>
+                </div>
+                <img src="{% static 'svg/sad_smile.svg' %}">
+            </div>
+            {% endif %}
+        {% elif type == 'view' %}
+            {% if user.viewed_news_id %}
+            <div class="cards_div">
+                {% include 'news/news_card.html' %}
+            </div>
+            {% else %}
+            <div class="profile_adds_card_body">
+                <div>
+                    <h5>Ой, здесь пока пусто.</h5>
+                    <h5>Тут отображаются просмотренные новости.</h5>
+                </div>
+                <img src="{% static 'svg/sad_smile.svg' %}">
+            </div>
+            {% endif %}
+        {% else %}
+        {% endif %}
     </div>
 </div>
