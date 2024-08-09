@@ -2,6 +2,16 @@ main {
     display: flex;
 }
 
+body {
+    overflow-y: hidden;
+}
+.news_card {
+    top: 4vh;
+}
+.news_card_body {
+    aspect-ratio: 1.5;
+}
+
 .all_cards {
     display: flex;
     width: 100%;
@@ -11,6 +21,7 @@ main {
     height: 88vh;
     position: relative;
     top: -4vh;
+    padding-bottom: 8vh;
 }
 
 .all_cards::-webkit-scrollbar {
@@ -18,15 +29,20 @@ main {
 }
 
 .paginator_block {
-
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
 }
 
-.paginator_block ul {
+.pagination {
     list-style: none;
     padding: 0;
+    width: 50%;
+    margin: auto;
 }
 
-.paginator_block li {
+.pagination li {
     margin: 10px 0;
     background-color: white;
     border-radius: 10px;
@@ -34,6 +50,6 @@ main {
     width: 100%;
 }
 
-.paginator_block a {
-    color: #3282B8;
+.pagination a {
+    color: black;
 }

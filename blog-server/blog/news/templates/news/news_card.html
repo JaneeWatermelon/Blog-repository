@@ -30,7 +30,7 @@
     </a>
     <div class="news_card_footer">
         <div>
-            {% if news|is_heart:user %}
+            {% if user.is_authenticated and news|is_heart:user %}
             <img id="like_{{ news.id }}" class="heart_icon is_heart" src="{% static 'svg/heart_filled.svg' %}">
             {% else %}
             <img id="like_{{ news.id }}" class="heart_icon" src="{% static 'svg/heart.svg' %}">

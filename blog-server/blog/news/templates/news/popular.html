@@ -8,7 +8,7 @@
     <link href="{% static 'css/card.css' %}" rel="stylesheet" />
     <link href="{% static 'css/recommendations.css' %}" rel="stylesheet" />
     <style>
-        #recommended > h4 {
+        #popular > h4 {
             font-size: 25px;
         }
     </style>
@@ -22,17 +22,17 @@
         <div class="paginator_block">
             <ul class="pagination">
                 {% if page_obj.has_previous %}
-                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_recommended' page_obj.previous_page_number %}">Prev</a></li>
+                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_popular' page_obj.previous_page_number %}">Prev</a></li>
                 {% else %}
                 <li class="page-item disabled"><a class="page-link">Prev</a></li>
                 {% endif %}
 
                 {% for page in paginator.page_range %}
-                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_recommended' page %}">{{ page }}</a></li>
+                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_popular' page %}">{{ page }}</a></li>
                 {% endfor %}
 
                 {% if page_obj.has_next %}
-                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_recommended' page_obj.next_page_number %}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_popular' page_obj.next_page_number %}">Next</a></li>
                 {% else %}
                 <li class="page-item disabled"><a class="page-link">Next</a></li>
                 {% endif %}

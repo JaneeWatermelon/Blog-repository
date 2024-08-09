@@ -11,6 +11,7 @@ main {
     height: 88vh;
     position: relative;
     top: -4vh;
+    padding-bottom: 8vh;
 }
 
 .all_cards::-webkit-scrollbar {

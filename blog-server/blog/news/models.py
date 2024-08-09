@@ -27,6 +27,10 @@ class News(models.Model):
     def __str__(self):
         return str(self.id)
 
+    def get_popularity(self):
+        return (self.views*0.025 + self.likes*0.2 + self.comments_count)
+
+
 class Comment(models.Model):
     text = models.TextField(max_length=1000)
     likes = models.PositiveIntegerField(default=0)

@@ -11,7 +11,7 @@ $(document).ready(function(){
             see_type = 'like';
         }
         $.ajax({
-           url: "http://127.0.0.1:8000/news/see_news_in_profile",
+           url: "http://127.0.0.1:8000/users/see_news_in_profile",
            type: "GET",
            data: {
                 type: see_type,
@@ -36,7 +36,7 @@ $(document).ready(function(){
             see_type = 'view';
         }
         $.ajax({
-           url: "http://127.0.0.1:8000/news/see_news_in_profile",
+           url: "http://127.0.0.1:8000/users/see_news_in_profile",
            type: "GET",
            data: {
                 type: see_type,
@@ -46,6 +46,7 @@ $(document).ready(function(){
            },
            error: function(xhr, status, error) {
                console.log("category changed with error");
+               window.location.href = "/users/login/";
            }
         });
     });

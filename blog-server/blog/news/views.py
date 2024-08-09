@@ -8,8 +8,9 @@ from bs4 import BeautifulSoup
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.http import JsonResponse
-from django.shortcuts import HttpResponseRedirect, render
+from django.shortcuts import HttpResponseRedirect, render, HttpResponse
 from django.urls import reverse, reverse_lazy
+from django.contrib.auth.decorators import login_required
 
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
@@ -26,6 +27,19 @@ from users.models import User
 import difflib
 from rutermextract import TermExtractor
 
+from functools import wraps
+from django.core.exceptions import PermissionDenied
+
+def ajax_login_required(view):
+    @wraps(view)
+    def wrapper(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            print('not auth')
+            raise PermissionDenied
+        print('yes auth')
+        return view(request, *args, **kwargs)
+    return wrapper
+
 class All_News_View(TitleMixin, ListView):
     template_name = "news/all_news.html"
     title = 'All News'
@@ -41,6 +55,7 @@ class All_News_View(TitleMixin, ListView):
         queryset = super().get_queryset()
         result = queryset.filter(pk=0)
         active_categories = self.request.session.setdefault('active_categories', [])
+        print(active_categories)
         if active_categories:
             for category_id in active_categories:
                 result = result.union(queryset.filter(category=Category.objects.get(pk=category_id)))
@@ -60,12 +75,12 @@ class Recommended_News_View(TitleMixin, ListView):
         result = queryset.filter(pk=0)
 
         user = self.request.user
-        sorted_tags = {k: v for k, v in sorted(user.recommended_tags.items(), key=lambda item: item[1], reverse=True)}
+        sorted_user_tags = {k: v for k, v in sorted(user.recommended_tags.items(), key=lambda item: item[1], reverse=True)}
         random_news = News.objects.all().order_by('?')
 
         for news in random_news:
             for news_tag in news.tags:
-                for user_tag in list(sorted_tags.keys())[:10]:
+                for user_tag in list(sorted_user_tags.keys())[:10]:
                     matcher_result = difflib.SequenceMatcher(isjunk=None, a=user_tag, b=news_tag, autojunk=True).quick_ratio()
                     if matcher_result >= 0.7:
                         result = result.union(News.objects.filter(pk=news.id))
@@ -74,6 +89,29 @@ class Recommended_News_View(TitleMixin, ListView):
     # def reload_queryset(self):
     #     self.object_list = self.get_queryset()
 
+class Popular_News_View(TitleMixin, ListView):
+    template_name = "news/popular.html"
+    title = 'Popular News'
+    model = News
+    paginate_by = 30
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        result = queryset.all()
+        result = sorted(result, key=lambda p: p.get_popularity(), reverse=True)
+        return result
+    # def reload_queryset(self):
+    #     self.object_list = self.get_queryset()
+
+class New_News_View(TitleMixin, ListView):
+    template_name = "news/new.html"
+    title = 'New News'
+    model = News
+    paginate_by = 30
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.order_by('-time')
+    # def reload_queryset(self):
+    #     self.object_list = self.get_queryset()
 class Full_Card_View(TitleMixin, DetailView):
     model = News
     title = 'Detail News'
@@ -84,11 +122,11 @@ class Full_Card_View(TitleMixin, DetailView):
         context['comments'] = Comment.objects.filter(news=self.object).order_by('-time')
         return context
 
+@ajax_login_required
 def heart_news(request):
 
     if request.method == 'GET':
         user = request.user
-        # user.recommended_tags = {}
         print(user.recommended_tags)
 
         news_id = int(request.GET['id'][5:])
@@ -123,8 +161,8 @@ def heart_news(request):
 
 def change_category(request):
     if request.method == 'GET':
-        category_id = request.GET.get('id', '0')
-        active_categories = request.session.setdefault('active_categories', [])
+        category_id = request.GET['id']
+        active_categories = request.session['active_categories']
 
         if category_id == '0':
             active_categories = []
@@ -139,9 +177,9 @@ def change_category(request):
         current_list_view = All_News_View(request=request)
         current_list_view.reload_queryset()
         return JsonResponse(data)
-
+@ajax_login_required
 def change_star(request):
-    if request.method == 'GET':
+    if request.method == 'GET' and request.user.is_authenticated:
         category_id = request.GET['id']
         star_category_id = request.user.star_categories_id
 
@@ -155,7 +193,8 @@ def change_star(request):
             'star_category_id': star_category_id
         }
         return JsonResponse(data)
-
+    else:
+        return HttpResponse('', status=401)
 def try_get_key_words(title, description):
     term_extractor = TermExtractor()
     text = title + ' ' + description
@@ -223,6 +262,8 @@ def is_malicious_code(comment):
     if re.search(pattern, comment, re.IGNORECASE):
         return True
     return False
+
+@ajax_login_required
 def leave_comment(request):
     if request.method == "GET":
         print('in get')
@@ -253,6 +294,7 @@ def leave_comment(request):
                 }
                 return JsonResponse(data)
 
+@ajax_login_required
 def rate_comment(request):
     if request.method == 'GET':
         user = request.user
@@ -306,4 +348,5 @@ def check_view(request):
 
         data = {}
         return JsonResponse(data)
+
 

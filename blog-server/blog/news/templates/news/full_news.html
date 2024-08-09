@@ -14,7 +14,7 @@
         <img src="{{ object.image.url }}">
         <div class="card_bottom_icons">
             <div class="heart_div">
-                {% if object|is_heart:user %}
+                {% if user.is_authenticated and object|is_heart:user %}
                 <img id="like_{{ object.id }}" class="heart_icon is_heart" src="{% static 'svg/heart_filled.svg' %}">
                 {% else %}
                 <img id="like_{{ object.id }}" class="heart_icon" src="{% static 'svg/heart.svg' %}">
@@ -63,7 +63,7 @@
             </div>
             <div class="all_comments">
                 {% for comment in comments %}
-                <div class="comment">
+                <div class="comment" style="display: none;">
                     <div class="comment_header">
                         <img src="{{ comment.user.image.url }}">
                         <p>@{{ comment.user.username }}</p>
@@ -74,7 +74,7 @@
                     </div>
                     <div class="comment_footer">
                         <div class="like_or_dislike_block">
-                            {% if comment|is_liked:user %}
+                            {% if user.is_authenticated and comment|is_liked:user %}
                             <img class="like is_rate" data-comment-id="{{ comment.id }}" src="{% static 'svg/like_filled.svg' %}">
                             {% else %}
                             <img class="like" data-comment-id="{{ comment.id }}" src="{% static 'svg/like.svg' %}">
@@ -82,7 +82,7 @@
                             <p>{{ comment.likes }}</p>
                         </div>
                         <div class="like_or_dislike_block">
-                            {% if comment|is_disliked:user %}
+                            {% if user.is_authenticated and comment|is_disliked:user %}
                             <img class="dislike is_rate" data-comment-id="{{ comment.id }}" src="{% static 'svg/like_filled.svg' %}">
                             {% else %}
                             <img class="dislike" data-comment-id="{{ comment.id }}" src="{% static 'svg/like.svg' %}">
@@ -92,6 +92,9 @@
                 </div>
                 {% endfor %}
             </div>
+            <button type="button" class="see_more_button" data-page="1">
+                <p>See More</p>
+            </button>
         </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $(".heart_icon").on('click', function(){
+    $(".profile_adds_card_middle").on('click', '.heart_icon', function(){
         console.log('clicked');
         let news_id = $(this).attr('id');
         let click_type;
@@ -30,7 +30,6 @@ $(document).ready(function(){
            },
            error: function(xhr, status, error) {
                console.log("category changed with error");
-               window.location.href = "/users/login/";
            }
         });
     });

@@ -1,5 +1,3 @@
-from users.models import User
 
-
-def star_categories(request):
-    return {}
+def choosed_categories(request):
+    return {'choosed_categories': request.session['active_categories']}

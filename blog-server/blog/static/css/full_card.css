@@ -229,3 +229,13 @@ h6 {
     transform: scale(1.1) rotate(180deg);
     cursor: pointer;
 }
+
+.see_more_button {
+    background-color: white;
+    margin: calc(20* 0.8px);
+    padding: 10px;
+    border: 1px solid #0F4C75;
+    border-radius: 10px;
+    width: 200px;
+    text-align: center;
+}

@@ -49,6 +49,8 @@ h4 {
     background: linear-gradient(#3282B8, #BBE1FA);
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    z-index: 100;
 }
 
 .news_hider {

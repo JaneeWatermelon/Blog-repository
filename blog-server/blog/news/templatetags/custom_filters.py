@@ -14,6 +14,20 @@ def my_int(value):
         return value
 
 @register.filter
+def is_choosed_category(category, actives):
+    if category.id in actives:
+        return True
+    else:
+        return False
+
+@register.filter
+def is_choosed_all_category(actives):
+    if actives == []:
+        return True
+    else:
+        return False
+
+@register.filter
 def is_star(obj, user):
     if obj.id in user.star_categories_id:
         return True

@@ -1,11 +1,13 @@
 {% load static %}
+{% load custom_filters_users %}
+{% load custom_filters %}
 
 <div class="profile_adds_card">
     <div class="profile_adds_card_header">
-        <button class="top_bar like choosed">
+        <button class="top_bar like {% if type == 'like' %}choosed{% endif %}">
             <h5>Liked</h5>
         </button>
-        <button class="top_bar view">
+        <button class="top_bar view {% if type == 'view' %}choosed{% endif %}">
             <h5>Viewed</h5>
         </button>
     </div>
@@ -13,7 +15,52 @@
         {% if type == 'like' %}
             {% if user.liked_news_id %}
             <div class="cards_div">
-                {% include 'news/news_card.html' %}
+                {% for news in liked_news %}
+                <div class="news_card">
+                    <a href="{% url 'news:full_card' news.id %}">
+                        <div class="news_card_header">
+                            {% if news.image %}
+                            <img src="{{ news.image.url }}">
+                            {% else %}
+                            <img src="{% static 'img/korea.png' %}">
+                            {% endif %}
+                        </div>
+                        <div class="news_card_body">
+                            <div class="time_and_category">
+                                <p>{{ news.time.date }}</p>
+                                <p>{{ news.category }}</p>
+                            </div>
+                            <div class="name">
+                                <h3>{{ news.name }}</h3>
+                            </div>
+                            <div class="description">
+                                <p>{{ news.description }}</p>
+                            </div>
+                            <div class="read_more">
+                                <p>Read more</p>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="news_card_footer">
+                        <div>
+                            {% if news|is_heart:user %}
+                            <img id="like_{{ news.id }}" class="heart_icon is_heart" src="{% static 'svg/heart_filled.svg' %}">
+                            {% else %}
+                            <img id="like_{{ news.id }}" class="heart_icon" src="{% static 'svg/heart.svg' %}">
+                            {% endif %}
+                            <h6>{{ news.likes }}</h6>
+                        </div>
+                        <div>
+                            <img class="view_icon" src="{% static 'svg/view.svg' %}">
+                            <h6>{{ news.views }}</h6>
+                        </div>
+                        <div>
+                            <img class="comment_icon" src="{% static 'svg/comment.svg' %}">
+                            <h6>{{ news.comments_count }}</h6>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
             {% else %}
             <div class="profile_adds_card_body">
@@ -27,7 +74,52 @@
         {% elif type == 'view' %}
             {% if user.viewed_news_id %}
             <div class="cards_div">
-                {% include 'news/news_card.html' %}
+                {% for news in viewed_news %}
+                <div class="news_card">
+                    <a href="{% url 'news:full_card' news.id %}">
+                        <div class="news_card_header">
+                            {% if news.image %}
+                            <img src="{{ news.image.url }}">
+                            {% else %}
+                            <img src="{% static 'img/korea.png' %}">
+                            {% endif %}
+                        </div>
+                        <div class="news_card_body">
+                            <div class="time_and_category">
+                                <p>{{ news.time.date }}</p>
+                                <p>{{ news.category }}</p>
+                            </div>
+                            <div class="name">
+                                <h3>{{ news.name }}</h3>
+                            </div>
+                            <div class="description">
+                                <p>{{ news.description }}</p>
+                            </div>
+                            <div class="read_more">
+                                <p>Read more</p>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="news_card_footer">
+                        <div>
+                            {% if news|is_heart:user %}
+                            <img id="like_{{ news.id }}" class="heart_icon is_heart" src="{% static 'svg/heart_filled.svg' %}">
+                            {% else %}
+                            <img id="like_{{ news.id }}" class="heart_icon" src="{% static 'svg/heart.svg' %}">
+                            {% endif %}
+                            <h6>{{ news.likes }}</h6>
+                        </div>
+                        <div>
+                            <img class="view_icon" src="{% static 'svg/view.svg' %}">
+                            <h6>{{ news.views }}</h6>
+                        </div>
+                        <div>
+                            <img class="comment_icon" src="{% static 'svg/comment.svg' %}">
+                            <h6>{{ news.comments_count }}</h6>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
             {% else %}
             <div class="profile_adds_card_body">

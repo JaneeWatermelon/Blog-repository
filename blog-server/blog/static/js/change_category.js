@@ -1,6 +1,7 @@
 $(document).ready(function(){
-    let n = 0;
-    $(".category_name").on('click', function(){
+    let n = Number($(".category_card_body").attr('data-active-count'));
+    console.log(n);
+    $(".category_card_body").on('click', '.category_name', function(){
         let category_id = $(this).attr('id');
         if (category_id == '0') {
             $(".category_name").removeClass('choosed_div');

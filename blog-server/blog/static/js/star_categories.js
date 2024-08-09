@@ -20,6 +20,7 @@ $(document).ready(function(){
            },
            error: function(xhr, status, error) {
                console.log("category changed with error");
+               window.location.href = "/users/login/";
            }
         });
     });
