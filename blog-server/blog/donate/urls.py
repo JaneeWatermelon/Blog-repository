@@ -4,10 +4,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-from news.views import All_News_View
+from donate.views import DonateView, DonateResultView
 
 app_name = 'donate'
 
 urlpatterns = [
-
+    path('form', DonateView.as_view(), name='form'),
+    path('result', DonateResultView.as_view(), name='result'),
 ]

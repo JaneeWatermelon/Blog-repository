@@ -48,7 +48,9 @@
         {% endif %}
     </div>
     <div class="all_cards">
-        {% include 'news/news_card.html' %}
+        {% for news in object_list %}
+            {% include 'news/news_card.html' %}
+        {% endfor %}
     </div>
 </main>
 {% endblock %}
@@ -57,4 +59,5 @@
     <script src="{% static 'js/change_category.js' %}"></script>
     <script id="star_script" src="{% static 'js/star_categories.js' %}"></script>
     <script src="{% static 'js/heart.js' %}"></script>
+<!--    <script src="{% static 'js/check_view.js' %}"></script>-->
 {% endblock %}

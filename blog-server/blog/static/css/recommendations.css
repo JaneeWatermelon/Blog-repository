@@ -1,5 +1,7 @@
 main {
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 body {
@@ -52,4 +54,27 @@ body {
 
 .pagination a {
     color: black;
+}
+
+.no_recommends_div {
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 60vh;
+    width: 60%;
+    text-align: center;
+}
+
+.no_recommends_div > img {
+    height: calc(150*0.8px);
+}
+
+.no_recommends_div > div {
+    margin: 0 20%;
+}
+
+.no_recommends_div h5 {
+    color: rgba(0, 0, 0, 0.5);
 }

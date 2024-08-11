@@ -72,22 +72,21 @@ class Recommended_News_View(TitleMixin, ListView):
     paginate_by = 30
     def get_queryset(self):
         queryset = super().get_queryset()
+        user = self.request.user
         result = queryset.filter(pk=0)
 
-        user = self.request.user
-        sorted_user_tags = {k: v for k, v in sorted(user.recommended_tags.items(), key=lambda item: item[1], reverse=True)}
-        random_news = News.objects.all().order_by('?')
+        if user.is_authenticated:
+            sorted_user_tags = {k: v for k, v in sorted(user.recommended_tags.items(), key=lambda item: item[1], reverse=True)}
+            random_news = News.objects.all().order_by('?')
 
-        for news in random_news:
-            for news_tag in news.tags:
-                for user_tag in list(sorted_user_tags.keys())[:10]:
-                    matcher_result = difflib.SequenceMatcher(isjunk=None, a=user_tag, b=news_tag, autojunk=True).quick_ratio()
-                    if matcher_result >= 0.7:
-                        result = result.union(News.objects.filter(pk=news.id))
-                        break
+            for news in random_news:
+                for news_tag in news.tags:
+                    for user_tag in list(sorted_user_tags.keys())[:10]:
+                        matcher_result = difflib.SequenceMatcher(isjunk=None, a=user_tag, b=news_tag, autojunk=True).quick_ratio()
+                        if matcher_result >= 0.7:
+                            result = result.union(News.objects.filter(pk=news.id))
+                            break
         return result
-    # def reload_queryset(self):
-    #     self.object_list = self.get_queryset()
 
 class Popular_News_View(TitleMixin, ListView):
     template_name = "news/popular.html"
@@ -99,8 +98,6 @@ class Popular_News_View(TitleMixin, ListView):
         result = queryset.all()
         result = sorted(result, key=lambda p: p.get_popularity(), reverse=True)
         return result
-    # def reload_queryset(self):
-    #     self.object_list = self.get_queryset()
 
 class New_News_View(TitleMixin, ListView):
     template_name = "news/new.html"
@@ -110,8 +107,6 @@ class New_News_View(TitleMixin, ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.order_by('-time')
-    # def reload_queryset(self):
-    #     self.object_list = self.get_queryset()
 class Full_Card_View(TitleMixin, DetailView):
     model = News
     title = 'Detail News'
@@ -342,11 +337,11 @@ def check_view(request):
         if news_id not in user.viewed_news_id:
             user.viewed_news_id.append(news_id)
             user.save()
-            news = News.objects.get(pk=news_id)
-            news.views += 1
-            news.save()
+        news = News.objects.get(pk=news_id)
+        news.views += 1
+        print('+1')
+        news.save()
 
-        data = {}
-        return JsonResponse(data)
+        return JsonResponse({})
 
 

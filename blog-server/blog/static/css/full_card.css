@@ -231,6 +231,7 @@ h6 {
 }
 
 .see_more_button {
+    display: none;
     background-color: white;
     margin: calc(20* 0.8px);
     padding: 10px;

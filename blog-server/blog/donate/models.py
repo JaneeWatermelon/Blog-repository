@@ -1,3 +1,7 @@
 from django.db import models
+from users.models import User
 
-# Create your models here.
+class Donate(models.Model):
+    price = models.PositiveIntegerField(default=50)
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+

@@ -1,4 +1,5 @@
-<div class="donate_card">
+<form class="donate_card" action="{% url 'donate:form' %}" method="post">
+    {% csrf_token %}
     <div class="card_header">
         <h3>Donate</h3>
     </div>
@@ -29,12 +30,12 @@
             </button>
         </div>
         <div class="input_bar">
-            <input type="number" placeholder="Введите сумму" minlength="2">
+            {{ form.price }}
         </div>
     </div>
     <div class="card_footer">
-        <button>
+        <button type="submit">
             <h5>Перейти к оплате</h5>
         </button>
     </div>
-</div>
+</form>

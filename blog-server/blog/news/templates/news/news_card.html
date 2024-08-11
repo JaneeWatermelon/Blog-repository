@@ -2,14 +2,13 @@
 {% load custom_filters %}
 
 
-{% for news in object_list %}
-<div class="news_card">
+<div class="news_card" data-object-id="{{ news.id }}">
     <a href="{% url 'news:full_card' news.id %}">
         <div class="news_card_header">
             {% if news.image %}
-            <img src="{{ news.image.url }}">
+            <img src="{{ news.image.url }}" alt="news_image">
             {% else %}
-            <img src="{% static 'img/korea.png' %}">
+            <img src="{% static 'img/no_image.png' %}" alt="empty_news_image">
             {% endif %}
         </div>
         <div class="news_card_body">
@@ -31,20 +30,19 @@
     <div class="news_card_footer">
         <div>
             {% if user.is_authenticated and news|is_heart:user %}
-            <img id="like_{{ news.id }}" class="heart_icon is_heart" src="{% static 'svg/heart_filled.svg' %}">
+            <img id="like_{{ news.id }}" class="heart_icon is_heart" src="{% static 'svg/heart_filled.svg' %}" alt="filled_heart_icon">
             {% else %}
-            <img id="like_{{ news.id }}" class="heart_icon" src="{% static 'svg/heart.svg' %}">
+            <img id="like_{{ news.id }}" class="heart_icon" src="{% static 'svg/heart.svg' %}" alt="heart_icon">
             {% endif %}
             <h6>{{ news.likes }}</h6>
         </div>
         <div>
-            <img class="view_icon" src="{% static 'svg/view.svg' %}">
+            <img class="view_icon" src="{% static 'svg/view.svg' %}" alt="view_icon">
             <h6>{{ news.views }}</h6>
         </div>
         <div>
-            <img class="comment_icon" src="{% static 'svg/comment.svg' %}">
+            <img class="comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
             <h6>{{ news.comments_count }}</h6>
         </div>
     </div>
 </div>
-{% endfor %}

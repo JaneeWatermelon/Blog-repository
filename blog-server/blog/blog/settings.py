@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from yookassa import Configuration
+
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,6 +29,8 @@ SECRET_KEY = 'django-insecure-_m3&b^20s8^)nm2o%^vsyo06pc6z*cu@249ha8sl319g=yz9%8
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+DOMAIN_NAME = 'http://127.0.0.1:8000'
 
 ALLOWED_HOSTS = ['*']
 
@@ -157,3 +163,14 @@ AUTH_USER_MODEL = 'users.User'
 
 LOGIN_URL = '/users/login/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Email
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = '465'
+EMAIL_HOST_USER = 'sinitsyn.server@yandex.ru'
+EMAIL_HOST_PASSWORD = 'srrznyhgtxpfffmm'
+EMAIL_USE_SSL = True
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+#yookassa

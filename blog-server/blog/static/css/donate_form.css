@@ -81,6 +81,23 @@ h5 {
     background-color: white;
 }
 
+.choose_bar:active {
+    transform: scale(0.9);
+}
+
+@keyframes click_button{ /*Создаёт ключевые кадры для анимации*/
+    0%{ /*Процентами указываются ключевые кадры, основываясь на состоянии элемента*/
+        transform: scale(1);
+    }
+    50%{ /*кадр по истечении половины времени анимации*/
+        transform: scale(0.8);
+    }
+    100%{ /*кадр в конце выполнения анимации*/
+        transform: scale(1);
+    }
+    /*Основные методы анимации указаны чуть выше, в конце всех свойств главного элемента*/
+}
+
 .choose_bar > h5 {
     font-weight: bold;
 }
@@ -104,7 +121,7 @@ h5 {
     height: 59px;
 }
 
-.input_bar > input {
+.input_field {
     width: 100%;
     outline: none;
     border: none;

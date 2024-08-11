@@ -4,7 +4,7 @@
     {% csrf_token %}
     <div class="profile_info_card_header">
         {{ form.image }}
-        <img id="old_avatar" class="profile_info_photo" src="{{ user.image.url }}">
+        <img id="old_avatar" class="profile_info_photo" src="{{ user.image.url }}" alt="user_image">
     </div>
     <div class="profile_info_card_body">
         <div class="input_group">

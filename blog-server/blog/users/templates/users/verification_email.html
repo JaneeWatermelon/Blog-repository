@@ -1,0 +1,29 @@
+{% extends 'news/base.html' %}
+
+{% load static %}
+
+{% block css_link %}
+    <link href="{% static 'css/email_verification.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block main %}
+<main>
+    {% if is_verified %}
+    <div class="verification_div">
+        <div>
+            <h5>Поздравляем, вы успешно подтвердили учётную запись!</h5>
+            <h5><a href="/">Вернуться на главную</a></h5>
+        </div>
+        <img src="{% static 'svg/happy_smile.svg' %}" alt="happy_smile_icon">
+    </div>
+    {% else %}
+    <div class="verification_div">
+        <div>
+            <h5>Ой, кажется срок действия ссылки истёк.</h5>
+            <h5>Мы повторно отправили вам письмо для подтверждения.</h5>
+        </div>
+        <img src="{% static 'svg/sad_smile.svg' %}" alt="sad_smile_icon">
+    </div>
+    {% endif %}
+</main>
+{% endblock %}

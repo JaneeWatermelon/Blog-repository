@@ -17,7 +17,9 @@
 {% block main %}
 <main>
     <div class="all_cards">
-        {% include 'news/news_card.html' %}
+        {% for news in object_list %}
+            {% include 'news/news_card.html' %}
+        {% endfor %}
         {% if is_paginated %}
         <div class="paginator_block">
             <ul class="pagination">
@@ -43,6 +45,6 @@
 </main>
 {% endblock %}
 {% block script %}
-    <script src="{% static 'js/card.js' %}"></script>
+<!--    <script src="{% static 'js/check_view.js' %}"></script>-->
     <script src="{% static 'js/heart.js' %}"></script>
 {% endblock %}

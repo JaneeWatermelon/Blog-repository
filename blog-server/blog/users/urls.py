@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import include, path
 
 from users.views import (UserLoginView, UserLogout, UserProfileView,
-                         UserRegistrationView, see_news_in_profile)
+                         UserRegistrationView, see_news_in_profile, EmailVerificationView)
 
 
 app_name = 'users'
@@ -14,4 +14,5 @@ urlpatterns = [
     path('logout/', UserLogout, name='logout'),
     path('profile/<int:pk>', login_required(UserProfileView), name='profile'),
     path('see_news_in_profile', see_news_in_profile, name='see_news_in_profile'),
+    path('verify/<str:email>/<uuid:code>', EmailVerificationView.as_view(), name='verify'),
 ]

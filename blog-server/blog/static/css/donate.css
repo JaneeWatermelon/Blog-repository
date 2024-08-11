@@ -3,6 +3,10 @@ main {
     justify-content: center;
     align-items: center;
     position: relative;
-    top: -89px;
+    top: -16vh;
+    height: 100vh;
+}
+
+#main_section {
     height: 100vh;
 }

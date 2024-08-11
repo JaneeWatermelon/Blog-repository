@@ -10,14 +10,10 @@
             <button type="button" id="0" style="background-color: #D9EE58;" class="category_name {% if choosed_categories|is_choosed_all_category %}choosed_div{% endif %}">
                 <p class="{% if choosed_categories|is_choosed_all_category %}choosed_p{% endif %}">Все</p>
             </button>
-            {% if user.is_authenticated %}
-                {% if user|is_zero_star %}
-                <img class="star_icon in_star" src="{% static 'svg/star_filled.svg' %}">
-                {% else %}
-                <img class="star_icon" src="{% static 'svg/star.svg' %}">
-                {% endif %}
+            {% if user.is_authenticated and user|is_zero_star %}
+            <img class="star_icon in_star" src="{% static 'svg/star_filled.svg' %}" alt="filled_star_icon">
             {% else %}
-                <img class="star_icon" src="{% static 'svg/star.svg' %}">
+            <img class="star_icon" src="{% static 'svg/star.svg' %}" alt="star_icon">
             {% endif %}
         </div>
         {% for category in categories %}
@@ -25,14 +21,10 @@
             <button type="button" id="{{ category.id }}" class="category_name {% if category|is_choosed_category:choosed_categories %}choosed_div{% endif %}">
                 <p class="{% if category|is_choosed_category:choosed_categories %}choosed_p{% endif %}">{{ category.name }}</p>
             </button>
-            {% if user.is_authenticated %}
-                {% if category|is_star:user %}
-                <img class="star_icon in_star" src="{% static 'svg/star_filled.svg' %}">
-                {% else %}
-                <img class="star_icon" src="{% static 'svg/star.svg' %}">
-                {% endif %}
+            {% if user.is_authenticated and category|is_star:user %}
+            <img class="star_icon in_star" src="{% static 'svg/star_filled.svg' %}" alt="filled_star_icon">
             {% else %}
-                <img class="star_icon" src="{% static 'svg/star.svg' %}">
+            <img class="star_icon" src="{% static 'svg/star.svg' %}" alt="star_icon">
             {% endif %}
         </div>
         {% endfor %}

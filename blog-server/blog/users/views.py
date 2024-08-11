@@ -4,10 +4,11 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import HttpResponseRedirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.base import TemplateView
 
 from common.views import TitleMixin
 from users.forms import ProfileForm, UserAuthForm, UserRegistrationForm
-from users.models import User
+from users.models import User, EmailVerification
 from news.models import News
 
 from django.http import JsonResponse
@@ -22,6 +23,27 @@ class UserRegistrationView(TitleMixin, SuccessMessageMixin, CreateView):
     title = 'Registration Page'
     success_url = reverse_lazy('users:login')
     success_message = 'Поздравляем! Вы успешно зарегистрировались!'
+
+class EmailVerificationView(TitleMixin, TemplateView):
+    template_name = 'users/verification_email.html'
+    title = 'Email Verification Page'
+
+    def get_context_data(self, **kwargs):
+        context = super(EmailVerificationView, self).get_context_data()
+        user = User.objects.get(email=kwargs['email'])
+        context['is_verified'] = user.is_verified
+        return context
+    def get(self, request, *args, **kwargs):
+        code = kwargs['code']
+        user = User.objects.get(email=kwargs['email'])
+        record = EmailVerification.objects.filter(code=code, user=user)
+        if record.exists() and record.first().is_expired() == False:
+            user.is_verified = True
+            user.save()
+        return super(EmailVerificationView, self).get(request, *args, **kwargs)
+
+
+
 
 class UserLoginView(TitleMixin, SuccessMessageMixin, LoginView):
     template_name = 'users/auth.html'
@@ -40,7 +62,8 @@ def UserProfileView(request, pk):
     user = request.user
     if request.method == "POST":
         if request.FILES:
-            user.image.delete(save=False)
+            if user.image.name != 'profilo.jpg':
+                user.image.delete(save=False)
             dot_index = request.FILES['image'].name.rfind('.')
             request.FILES['image'].name = f"{request.user.id}{request.FILES['image'].name[dot_index:]}"
         form = ProfileForm(instance=user, data=request.POST, files=request.FILES)

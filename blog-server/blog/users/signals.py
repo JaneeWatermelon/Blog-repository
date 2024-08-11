@@ -1,4 +1,4 @@
-from django.db.models.signals import post_delete
+from django.db.models.signals import post_delete, post_init, post_save
 from django.dispatch import receiver
 from news.models import News, Comment
 from users.models import User

@@ -11,22 +11,22 @@
 {% block main %}
 <div class="news_card" data-object-id="{{ object.id }}">
     <div class="card_header">
-        <img src="{{ object.image.url }}">
+        <img src="{{ object.image.url }}" alt="news_image">
         <div class="card_bottom_icons">
             <div class="heart_div">
                 {% if user.is_authenticated and object|is_heart:user %}
-                <img id="like_{{ object.id }}" class="heart_icon is_heart" src="{% static 'svg/heart_filled.svg' %}">
+                <img id="like_{{ object.id }}" class="heart_icon is_heart" src="{% static 'svg/heart_filled.svg' %}" alt="filled_heart_icon">
                 {% else %}
-                <img id="like_{{ object.id }}" class="heart_icon" src="{% static 'svg/heart.svg' %}">
+                <img id="like_{{ object.id }}" class="heart_icon" src="{% static 'svg/heart.svg' %}" alt="heart_icon">
                 {% endif %}
                 <h6>{{ object.likes }}</h6>
             </div>
             <div class="view_div">
-                <img class="view_icon" src="{% static 'svg/view.svg' %}">
+                <img class="view_icon" src="{% static 'svg/view.svg' %}" alt="view_icon">
                 <h6>{{ object.views }}</h6>
             </div>
             <div class="comment_div">
-                <img class="comment_icon" src="{% static 'svg/comment.svg' %}">
+                <img class="comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
                 <h6>{{ object.comments_count }}</h6>
             </div>
         </div>
@@ -49,7 +49,7 @@
     <div class="card_footer">
         <button type="button" class="comment_shower">
             <h3>Comments</h3>
-            <img class="comment_icon" src="{% static 'svg/comment.svg' %}">
+            <img class="comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
         </button>
         <div class="foot_comments">
             <div class="leave_comment">
@@ -65,7 +65,7 @@
                 {% for comment in comments %}
                 <div class="comment" style="display: none;">
                     <div class="comment_header">
-                        <img src="{{ comment.user.image.url }}">
+                        <img src="{{ comment.user.image.url }}" alt="comment_user_image">
                         <p>@{{ comment.user.username }}</p>
                         <p>{{ comment.time|naturaltime }}</p>
                     </div>
@@ -75,17 +75,17 @@
                     <div class="comment_footer">
                         <div class="like_or_dislike_block">
                             {% if user.is_authenticated and comment|is_liked:user %}
-                            <img class="like is_rate" data-comment-id="{{ comment.id }}" src="{% static 'svg/like_filled.svg' %}">
+                            <img class="like is_rate" data-comment-id="{{ comment.id }}" src="{% static 'svg/like_filled.svg' %}" alt="filled_like_icon">
                             {% else %}
-                            <img class="like" data-comment-id="{{ comment.id }}" src="{% static 'svg/like.svg' %}">
+                            <img class="like" data-comment-id="{{ comment.id }}" src="{% static 'svg/like.svg' %}" alt="like_icon">
                             {% endif %}
                             <p>{{ comment.likes }}</p>
                         </div>
                         <div class="like_or_dislike_block">
                             {% if user.is_authenticated and comment|is_disliked:user %}
-                            <img class="dislike is_rate" data-comment-id="{{ comment.id }}" src="{% static 'svg/like_filled.svg' %}">
+                            <img class="dislike is_rate" data-comment-id="{{ comment.id }}" src="{% static 'svg/like_filled.svg' %}" alt="filled_dislike_icon">
                             {% else %}
-                            <img class="dislike" data-comment-id="{{ comment.id }}" src="{% static 'svg/like.svg' %}">
+                            <img class="dislike" data-comment-id="{{ comment.id }}" src="{% static 'svg/like.svg' %}" alt="dislike_icon">
                             {% endif %}
                         </div>
                     </div>

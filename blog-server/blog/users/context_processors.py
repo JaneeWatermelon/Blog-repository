@@ -4,4 +4,4 @@ def get_type(request):
     if 'type' in request.session:
         return {'type': request.session['type']}
     else:
-        return {}
+        return {'type': 'like'}

@@ -9,6 +9,10 @@
 
 {% block main %}
 <main>
-    {% include 'news/donate_form.html' %}
+    {% include 'donate/donate_form.html' %}
 </main>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/donate.js' %}"></script>
 {% endblock %}
