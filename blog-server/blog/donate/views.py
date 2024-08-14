@@ -1,14 +1,17 @@
-from django.shortcuts import render
-from common.views import TitleMixin
-from django.views.generic.base import TemplateView
-from django.views.generic.edit import FormView, CreateView
-
-from donate.forms import DonateForm
-from django.urls import reverse, reverse_lazy
-from django.http import HttpResponseRedirect
 import uuid
 
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.urls import reverse, reverse_lazy
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView
 from yookassa import Configuration, Payment
+
+from common.views import TitleMixin
+from donate.forms import DonateForm
+
+
+
 class DonateView(TitleMixin, CreateView):
     template_name = 'donate/donate.html'
     title = 'Donate Page'
@@ -38,6 +41,9 @@ class DonateView(TitleMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        if form.instance.price < 50:
+            form.instance.price = 50
+
         return super().form_valid(form)
 
 class DonateResultView(TitleMixin, TemplateView):

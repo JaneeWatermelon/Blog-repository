@@ -1,5 +1,7 @@
 from django import forms
+
 from donate.models import Donate
+
 
 class DonateForm(forms.ModelForm):
     price = forms.IntegerField(min_value=50, widget=forms.NumberInput(attrs={

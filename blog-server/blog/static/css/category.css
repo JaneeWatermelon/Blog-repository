@@ -39,11 +39,11 @@ h6 {
 }
 
 .category_card {
-    /*width: calc(310*0.8px);*/
     width: 100%;
     border-radius: 10px;
     background-color: white;
     overflow: auto;
+    margin-bottom: 10px;
 }
 
 .category_card_header {

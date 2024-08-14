@@ -2,13 +2,13 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
 from django.contrib.auth.decorators import login_required
+from django.urls import include, path
 
-from news.views import (All_News_View, Recommended_News_View, Popular_News_View, New_News_View,
-                        Full_Card_View,
-                        change_category, change_star, heart_news, leave_comment,
-                        rate_comment, check_view)
+from news.views import (All_News_View, Full_Card_View, New_News_View,
+                        Popular_News_View, Recommended_News_View,
+                        change_category, change_star, check_view, heart_news,
+                        leave_comment, rate_comment, change_show_type)
 
 app_name = 'news'
 
@@ -30,4 +30,5 @@ urlpatterns = [
     path('rate_comment', rate_comment, name='rate_comment'),
     path('leave_comment', leave_comment, name='leave_comment'),
     path('check_view', check_view, name='check_view'),
+    path('change_show_type', change_show_type, name='change_show_type'),
 ]

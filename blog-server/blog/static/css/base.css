@@ -78,4 +78,22 @@ h4 {
 #dollar_svg {
     height: calc(63*0.7px);
     filter: drop-shadow(0 6px 4px rgba(0, 0, 0, 0.25));
+    transition: transform 1s ease;
+}
+#dollar_svg:hover {
+    transform: rotate(360deg);
+}
+
+
+@keyframes dollar_focus{ /*Создаёт ключевые кадры для анимации*/
+    0%{ /*Процентами указываются ключевые кадры, основываясь на состоянии элемента*/
+        transform: scaleX(1);
+    }
+    50%{ /*кадр по истечении половины времени анимации*/
+        transform: scaleX(0.1);
+    }
+    100%{ /*кадр в конце выполнения анимации*/
+        transform: scaleX(1);
+    }
+    /*Основные методы анимации указаны чуть выше, в конце всех свойств главного элемента*/
 }

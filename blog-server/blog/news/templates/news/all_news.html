@@ -3,6 +3,7 @@
 {% load static %}
 {% load humanize %}
 {% load custom_filters %}
+{% load cache %}
 
 {% block css_link %}
     <link href="{% static 'css/category.css' %}" rel="stylesheet" />
@@ -25,13 +26,24 @@
 <main>
     <div class="category_div">
         {% include 'news/category.html' %}
+        <div class="show_variants" data-show_type="{{ show_type }}">
+            <div class="variant_text_div">
+                <p>Вариант отображения</p>
+            </div>
+            <button class="variant type_4 {% if show_type == 'type_4' %}choosed{% endif %}">
+                <img src="{% static 'svg/4x4.svg' %}">
+            </button>
+            <button class="variant type_3 {% if show_type == 'type_3' %}choosed{% endif %}">
+                <img src="{% static 'svg/3x3.svg' %}">
+            </button>
+        </div>
         {% if is_paginated %}
         <div class="paginator_block">
             <ul class="pagination">
                 {% if page_obj.has_previous %}
-                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_all' page_obj.previous_page_number %}">Prev</a></li>
+                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_all' page_obj.previous_page_number %}"><i class="fa-solid fa-arrow-left"></i></a></li>
                 {% else %}
-                <li class="page-item disabled"><a class="page-link">Prev</a></li>
+                <li class="page-item disabled"><a class="page-link"><i class="fa-solid fa-arrow-left"></i></a></li>
                 {% endif %}
 
                 {% for page in paginator.page_range %}
@@ -39,23 +51,30 @@
                 {% endfor %}
 
                 {% if page_obj.has_next %}
-                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_all' page_obj.next_page_number %}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_all' page_obj.next_page_number %}"><i class="fa-solid fa-arrow-right"></i></a></li>
                 {% else %}
-                <li class="page-item disabled"><a class="page-link">Next</a></li>
+                <li class="page-item disabled"><a class="page-link"><i class="fa-solid fa-arrow-right"></i></a></li>
                 {% endif %}
             </ul>
         </div>
         {% endif %}
+        <div class="footer_info">
+            <p>Все новостные материалы опубликованные на сайте не являются его частной собственностью.<br>
+                Каждая новость имеет как минимум одну ссылку на первоисточник.<br>
+                Администрация не несёт ответственности за достоверность новостей, опубликованных на данном сайте.</p>
+        </div>
     </div>
     <div class="all_cards">
         {% for news in object_list %}
+            {% cache 30 sidebar user news news.likes news.views news.comments %}
             {% include 'news/news_card.html' %}
+            {% endcache %}
         {% endfor %}
     </div>
 </main>
 {% endblock %}
 {% block script %}
-    <script src="{% static 'js/card.js' %}"></script>
+<!--    <script src="{% static 'js/card.js' %}"></script>-->
     <script src="{% static 'js/change_category.js' %}"></script>
     <script id="star_script" src="{% static 'js/star_categories.js' %}"></script>
     <script src="{% static 'js/heart.js' %}"></script>

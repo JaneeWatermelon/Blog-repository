@@ -38,12 +38,29 @@
         </div>
         <div class="category">
             <p>Category: {{ object.category.name }}</p>
+            <a href="{{ object.base_url }}"><p>Главная страница источника</p></a>
         </div>
         <div class="name">
             <h3>{{ object.name }}</h3>
         </div>
         <div class="description">
-            <p>{{ object.description }}</p>
+            {% for item in object.description %}
+                {% if item|first == 'p' %}
+                    <p>{{ item|last }}</p>
+                {% elif item|first == 'ul' %}
+                    <ul>
+                        {% for li in item|last %}
+                            <li>{{ li }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <ol>
+                        {% for li in item|last %}
+                            <li>{{ li }}</li>
+                        {% endfor %}
+                    </ol>
+                {% endif %}
+            {% endfor %}
         </div>
     </div>
     <div class="card_footer">

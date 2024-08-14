@@ -20,7 +20,23 @@
                 <h3>{{ news.name }}</h3>
             </div>
             <div class="description">
-                <p>{{ news.description }}</p>
+                {% for item in news.description %}
+                    {% if item|first == 'p' %}
+                        <p>{{ item|last }}</p>
+                    {% elif item|first == 'ul' %}
+                        <ul>
+                            {% for li in item|last %}
+                                <li>{{ li }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <ol>
+                            {% for li in item|last %}
+                                <li>{{ li }}</li>
+                            {% endfor %}
+                        </ol>
+                    {% endif %}
+                {% endfor %}
             </div>
             <div class="read_more">
                 <p>Read more</p>

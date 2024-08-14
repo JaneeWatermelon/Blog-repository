@@ -10,6 +10,10 @@ p {
     margin: 0;
 }
 
+.description p {
+    margin: inherit;
+}
+
 h3 {
     font-family: 'normal';
     font-size: calc(30*0.8px);
@@ -53,6 +57,11 @@ h6 {
     display: flex;
     justify-content: space-between;
     margin-bottom: calc(10*0.8px);
+}
+
+.category {
+    display: flex;
+    justify-content: space-between;
 }
 
 .category, .name, .description, .comment_shower {

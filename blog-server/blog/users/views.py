@@ -1,19 +1,18 @@
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http import JsonResponse
 from django.shortcuts import HttpResponseRedirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView, UpdateView
 
 from common.views import TitleMixin
-from users.forms import ProfileForm, UserAuthForm, UserRegistrationForm
-from users.models import User, EmailVerification
 from news.models import News
-
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
 from news.views import ajax_login_required
+from users.forms import ProfileForm, UserAuthForm, UserRegistrationForm
+from users.models import EmailVerification, User
 
 
 class UserRegistrationView(TitleMixin, SuccessMessageMixin, CreateView):

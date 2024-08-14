@@ -3,6 +3,7 @@
 {% load static %}
 {% load humanize %}
 {% load custom_filters %}
+{% load cache %}
 
 {% block css_link %}
     <link href="{% static 'css/card.css' %}" rel="stylesheet" />
@@ -18,7 +19,9 @@
 <main>
     <div class="all_cards">
         {% for news in object_list %}
+            {% cache 30 sidebar user news news.likes news.views news.comments %}
             {% include 'news/news_card.html' %}
+            {% endcache %}
         {% endfor %}
         {% if is_paginated %}
         <div class="paginator_block">

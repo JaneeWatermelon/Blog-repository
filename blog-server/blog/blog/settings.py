@@ -12,25 +12,45 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
-from yookassa import Configuration
+import environ
 
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool),
+    SECRET_KEY=(str),
+    DOMAIN_NAME=(str),
 
+    DATABASE_NAME=(str),
+    DATABASE_USER=(str),
+    DATABASE_PASSWORD=(str),
+    DATABASE_HOST=(str),
+    DATABASE_PORT=(str),
 
+    EMAIL_HOST=(str),
+    EMAIL_PORT=(str),
+    EMAIL_HOST_USER=(str),
+    EMAIL_HOST_PASSWORD=(str),
+    EMAIL_USE_SSL=(bool),
+
+    REDIS_HOST=(str),
+    REDIS_PORT=(str),
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_m3&b^20s8^)nm2o%^vsyo06pc6z*cu@249ha8sl319g=yz9%8'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-DOMAIN_NAME = 'http://127.0.0.1:8000'
+DOMAIN_NAME = env('DOMAIN_NAME')
 
 ALLOWED_HOSTS = ['*']
 
@@ -47,6 +67,7 @@ INSTALLED_APPS = [
 
     'django.contrib.humanize',
     'django_extensions',
+    'debug_toolbar',
 
     'news',
     'users',
@@ -62,6 +83,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django.middleware.locale.LocaleMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+]
+
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 ROOT_URLCONF = 'blog.urls'
@@ -78,6 +106,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'news.context_processors.choosed_categories',
+                'news.context_processors.show_type',
                 'users.context_processors.get_type',
             ],
         },
@@ -100,11 +129,11 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'blog_db',
-        'USER': 'blog_user',
-        'PASSWORD': 'watermelonka',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('DATABASE_HOST'),
+        'PORT': env('DATABASE_PORT'),
     }
 }
 
@@ -131,7 +160,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -139,6 +168,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+    ("ru", "Русский"),
+    ("en", "English"),
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -165,12 +198,30 @@ LOGIN_URL = '/users/login/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Email
-EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_PORT = '465'
-EMAIL_HOST_USER = 'sinitsyn.server@yandex.ru'
-EMAIL_HOST_PASSWORD = 'srrznyhgtxpfffmm'
-EMAIL_USE_SSL = True
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = env('EMAIL_USE_SSL')
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-#yookassa
+#REDIS
+
+REDIS_HOST = env('REDIS_HOST')
+REDIS_PORT = env('REDIS_PORT')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+#Celery
+
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}'
+CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}'

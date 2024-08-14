@@ -2,9 +2,9 @@
 from django.contrib.auth.decorators import login_required
 from django.urls import include, path
 
-from users.views import (UserLoginView, UserLogout, UserProfileView,
-                         UserRegistrationView, see_news_in_profile, EmailVerificationView)
-
+from users.views import (EmailVerificationView, UserLoginView, UserLogout,
+                         UserProfileView, UserRegistrationView,
+                         see_news_in_profile)
 
 app_name = 'users'
 

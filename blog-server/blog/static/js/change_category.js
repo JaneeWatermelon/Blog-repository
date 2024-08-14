@@ -1,4 +1,39 @@
 $(document).ready(function(){
+
+    function type_4() {
+        $(".news_card").css({
+            width: '24%',
+            top: '4vh',
+        });
+        for (let i = 1; i < $(".all_cards").children().length; i+=2) {
+            $($(".all_cards").children()[i]).css({
+                top: '12vh',
+            });
+            console.log('done');
+        };
+    };
+
+    function type_3() {
+        $(".news_card").css({
+            width: '32%',
+            top: '4vh',
+        });
+        for (let i = 1; i < $(".all_cards").children().length; i+=3) {
+            $($(".all_cards").children()[i]).css({
+                top: '12vh',
+            });
+            console.log('done');
+        };
+    };
+    function check_show_type() {
+        if ($(".show_variants").attr('data-show_type') == 'type_4') {
+            type_4();
+        } else {
+            type_3();
+        };
+    };
+    check_show_type()
+
     let n = Number($(".category_card_body").attr('data-active-count'));
     console.log(n);
     $(".category_card_body").on('click', '.category_name', function(){
@@ -35,13 +70,37 @@ $(document).ready(function(){
            },
            success: function(response) {
                 $(".all_cards").load(window.location.href + " .all_cards > *", function(){
-                    for (let i = 1; i < $(".all_cards").children().length; i+=2) {
-                        $($(".all_cards").children()[i]).css({
-                            top: '12vh',
-                        });
-                        console.log('done after ajax');
-                    };
+                    check_show_type();
                 });
+           },
+           error: function(xhr, status, error) {
+               console.log("category changed with error");
+           }
+        });
+    });
+    $(".variant").on('click', function(){
+        let type;
+        if ($(this).hasClass('choosed') == false) {
+            if ($(this).hasClass('type_4')) {
+                type = 'type_4';
+                $(this).toggleClass('choosed');
+                $(".type_3").toggleClass('choosed');
+                type_4();
+            } else {
+                type = 'type_3';
+                $(this).toggleClass('choosed');
+                $(".type_4").toggleClass('choosed');
+                type_3();
+            };
+        };
+        $.ajax({
+           url: "http://127.0.0.1:8000/news/change_show_type",
+           type: "GET",
+           data: {
+                show_type: type,
+           },
+           success: function(response) {
+
            },
            error: function(xhr, status, error) {
                console.log("category changed with error");

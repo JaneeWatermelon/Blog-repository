@@ -1,7 +1,9 @@
 from django.db.models.signals import post_delete, post_init, post_save
 from django.dispatch import receiver
-from news.models import News, Comment
+
+from news.models import Comment, News
 from users.models import User
+
 
 @receiver(post_delete, sender=User)
 def post_delete_user(sender, instance, **kwargs):

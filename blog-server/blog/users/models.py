@@ -1,10 +1,8 @@
-from django.contrib.auth.models import AbstractUser
-from django.db import models
-
-from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth.models import AbstractUser
+from django.core.mail import send_mail
+from django.db import models
 from django.urls import reverse, reverse_lazy
-
 from django.utils.timezone import now
 
 
@@ -34,10 +32,11 @@ class EmailVerification(models.Model):
         from_email = settings.EMAIL_HOST_USER
         send_mail(
             subject=subject,
-            html_message=html_message,
+            message=html_message,
             from_email=from_email,
             recipient_list=[self.user.email],
             fail_silently=False,
+            html_message=html_message,
         )
 
     def is_expired(self):
