@@ -44,23 +44,7 @@
             <h3>{{ object.name }}</h3>
         </div>
         <div class="description">
-            {% for item in object.description %}
-                {% if item|first == 'p' %}
-                    <p>{{ item|last }}</p>
-                {% elif item|first == 'ul' %}
-                    <ul>
-                        {% for li in item|last %}
-                            <li>{{ li }}</li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <ol>
-                        {% for li in item|last %}
-                            <li>{{ li }}</li>
-                        {% endfor %}
-                    </ol>
-                {% endif %}
-            {% endfor %}
+            {{ object.description_for_html|safe }}
         </div>
     </div>
     <div class="card_footer">

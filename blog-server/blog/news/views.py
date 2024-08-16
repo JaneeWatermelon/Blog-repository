@@ -28,6 +28,7 @@ from users.models import User
 
 from django.utils.translation import gettext
 
+per_page = 24
 
 def ajax_login_required(view):
     @wraps(view)
@@ -43,7 +44,7 @@ class All_News_View(TitleMixin, ListView):
     template_name = "news/all_news.html"
     title = 'All News'
     model = News
-    paginate_by = 24
+    paginate_by = per_page
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
@@ -51,11 +52,9 @@ class All_News_View(TitleMixin, ListView):
         return context
 
     def get_queryset(self):
-        print(gettext('Hello, i am so exited!'))
         queryset = super().get_queryset()
         result = queryset.filter(pk=0)
         active_categories = self.request.session.setdefault('active_categories', [])
-        print(active_categories)
         if active_categories:
             for category_id in active_categories:
                 result = result.union(queryset.filter(category=Category.objects.get(pk=category_id)))
@@ -69,7 +68,7 @@ class Recommended_News_View(TitleMixin, ListView):
     template_name = "news/recommendations.html"
     title = 'Recommended News'
     model = News
-    paginate_by = 30
+    paginate_by = per_page
     def get_queryset(self):
         queryset = super().get_queryset()
         user = self.request.user
@@ -79,25 +78,30 @@ class Recommended_News_View(TitleMixin, ListView):
             sorted_user_tags = {k: v for k, v in sorted(user.recommended_tags.items(), key=lambda item: item[1], reverse=True)}
             all_news = News.objects.all()
 
+            maybe_news = {}
             for user_tag in list(sorted_user_tags.keys())[:10]:
                 for news in all_news:
+                    news_id = news.id
                     for news_tag in news.tags:
+                        print(f'user_tag - {user_tag} | news_tag - {news_tag}')
                         matcher_result = difflib.SequenceMatcher(isjunk=None, a=user_tag, b=news_tag, autojunk=True).quick_ratio()
                         if matcher_result >= 0.7:
-                            print(f'news_tag: {news_tag} | user_tag: {user_tag}')
-                            result = result.union(all_news.filter(pk=news.id))
-                            all_news = all_news.exclude(pk=news.id)
-                            print(result)
-                            break
-            print(result)
-            return result
+                            try:
+                                maybe_news[news_id] += 1
+                            except Exception:
+                                maybe_news[news_id] = 1
+                            print(f'user_tag - {user_tag} | news_tag - {news_tag}')
+                            if maybe_news[news_id] >= 2:
+                                result = result.union(all_news.filter(pk=news_id))
+                                all_news = all_news.exclude(pk=news_id)
+                                break
         return result
 
 class Popular_News_View(TitleMixin, ListView):
     template_name = "news/popular.html"
     title = 'Popular News'
     model = News
-    paginate_by = 30
+    paginate_by = per_page
     def get_queryset(self):
         queryset = super().get_queryset()
         result = queryset.all()
@@ -108,7 +112,7 @@ class New_News_View(TitleMixin, ListView):
     template_name = "news/new.html"
     title = 'New News'
     model = News
-    paginate_by = 30
+    paginate_by = per_page
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(date=(now().date())).order_by('-time')
@@ -195,18 +199,6 @@ def change_star(request):
         return JsonResponse(data)
     else:
         return HttpResponse('', status=401)
-def try_get_key_words(title, description):
-    term_extractor = TermExtractor()
-    text = title
-    for block in description:
-        if block[0] == 'p':
-            text += f' {block[1]}'
-        else:
-            text += f' {" ".join(block[1])}'
-    result_list = []
-    for term in term_extractor(text, nested=True):
-        result_list.append(term.normalized)
-    return result_list
 
 def clear_hearts_from_users_and_news(request):
     for user in User.objects.all():
@@ -315,7 +307,13 @@ def change_show_type(request):
         request.session['show_type'] = request.GET['show_type']
         return JsonResponse({})
 
-
+def try_get_key_words(title, description):
+    term_extractor = TermExtractor()
+    text = f'{title} {description}'
+    result_list = []
+    for term in term_extractor(text, nested=True):
+        result_list.append(term.normalized)
+    return result_list
 
 def parsing_genshin(request):
     option = webdriver.ChromeOptions()
@@ -370,7 +368,7 @@ def parsing_genshin(request):
 
 def parsing_playground_movies(request):
     # every 3 hours i think
-    response = requests.get('https://www.playground.ru/news/hardware')
+    response = requests.get('https://www.playground.ru/news/movies')
     category = Category.objects.get(pk=1)
 
     soup = BeautifulSoup(response.text, 'lxml')
@@ -397,22 +395,19 @@ def parsing_playground_movies(request):
             saved_image_path = default_storage.save(f'news_images/{category.name}/{image_name}', image_file)
 
             name = full_soup.find('h1', class_='post-title').text.strip()
-            description = []
-            desc_items = article_content.contents
-            for item in desc_items:
-                if item.name == 'p':
-                    description += [[item.name, item.text.strip()]]
-                elif item.name in ['ul', 'ol']:
-                    new_item = [item.name, []]
-                    for li in item.contents:
-                        if li.name:
-                            new_item[1] += [li.text.strip()]
-                    description += [new_item]
+            description = article_content.text.strip()
+
+            for fig in article_content.find_all('figure'):
+                fig.extract()
+            for pg in article_content.find_all('pg-embed'):
+                pg.extract()
+            description_for_html = ''.join(str(content) for content in article_content.contents if content != '\n')
             tags = (try_get_key_words(name, description)[:15])
 
             result_news = News(
                 name=name,
                 description=description,
+                description_for_html=description_for_html,
                 url=news_link,
                 base_url='https://www.playground.ru/',
                 category=category,
@@ -452,22 +447,19 @@ def parsing_playground_hardware(request):
             saved_image_path = default_storage.save(f'news_images/{category.name}/{image_name}', image_file)
 
             name = full_soup.find('h1', class_='post-title').text.strip()
-            description = []
-            desc_items = article_content.contents
-            for item in desc_items:
-                if item.name == 'p':
-                    description += [[item.name, item.text.strip()]]
-                elif item.name in ['ul', 'ol']:
-                    new_item = [item.name, []]
-                    for li in item.contents:
-                        if li.name:
-                            new_item[1] += [li.text.strip()]
-                    description += [new_item]
+            description = article_content.text.strip()
+
+            for fig in article_content.find_all('figure'):
+                fig.extract()
+            for pg in article_content.find_all('pg-embed'):
+                pg.extract()
+            description_for_html = ''.join(str(content) for content in article_content.contents if content != '\n')
             tags = (try_get_key_words(name, description)[:15])
 
             result_news = News(
                 name=name,
                 description=description,
+                description_for_html=description_for_html,
                 url=news_link,
                 base_url='https://www.playground.ru/',
                 category=category,
@@ -478,3 +470,129 @@ def parsing_playground_hardware(request):
             print('saved')
     return HttpResponseRedirect(reverse('all_news'))
 
+def parsing_playground_games(request):
+    # every 1 hour i think
+    game_urls = ['pc', 'industry', 'consoles']
+    category = Category.objects.get(pk=3)
+    for i in range(3):
+        response = requests.get(f'https://www.playground.ru/news/{game_urls[i]}')
+
+        soup = BeautifulSoup(response.text, 'lxml')
+
+        news_block = soup.find('div', id='postListContainer')
+        all_news = news_block.find_all('div', class_='post')[::-1]
+
+        for news in all_news:
+            news_link = news.find('div', class_='post-title').find('a')['href']
+            if not News.objects.filter(url=news_link):
+                full_news = requests.get(news_link)
+                full_soup = BeautifulSoup(full_news.text, 'lxml')
+
+                print(news_link)
+                article_content = full_soup.find('div', class_='article-content')
+                try:
+                    image_url = article_content.find('img')['src']
+                except Exception:
+                    image_url = news.find('img')['src']
+                image_bytes = requests.get(image_url).content
+                next_id = 1 if not News.objects.last() else News.objects.last().id + 1
+                image_name = f'{next_id}.jpg'
+                image_file = ContentFile(image_bytes, name=image_name)
+                saved_image_path = default_storage.save(f'news_images/{category.name}/{image_name}', image_file)
+
+                name = full_soup.find('h1', class_='post-title').text.strip()
+                description = article_content.text.strip()
+
+                for fig in article_content.find_all('figure'):
+                    fig.extract()
+                for pg in article_content.find_all('pg-embed'):
+                    pg.extract()
+                description_for_html = ''.join(str(content) for content in article_content.contents if content != '\n')
+                tags = (try_get_key_words(name, description)[:15])
+
+                result_news = News(
+                    name=name,
+                    description=description,
+                    description_for_html=description_for_html,
+                    url=news_link,
+                    base_url='https://www.playground.ru/',
+                    category=category,
+                    image=saved_image_path,
+                    tags=tags
+                )
+                result_news.save()
+                print('saved')
+    return HttpResponseRedirect(reverse('all_news'))
+
+def parsing_womanhit(request):
+    # every day i think
+    domain_url = 'https://www.womanhit.ru'
+    # '/lifestyle/fashion/' 4
+    # '/at-home/food/' 5
+    # '/at-home/interier/' 6
+    # '/at-home/dacha/' 7
+    # '/health-and-beauty/' 8
+    adds_url = '/lifestyle/fashion/'
+    category_id = 4
+    print(adds_url)
+    print(category_id)
+
+
+    link = f'{domain_url}{adds_url}'
+
+    category = Category.objects.get(pk=category_id)
+    response = requests.get(link)
+
+    soup = BeautifulSoup(response.text, 'lxml')
+
+    all_news = soup.find_all('article', class_='card')[:10]
+
+    for news in all_news:
+        try:
+            news_link = f"{domain_url}{news.find('a')['href']}"
+            print('in try')
+        except Exception:
+            print('in except')
+            continue
+        if not News.objects.filter(url=news_link):
+            full_news = requests.get(news_link)
+            full_soup = BeautifulSoup(full_news.text, 'lxml')
+
+            print(news_link)
+            article_content = full_soup.find('article', class_='article')
+            try:
+                image_url = f"{domain_url}{article_content.find('picture').find('img')['src']}"
+            except Exception:
+                image_url = f"{domain_url}{article_content.find('picture').find('img')['src']}"
+            image_bytes = requests.get(image_url).content
+            next_id = 1 if not News.objects.last() else News.objects.last().id + 1
+            image_name = f'{next_id}.jpg'
+            image_file = ContentFile(image_bytes, name=image_name)
+            saved_image_path = default_storage.save(f'news_images/{category.name}/{image_name}', image_file)
+
+            name = article_content.find('figcaption').find('h1').text.strip()
+            desc_div = article_content.find('span', itemprop='articleBody')
+            description = desc_div.text.strip()
+
+            for div in desc_div.find_all('div'):
+                div.extract()
+            description_for_html = ''.join(str(content) for content in desc_div.contents if content.text != '')
+            tags_div = full_soup.find('div', class_='article__tags')
+            try:
+                tags = list(span.text for span in tags_div.find_all('span'))
+            except Exception:
+                tags = (try_get_key_words(name, description)[:15])
+
+            result_news = News(
+                name=name,
+                description=description,
+                description_for_html=description_for_html,
+                url=news_link,
+                base_url='https://www.womanhit.ru/',
+                category=category,
+                image=saved_image_path,
+                tags=tags
+            )
+            result_news.save()
+            print('saved')
+    return HttpResponseRedirect(reverse('all_news'))

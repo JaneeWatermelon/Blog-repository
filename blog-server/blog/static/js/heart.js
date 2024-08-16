@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $(".heart_icon").on('click', function(){
+    $(".all_cards").on('click', '.heart_icon', function(){
         console.log('clicked');
         let news_id = $(this).attr('id');
         let click_type;

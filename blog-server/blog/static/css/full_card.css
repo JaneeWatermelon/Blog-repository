@@ -27,6 +27,13 @@ h6 {
     margin: 0;
 }
 
+blockquote {
+    padding: 20px;
+    background-color: aquamarine;
+    border-radius: 10px;
+    clear: both;
+}
+
 .news_card {
     width: 100%;
     border-radius: 10px;
@@ -37,7 +44,6 @@ h6 {
 
 .card_header > img {
     width: 100%;
-    /*height: calc(329*0.8px);*/
     object-fit: cover;
     border-radius: 10px;
 }
@@ -45,6 +51,7 @@ h6 {
     margin: calc(20*0.8px);
     width: 25%;
     float: left;
+    background-color: white;
 }
 
 
@@ -72,7 +79,7 @@ h6 {
 
 
 .card_bottom_icons {
-    margin: calc(20*0.8px) calc(10*0.8px) 0 calc(10*0.8px);
+    margin: 16px 8px 0 8px;
     display: flex;
     justify-content: space-between;
 }

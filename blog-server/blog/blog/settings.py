@@ -225,3 +225,16 @@ CACHES = {
 
 CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}'
 CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}'
+
+from datetime import timedelta
+
+CELERY_BEAT_SCHEDULE = {
+    'run-parser-every-1-hour': {
+        'task': 'news.tasks.parsing_playground_games',
+        'schedule': timedelta(seconds=60),
+    },
+    'run-parser-every-1-day': {
+        'task': 'news.tasks.call_womanhit',
+        'schedule': timedelta(seconds=120),
+    },
+}

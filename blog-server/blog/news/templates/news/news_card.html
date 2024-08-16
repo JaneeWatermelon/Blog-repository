@@ -1,5 +1,6 @@
 {% load static %}
 {% load custom_filters %}
+{% load humanize %}
 
 
 <div class="news_card" data-object-id="{{ news.id }}">
@@ -13,30 +14,14 @@
         </div>
         <div class="news_card_body">
             <div class="time_and_category">
-                <p>{{ news.time.date }}</p>
+                <p>{{ news.time|naturaltime }}</p>
                 <p>{{ news.category }}</p>
             </div>
             <div class="name">
                 <h3>{{ news.name }}</h3>
             </div>
             <div class="description">
-                {% for item in news.description %}
-                    {% if item|first == 'p' %}
-                        <p>{{ item|last }}</p>
-                    {% elif item|first == 'ul' %}
-                        <ul>
-                            {% for li in item|last %}
-                                <li>{{ li }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% else %}
-                        <ol>
-                            {% for li in item|last %}
-                                <li>{{ li }}</li>
-                            {% endfor %}
-                        </ol>
-                    {% endif %}
-                {% endfor %}
+                <p>{{ news.description }}</p>
             </div>
             <div class="read_more">
                 <p>Read more</p>

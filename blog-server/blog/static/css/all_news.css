@@ -14,13 +14,18 @@ main {
     padding-bottom: 8vh;
 }
 
-.all_cards::-webkit-scrollbar {
+.all_cards::-webkit-scrollbar, .category_div::-webkit-scrollbar {
     width: 0;
 }
 
 .category_div {
     width: 20%;
-    height: fit-content;
+    height: 88vh;
+    overflow: overlay;
+    padding-bottom: 8vh;
+    position: relative;
+    top: -4vh;
+    padding-top: 4vh;
 }
 
 .paginator_block {

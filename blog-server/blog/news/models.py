@@ -14,7 +14,8 @@ class Category(models.Model):
 
 class News(models.Model):
     name = models.CharField()
-    description = models.JSONField(default=list)
+    description = models.TextField()
+    description_for_html = models.TextField()
     category = models.ForeignKey(to=Category, on_delete=models.PROTECT)
     image = models.ImageField(upload_to=f'news_images/{category.name}', blank=True, null=True, default='/static/img/no_image.png')
     url = models.URLField()
