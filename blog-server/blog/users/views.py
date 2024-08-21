@@ -41,9 +41,6 @@ class EmailVerificationView(TitleMixin, TemplateView):
             user.save()
         return super(EmailVerificationView, self).get(request, *args, **kwargs)
 
-
-
-
 class UserLoginView(TitleMixin, SuccessMessageMixin, LoginView):
     template_name = 'users/auth.html'
     form_class = UserAuthForm

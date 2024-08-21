@@ -16,8 +16,8 @@
         .news_card {
             top: 4vh;
         }
-        #all_news > h4 {
-            font-size: 25px;
+        #all_news h2 {
+            font-size: 1.5625em;
         }
     </style>
 {% endblock %}
@@ -28,7 +28,7 @@
         {% include 'news/category.html' %}
         <div class="show_variants" data-show_type="{{ show_type }}">
             <div class="variant_text_div">
-                <p>Вариант отображения</p>
+                <h6>Вариант отображения</h6>
             </div>
             <button class="variant type_4 {% if show_type == 'type_4' %}choosed{% endif %}">
                 <img src="{% static 'svg/4x4.svg' %}">
@@ -47,7 +47,7 @@
                 {% endif %}
 
                 {% for page in paginator.page_range %}
-                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_all' page %}">{{ page }}</a></li>
+                    <li class="page-item"><a class="page-link {% if page_obj.number == page %}active{% endif %}" href="{% url 'news:paginator_all' page %}">{{ page }}</a></li>
                 {% endfor %}
 
                 {% if page_obj.has_next %}
@@ -61,12 +61,13 @@
         <div class="footer_info">
             <p>Все новостные материалы опубликованные на сайте не являются его частной собственностью.<br>
                 Каждая новость имеет как минимум одну ссылку на первоисточник.<br>
-                Администрация не несёт ответственности за достоверность новостей, опубликованных на данном сайте.</p>
+                Администрация не несёт ответственности за достоверность новостей, опубликованных на данном сайте.<br>
+                По всем вопросам обращаться по <a href="https://t.me/evgeniy_warer">ссылке</a></p>
         </div>
     </div>
     <div class="all_cards">
         {% for news in object_list %}
-            {% cache 30 sidebar user news news.likes news.views news.comments %}
+            {% cache 120 sidebar user news news.likes news.views news.comments %}
             {% include 'news/news_card.html' %}
             {% endcache %}
         {% endfor %}
@@ -74,9 +75,7 @@
 </main>
 {% endblock %}
 {% block script %}
-<!--    <script src="{% static 'js/card.js' %}"></script>-->
     <script src="{% static 'js/change_category.js' %}"></script>
     <script id="star_script" src="{% static 'js/star_categories.js' %}"></script>
-    <script src="{% static 'js/heart.js' %}"></script>
-<!--    <script src="{% static 'js/check_view.js' %}"></script>-->
+    <script src="{% static 'js/heart_for_all.js' %}"></script>
 {% endblock %}

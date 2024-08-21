@@ -20,7 +20,6 @@ from django.views.generic.list import ListView
 from rutermextract import TermExtractor
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 
 from common.views import TitleMixin
 from news.models import Category, Comment, News
@@ -30,13 +29,12 @@ from django.utils.translation import gettext
 
 per_page = 24
 
+
 def ajax_login_required(view):
     @wraps(view)
     def wrapper(request, *args, **kwargs):
         if not request.user.is_authenticated:
-            print('not auth')
             raise PermissionDenied
-        print('yes auth')
         return view(request, *args, **kwargs)
     return wrapper
 
@@ -55,6 +53,7 @@ class All_News_View(TitleMixin, ListView):
         queryset = super().get_queryset()
         result = queryset.filter(pk=0)
         active_categories = self.request.session.setdefault('active_categories', [])
+
         if active_categories:
             for category_id in active_categories:
                 result = result.union(queryset.filter(category=Category.objects.get(pk=category_id)))
@@ -79,7 +78,7 @@ class Recommended_News_View(TitleMixin, ListView):
             all_news = News.objects.all()
 
             maybe_news = {}
-            for user_tag in list(sorted_user_tags.keys())[:10]:
+            for user_tag in list(sorted_user_tags.keys())[:15]:
                 for news in all_news:
                     news_id = news.id
                     for news_tag in news.tags:
@@ -292,7 +291,7 @@ def check_view(request):
         news_id = int(request.GET['id'])
         user = request.user
 
-        if news_id not in user.viewed_news_id:
+        if user.is_authenticated and news_id not in user.viewed_news_id:
             user.viewed_news_id.append(news_id)
             user.save()
         news = News.objects.get(pk=news_id)
@@ -472,10 +471,14 @@ def parsing_playground_hardware(request):
 
 def parsing_playground_games(request):
     # every 1 hour i think
-    game_urls = ['pc', 'industry', 'consoles']
-    category = Category.objects.get(pk=3)
-    for i in range(3):
-        response = requests.get(f'https://www.playground.ru/news/{game_urls[i]}')
+    adds_url = ['movies', 'hardware', 'pc', 'industry', 'consoles']
+    for i in range(1, 6):
+        game_url = adds_url[i - 1]
+        if i >= 3:
+            category = Category.objects.get(pk=3)
+        else:
+            category = Category.objects.get(pk=i)
+        response = requests.get(f'https://www.playground.ru/news/{game_url}')
 
         soup = BeautifulSoup(response.text, 'lxml')
 
@@ -525,6 +528,7 @@ def parsing_playground_games(request):
     return HttpResponseRedirect(reverse('all_news'))
 
 def parsing_womanhit(request):
+
     # every day i think
     domain_url = 'https://www.womanhit.ru'
     # '/lifestyle/fashion/' 4
@@ -532,67 +536,87 @@ def parsing_womanhit(request):
     # '/at-home/interier/' 6
     # '/at-home/dacha/' 7
     # '/health-and-beauty/' 8
-    adds_url = '/lifestyle/fashion/'
-    category_id = 4
-    print(adds_url)
-    print(category_id)
+    adds = [
+        '/lifestyle/fashion/',
+        '/at-home/food/',
+        '/at-home/interier/',
+        '/at-home/dacha/',
+        '/health-and-beauty/',
+    ]
+    for i in range(4, 9):
 
+        adds_url = adds[i - 4]
+        category_id = i
+        print(adds_url)
+        print(category_id)
 
-    link = f'{domain_url}{adds_url}'
+        link = f'{domain_url}{adds_url}'
 
-    category = Category.objects.get(pk=category_id)
-    response = requests.get(link)
+        category = Category.objects.get(pk=category_id)
+        response = requests.get(link)
 
-    soup = BeautifulSoup(response.text, 'lxml')
+        soup = BeautifulSoup(response.text, 'lxml')
 
-    all_news = soup.find_all('article', class_='card')[:10]
+        all_news = soup.find_all('article', class_='card')[::-1]
 
-    for news in all_news:
-        try:
-            news_link = f"{domain_url}{news.find('a')['href']}"
-            print('in try')
-        except Exception:
-            print('in except')
-            continue
-        if not News.objects.filter(url=news_link):
-            full_news = requests.get(news_link)
-            full_soup = BeautifulSoup(full_news.text, 'lxml')
-
-            print(news_link)
-            article_content = full_soup.find('article', class_='article')
+        for news in all_news:
             try:
-                image_url = f"{domain_url}{article_content.find('picture').find('img')['src']}"
+                news_link = f"{domain_url}{news.find('a')['href']}"
+                print('in try')
             except Exception:
-                image_url = f"{domain_url}{article_content.find('picture').find('img')['src']}"
-            image_bytes = requests.get(image_url).content
-            next_id = 1 if not News.objects.last() else News.objects.last().id + 1
-            image_name = f'{next_id}.jpg'
-            image_file = ContentFile(image_bytes, name=image_name)
-            saved_image_path = default_storage.save(f'news_images/{category.name}/{image_name}', image_file)
+                print('in except')
+                continue
+            if not News.objects.filter(url=news_link):
+                full_news = requests.get(news_link)
+                full_soup = BeautifulSoup(full_news.text, 'lxml')
 
-            name = article_content.find('figcaption').find('h1').text.strip()
-            desc_div = article_content.find('span', itemprop='articleBody')
-            description = desc_div.text.strip()
+                print(news_link)
+                article_content = full_soup.find('article', class_='article')
+                try:
+                    image_url = f"{domain_url}{article_content.find('picture').find('img')['src']}"
+                except Exception:
+                    image_url = f"{domain_url}{article_content.find('picture').find('img')['src']}"
+                image_bytes = requests.get(image_url).content
+                next_id = 1 if not News.objects.last() else News.objects.last().id + 1
+                image_name = f'{next_id}.jpg'
+                image_file = ContentFile(image_bytes, name=image_name)
+                saved_image_path = default_storage.save(f'news_images/{category.name}/{image_name}', image_file)
 
-            for div in desc_div.find_all('div'):
-                div.extract()
-            description_for_html = ''.join(str(content) for content in desc_div.contents if content.text != '')
-            tags_div = full_soup.find('div', class_='article__tags')
-            try:
-                tags = list(span.text for span in tags_div.find_all('span'))
-            except Exception:
-                tags = (try_get_key_words(name, description)[:15])
+                name = article_content.find('figcaption').find('h1').text.strip()
+                desc_div = article_content.find('span', itemprop='articleBody')
+                description = desc_div.text.strip()
 
-            result_news = News(
-                name=name,
-                description=description,
-                description_for_html=description_for_html,
-                url=news_link,
-                base_url='https://www.womanhit.ru/',
-                category=category,
-                image=saved_image_path,
-                tags=tags
-            )
-            result_news.save()
-            print('saved')
+                for div in desc_div.find_all('div'):
+                    div.extract()
+                description_for_html = ''.join(str(content) for content in desc_div.contents if content.text != '')
+                tags_div = full_soup.find('div', class_='article__tags')
+                try:
+                    tags = list(span.text for span in tags_div.find_all('span'))
+                except Exception:
+                    tags = (try_get_key_words(name, description)[:15])
+
+                result_news = News(
+                    name=name,
+                    description=description,
+                    description_for_html=description_for_html,
+                    url=news_link,
+                    base_url='https://www.womanhit.ru/',
+                    category=category,
+                    image=saved_image_path,
+                    tags=tags
+                )
+                result_news.save()
+                print('saved')
     return HttpResponseRedirect(reverse('all_news'))
+
+def fill_categories(request):
+    names = ['Кино и сериалы', 'Железо', 'Игры', 'Мода', 'Еда', 'Интерьер', 'Дача', 'Красота']
+    for name in names:
+        category = Category.objects.create(name=name)
+        category.save()
+    return HttpResponseRedirect(reverse('all_news'))
+
+def get_screen_width(request):
+    if request.method == "GET":
+        request.session['screen_width'] = request.GET['width']
+        return JsonResponse({})

@@ -36,7 +36,7 @@ $(document).ready(function(){
         let news_id = $(".leave_comment textarea").attr('id');
         console.log(news_id);
         $.ajax({
-           url: "http://127.0.0.1:8000/news/leave_comment",
+           url: `${domain_name}/news/leave_comment`,
            type: "GET",
            data: {
                 text: $(".leave_comment textarea").val(),

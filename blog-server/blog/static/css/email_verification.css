@@ -15,7 +15,7 @@ main {
 }
 
 .verification_div > img {
-    height: calc(150*0.8px);
+    height: 120px;
 }
 
 .verification_div > div {

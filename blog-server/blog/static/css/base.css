@@ -1,7 +1,5 @@
-
-
 body {
-    background-color: #BBE1FA;
+    background-color: var(--light-blue);
     margin: 0;
 }
 
@@ -14,39 +12,56 @@ body {
 }
 
 #main_section {
-    margin: 0 26px;
+    margin: 0 28px;
 }
 
 a {
     text-decoration: none;
 }
-
-h2, h4 {
-    color: white;
+p {
+    font-size: 0.9em;
+}
+h1 {
+    font-size: 1.75em;
     -webkit-text-stroke: 1px black;
+    text-stroke: 1px black;
+}
+h2 {
+    font-size: 1.25em;
+    -webkit-text-stroke: 0.75px black;
+    text-stroke: 0.75px black;
+}
+h3 {
+    font-size: 2em;
+}
+h4 {
+    font-size: 1.5625em;
+}
+h5 {
+    font-size: 1.25em;
+}
+h6 {
+    font-size: 0.75em;
+}
+p, h3, h4, h5, h6 {
+    font-family: 'normal';
+    margin: 0;
+}
+
+h1, h2 {
+    color: white;
     font-family: 'second';
+    margin: 0 0 0 16px;
 }
 
 .choosed_page {
-    color: #BBE1FA;
-}
-
-h2 {
-    font-size: calc(40*0.7px);
-    margin: 0 0 0 16px;
-}
-
-h4 {
-    font-size: calc(25*0.7px);
-    -webkit-text-stroke: 0.75px black;
-    text-stroke: 1px black;
-    margin: 0 0 0 16px;
+    color: var(--light-blue);
 }
 
 .top_gradient_div {
     display: flex;
     height: 12vh;
-    background: linear-gradient(#3282B8, #BBE1FA);
+    background: linear-gradient(var(--normal-blue), var(--light-blue));
     align-items: center;
     justify-content: space-between;
     position: relative;
@@ -55,7 +70,7 @@ h4 {
 
 .news_hider {
     height: 4vh;
-    background: linear-gradient(180deg, #BBE1FA, rgba(0, 0, 0, 0));
+    background: linear-gradient(180deg, var(--light-blue), rgba(0, 0, 0, 0));
     position: relative;
     z-index: 1;
 }
@@ -67,16 +82,16 @@ h4 {
 }
 
 #blogus_svg {
-    height: calc(54*0.7px);
+    height: 2.5em;
     filter: drop-shadow(0 6px 4px rgba(0, 0, 0, 0.25));
 }
 #profile_svg {
-    height: calc(40*0.7px);
+    height: 1.75em;
     margin-left: 26px;
     filter: drop-shadow(0 6px 4px rgba(0, 0, 0, 0.25));
 }
 #dollar_svg {
-    height: calc(63*0.7px);
+    height: 2.75em;
     filter: drop-shadow(0 6px 4px rgba(0, 0, 0, 0.25));
     transition: transform 1s ease;
 }
@@ -96,4 +111,44 @@ h4 {
         transform: scaleX(1);
     }
     /*Основные методы анимации указаны чуть выше, в конце всех свойств главного элемента*/
+}
+
+@media (max-width:768px) {
+    #main_section {
+        margin: 0 14px;
+    }
+    .top_gradient_div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        overflow: visible;
+    }
+
+    .news_hider {
+        height: 2vh;
+        background: linear-gradient(180deg, var(--light-blue), rgba(0, 0, 0, 0));
+        position: relative;
+        z-index: 1;
+    }
+    .top_frame_group {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .top_frame_group > a:first-child h2 {
+        margin: 0;
+    }
+    h1 {
+        margin: 0 1em 0 0;
+    }
+    #profile_svg {
+        margin-left: 0;
+    }
+    p {
+        font-size: 0.75em;
+    }
+    #blogus_svg, #dollar_svg, #profile_svg {
+        height: 2em;
+    }
 }

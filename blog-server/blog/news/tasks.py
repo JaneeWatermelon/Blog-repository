@@ -94,9 +94,6 @@ def call_playground():
 def parsing_womanhit(adds_url, category_id):
     # every day i think
     domain_url = 'https://www.womanhit.ru'
-    print(adds_url)
-    print(category_id)
-
 
     link = f'{domain_url}{adds_url}'
 
@@ -105,7 +102,7 @@ def parsing_womanhit(adds_url, category_id):
 
     soup = BeautifulSoup(response.text, 'lxml')
 
-    all_news = soup.find_all('article', class_='card')[:10]
+    all_news = soup.find_all('article', class_='card')[::-1]
 
     for news in all_news:
         try:

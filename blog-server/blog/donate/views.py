@@ -10,6 +10,7 @@ from yookassa import Configuration, Payment
 from common.views import TitleMixin
 from donate.forms import DonateForm
 
+from django.conf import settings
 
 
 class DonateView(TitleMixin, CreateView):
@@ -32,7 +33,7 @@ class DonateView(TitleMixin, CreateView):
             },
             "confirmation": {
                 "type": "redirect",
-                "return_url": "http://127.0.0.1:8000/donate/result"
+                "return_url": f"{settings.DOMAIN_NAME}/donate/result"
             },
             "capture": True,
             "description": f"Заказ №{self.object.id}"

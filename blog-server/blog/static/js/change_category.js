@@ -1,29 +1,34 @@
 $(document).ready(function(){
-
     function type_4() {
-        $(".news_card").css({
-            width: '24%',
-            top: '4vh',
-        });
-        for (let i = 1; i < $(".all_cards").children().length; i+=2) {
-            $($(".all_cards").children()[i]).css({
-                top: '12vh',
+        if ($(window).width() > 768) {
+            $(".news_card").css({
+                width: '24%',
+                top: '4vh',
             });
-            console.log('done');
+            for (let i = 1; i < $(".all_cards").children().length; i+=2) {
+                $($(".all_cards").children()[i]).css({
+                    top: '12vh',
+                });
+                console.log('done');
+            };
         };
+        $(".show_variants").attr('data-show_type', 'type_4');
     };
 
     function type_3() {
-        $(".news_card").css({
-            width: '32%',
-            top: '4vh',
-        });
-        for (let i = 1; i < $(".all_cards").children().length; i+=3) {
-            $($(".all_cards").children()[i]).css({
-                top: '12vh',
+        if ($(window).width() > 768) {
+            $(".news_card").css({
+                width: '32%',
+                top: '4vh',
             });
-            console.log('done');
+            for (let i = 1; i < $(".all_cards").children().length; i+=3) {
+                $($(".all_cards").children()[i]).css({
+                    top: '12vh',
+                });
+                console.log('done');
+            };
         };
+        $(".show_variants").attr('data-show_type', 'type_3');
     };
     function check_show_type() {
         if ($(".show_variants").attr('data-show_type') == 'type_4') {
@@ -63,7 +68,7 @@ $(document).ready(function(){
             console.log(n);
         }
         $.ajax({
-           url: "http://127.0.0.1:8000/news/change_category",
+           url: `${domain_name}/news/change_category`,
            type: "GET",
            data: {
                 id: category_id
@@ -72,6 +77,10 @@ $(document).ready(function(){
                 $(".all_cards").load(window.location.href + " .all_cards > *", function(){
                     check_show_type();
                 });
+                if ($(".paginator_block")) {
+                    console.log('paginated');
+                    $(".paginator_block").load(window.location.href + " .paginator_block > *");
+                };
            },
            error: function(xhr, status, error) {
                console.log("category changed with error");
@@ -94,7 +103,7 @@ $(document).ready(function(){
             };
         };
         $.ajax({
-           url: "http://127.0.0.1:8000/news/change_show_type",
+           url: `${domain_name}/news/change_show_type`,
            type: "GET",
            data: {
                 show_type: type,

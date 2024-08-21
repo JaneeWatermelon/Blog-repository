@@ -9,13 +9,13 @@
     <div class="profile_info_card_body">
         <div class="input_group">
             <div class="input_div">
-                <label for="{{ form.first_name.id_for_label }}"><h5>Name</h5></label>
+                <label for="{{ form.first_name.id_for_label }}"><h5>Имя</h5></label>
                 <div class="input_bar">
                     {{ form.first_name }}
                 </div>
             </div>
             <div class="input_div">
-                <label for="{{ form.last_name.id_for_label }}"><h5>Surname</h5></label>
+                <label for="{{ form.last_name.id_for_label }}"><h5>Фамилия</h5></label>
                 <div class="input_bar">
                     {{ form.last_name }}
                 </div>
@@ -23,13 +23,13 @@
         </div>
         <div class="input_group">
             <div class="input_div">
-                <label for="{{ form.email.id_for_label }}"><h5>Email</h5></label>
+                <label for="{{ form.email.id_for_label }}"><h5>Электронная почта</h5></label>
                 <div class="input_bar">
                     {{ form.email }}
                 </div>
             </div>
             <div class="input_div">
-                <label for="{{ form.username.id_for_label }}"><h5>Username</h5></label>
+                <label for="{{ form.username.id_for_label }}"><h5>Имя пользователя</h5></label>
                 <div class="input_bar">
                     {{ form.username }}
                 </div>
@@ -37,22 +37,22 @@
         </div>
         <div class="input_group">
             <div class="input_div">
-                <label><h5>Sign Up: <span>{{ user.date_joined.date }}</span></h5></label>
+                <label><h5>Зарегистрирован: <span>{{ user.date_joined.date }}</span></h5></label>
             </div>
             <div class="input_div">
-                <label><h5>Verified: <span>{% if user.is_verified %}Yes{% else %}No{% endif %}</span></h5></label>
+                <label><h5>Подтверждён: <span>{% if user.is_verified %}Да{% else %}Нет{% endif %}</span></h5></label>
             </div>
         </div>
     </div>
     <div class="profile_info_card_footer">
         <div class="sign_up">
             <button type="button">
-                <a href="{% url 'users:logout' %}"><h5>Log Out</h5></a>
+                <a href="{% url 'users:logout' %}"><h5>Выйти</h5></a>
             </button>
         </div>
         <div class="sign_up">
             <button type="submit">
-                <h5>Save Changes</h5>
+                <h5>Сохранить</h5>
             </button>
         </div>
     </div>

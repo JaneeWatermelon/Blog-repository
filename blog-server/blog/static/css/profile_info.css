@@ -1,24 +1,12 @@
 
 
 span {
-    color: #3282B8;
+    color: var(--normal-blue);
 }
 
 a {
     text-decoration: none;
-    color: #0F4C75 !important;
-}
-
-p {
-    font-family: 'normal';
-    font-size: calc(18*0.8px);
-    margin: 0;
-}
-
-h5 {
-    font-size: calc(25*0.8px);
-    font-family: 'normal';
-    margin: 0;
+    color: var(--dark-blue) !important;
 }
 
 .profile_info_card {
@@ -26,6 +14,11 @@ h5 {
     background-color: white;
     overflow: auto;
     border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 
 .profile_info_card_header {
@@ -36,12 +29,12 @@ h5 {
 }
 
 .profile_info_photo {
-    height: calc(150*0.8px);
-    width: calc(150*0.8px);
-    outline: 2px solid #3282B8;
+    height: 120px;
+    width: 120px;
+    outline: 2px solid var(--normal-blue);
     border-radius: 75px;
     object-fit: cover;
-    margin: calc(30*0.8px) 0 calc(10*0.8px) 0;
+    margin: 24px 0 8px 0;
 }
 
 
@@ -51,18 +44,18 @@ h5 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0 calc(16*0.8px);
+    margin: 0 14px;
 }
 
 .input_group {
     display: flex;
-    margin-bottom: calc(16*0.8px);
+    margin-bottom: 14px;
     width: 100%;
     justify-content: space-between;
 }
 
 .input_group:last-child {
-    margin-bottom: calc(28*0.8px);
+    margin-bottom: 22px;
 }
 
 #email, #username {
@@ -70,7 +63,7 @@ h5 {
 }
 
 .input_bar, .sign_up > button {
-    border: 2px solid #3282B8;
+    border: 2px solid var(--normal-blue);
     border-radius: 10px;
 }
 
@@ -82,7 +75,7 @@ h5 {
 }
 
 .input_div > label {
-    margin-left: calc(10*0.8px);
+    margin-left: 8px;
 }
 
 .input_bar {
@@ -90,23 +83,23 @@ h5 {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: calc(59*0.8px);
+    height: 47px;
 }
 
 .input_bar > input {
     width: 100%;
     outline: none;
     border: none;
-    margin: calc(10*0.8px);
-    font-size: calc(18*0.8px);
+    margin: 8px;
+    font-size: 14px;
 }
 
 .input_div:first-child, .sign_up:first-child {
-    margin-right: calc(18*0.8px);
+    margin-right: 7px;
 }
 
 .input_div:last-child, .sign_up:last-child {
-    margin-left: calc(18*0.8px);
+    margin-left: 7px;
 }
 
 
@@ -116,8 +109,8 @@ h5 {
 }
 
 .sign_up > button {
-    background-color: #BBE1FA;
-    height: calc(59*0.8px);
+    background-color: var(--light-blue);
+    padding: 10px;
     width: 100%;
 }
 
@@ -128,16 +121,23 @@ h5 {
 
 .profile_info_card_footer {
     display: flex;
-    margin: calc(16*0.8px);
+    margin: 14px;
 }
 
 .profile_img {
     width: 50px;
     height: 50px;
     position: absolute;
-    background-color: #BBE1FA;
+    background-color: var(--light-blue);
 }
 
 .profile_img * {
     display: none;
+}
+
+@media (max-width:768px) {
+    .profile_info_photo {
+        height: 100px;
+        width: 100px;
+    }
 }

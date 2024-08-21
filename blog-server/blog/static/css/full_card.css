@@ -1,30 +1,11 @@
 
 a {
     text-decoration: none;
-    color: #3282B8;
-}
-
-p {
-    font-family: 'normal';
-    font-size: calc(18*0.8px);
-    margin: 0;
+    color: var(--normal-blue);
 }
 
 .description p {
     margin: inherit;
-}
-
-h3 {
-    font-family: 'normal';
-    font-size: calc(30*0.8px);
-    margin: 0;
-}
-
-h6 {
-    font-family: 'normal';
-    font-size: calc(18*0.8px);
-    font-weight: bold;
-    margin: 0;
 }
 
 blockquote {
@@ -39,7 +20,7 @@ blockquote {
     border-radius: 10px;
     background-color: white;
     overflow: auto;
-    margin-bottom: calc(26*0.8px);
+    margin-bottom: 20px;
 }
 
 .card_header > img {
@@ -48,7 +29,7 @@ blockquote {
     border-radius: 10px;
 }
 .card_header {
-    margin: calc(20*0.8px);
+    margin: 16px;
     width: 25%;
     float: left;
     background-color: white;
@@ -57,13 +38,13 @@ blockquote {
 
 
 .card_body {
-    margin: calc(20*0.8px);
+    margin: 16px;
 }
 
 .time_and_url {
     display: flex;
     justify-content: space-between;
-    margin-bottom: calc(10*0.8px);
+    margin-bottom: 8px;
 }
 
 .category {
@@ -72,7 +53,7 @@ blockquote {
 }
 
 .category, .name, .description, .comment_shower {
-    margin-bottom: calc(20*0.8px);
+    margin-bottom: 16px;
 }
 
 
@@ -113,11 +94,11 @@ blockquote {
 
 .card_footer {
     clear: both;
-    margin: calc(20*0.8px);
+    margin: 16px;
 }
 
 .comment_shower, .foot_comments {
-    border: 1px solid #0F4C75;
+    border: 1px solid var(--dark-blue);
     border-radius: 10px;
 }
 
@@ -125,8 +106,8 @@ blockquote {
     display: none;
 }
 
-.choosed_comment {
-    background-color: #BBE1FA;
+.comment_shower.choosed_comment {
+    background-color: var(--light-blue);
 }
 
 .comment_shower {
@@ -134,10 +115,11 @@ blockquote {
     width: fit-content;
     justify-content: center;
     align-items: center;
+    background-color: white;
 }
 
 .comment_shower * {
-    margin: calc(5*0.8px) calc(10*0.8px);
+    margin: 4px 8px;
 }
 
 .all_comments {
@@ -145,15 +127,15 @@ blockquote {
 }
 
 .leave_comment {
-    margin: calc(10*0.8px);
+    margin: 8px;
 }
 
 .leave_comment > span {
     display: block;
     width: 100%;
     height: 0.5px;
-    color: #0F4C75;
-    background-color: #0F4C75;
+    color: var(--normal-blue);
+    background-color: var(--normal-blue);
 }
 
 .leave_comment > div {
@@ -162,17 +144,17 @@ blockquote {
 }
 
 .leave_comment > button {
-    height: calc(48*0.8px);
+    height: 38px;
     display: flex;
-    background-color: #BBE1FA;
+    background-color: var(--light-blue);
     width: fit-content;
-    margin: calc(10*0.8px) 0;
+    margin: 8px 0;
     border-radius: 10px;
     border: none;
 }
 
 .leave_comment > div > textarea {
-    margin: calc(10*0.8px);
+    margin: 8px;
     border: none;
     outline: none;
     width: 100%;
@@ -181,7 +163,7 @@ blockquote {
 }
 
 .leave_comment > button > p {
-    margin: calc(10*0.8px);
+    margin: 8px;
 }
 
 .leave_comment > div:first-child > p, .comment_header > p {
@@ -189,8 +171,8 @@ blockquote {
 }
 
 .comment {
-    margin: 0 calc(10*0.8px);
-    padding: calc(10*0.8px);
+    margin: 0 8px;
+    padding: 8px;
 }
 
 .comment_header {
@@ -198,23 +180,23 @@ blockquote {
 }
 
 .comment_header > img {
-    height: calc(40*0.8px);
-    border-radius: calc(20*0.8px);
+    height: 32px;
+    border-radius: 16px;
     aspect-ratio: 1;
     object-fit: cover;
 }
 
 .comment_header > p {
-    margin: 0 calc(20*0.8px) 0 calc(10*0.8px);
+    margin: 0 16px 0 8px;
 }
 
 .comment_body > p {
-    margin: calc(10*0.8px);
+    margin: 8px;
 }
 
 .comment_footer {
     display: flex;
-    margin-left: calc(10*0.8px);
+    margin-left: 8px;
 }
 
 .comment_footer > div {
@@ -222,17 +204,17 @@ blockquote {
 }
 
 .comment_footer > div > img {
-    height: calc(23*0.8px);
+    height: 18px;
 }
 
 .like {
-    margin-right: calc(10*0.8px);
+    margin-right: 8px;
     transition: transform 0.5s ease;
 }
 
 .dislike {
     transform: rotate(180deg);
-    margin-left: calc(30*0.8px);
+    margin-left: 24px;
     transition: transform 0.5s ease;
 }
 
@@ -249,10 +231,21 @@ blockquote {
 .see_more_button {
     display: none;
     background-color: white;
-    margin: calc(20* 0.8px);
+    margin: 16px;
     padding: 10px;
-    border: 1px solid #0F4C75;
+    border: 1px solid var(--dark-blue);
     border-radius: 10px;
     width: 200px;
     text-align: center;
+}
+
+@media (max-width:768px) {
+    .card_header {
+        margin: 16px;
+        width: auto;
+        float: none;
+    }
+    .card_bottom_icons p {
+        font-size: 0.9em;
+    }
 }

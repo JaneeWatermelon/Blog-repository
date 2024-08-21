@@ -9,17 +9,18 @@
     <link href="{% static 'css/card.css' %}" rel="stylesheet" />
     <link href="{% static 'css/recommendations.css' %}" rel="stylesheet" />
     <style>
-        #new > h4 {
-            font-size: 25px;
+        #new h2 {
+            font-size: 1.5625em;
         }
     </style>
 {% endblock %}
 
 {% block main %}
 <main>
+    {% if object_list.exists %}
     <div class="all_cards">
         {% for news in object_list %}
-            {% cache 30 sidebar user news news.likes news.views news.comments %}
+            {% cache 60 sidebar user news news.likes news.views news.comments %}
             {% include 'news/news_card.html' %}
             {% endcache %}
         {% endfor %}
@@ -27,27 +28,35 @@
         <div class="paginator_block">
             <ul class="pagination">
                 {% if page_obj.has_previous %}
-                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_new' page_obj.previous_page_number %}">Prev</a></li>
+                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_new' page_obj.previous_page_number %}"><i class="fa-solid fa-arrow-left"></i></a></li>
                 {% else %}
-                <li class="page-item disabled"><a class="page-link">Prev</a></li>
+                <li class="page-item disabled"><a class="page-link"><i class="fa-solid fa-arrow-left"></i></a></li>
                 {% endif %}
 
                 {% for page in paginator.page_range %}
-                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_new' page %}">{{ page }}</a></li>
+                    <li class="page-item"><a class="page-link {% if page_obj.number == page %}active{% endif %}" href="{% url 'news:paginator_new' page %}">{{ page }}</a></li>
                 {% endfor %}
 
                 {% if page_obj.has_next %}
-                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_new' page_obj.next_page_number %}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="{% url 'news:paginator_new' page_obj.next_page_number %}"><i class="fa-solid fa-arrow-right"></i></a></li>
                 {% else %}
-                <li class="page-item disabled"><a class="page-link">Next</a></li>
+                <li class="page-item disabled"><a class="page-link"><i class="fa-solid fa-arrow-right"></i></a></li>
                 {% endif %}
             </ul>
         </div>
         {% endif %}
     </div>
+    {% else %}
+        <div class="no_recommends_div">
+            <div>
+                <h5>Ой, здесь пока пусто.</h5>
+                <h5>Кажется сегодня ещё не было новостей.</h5>
+            </div>
+            <img src="{% static 'svg/sad_smile.svg' %}" alt="sad_smile_icon">
+        </div>
+    {% endif %}
 </main>
 {% endblock %}
 {% block script %}
-<!--    <script src="{% static 'js/check_view.js' %}"></script>-->
     <script src="{% static 'js/heart.js' %}"></script>
 {% endblock %}

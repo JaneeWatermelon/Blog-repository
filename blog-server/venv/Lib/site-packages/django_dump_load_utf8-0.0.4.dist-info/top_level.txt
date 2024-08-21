@@ -1,0 +1,1 @@
+django_dump_load_utf8

@@ -1,4 +1,3 @@
-
 from django.urls import include, path
 
 from donate.views import DonateResultView, DonateView

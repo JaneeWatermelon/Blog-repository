@@ -1,3 +1,5 @@
+
+
 $(document).ready(function(){
     $(".star_icon").on('click', function(){
         console.log('clicked');
@@ -10,7 +12,7 @@ $(document).ready(function(){
             $(this).attr('src', "/static/svg/star_filled.svg");
         }
         $.ajax({
-           url: "http://127.0.0.1:8000/news/change_star",
+           url: `${domain_name}/news/change_star`,
            type: "GET",
            data: {
                 id: category_id

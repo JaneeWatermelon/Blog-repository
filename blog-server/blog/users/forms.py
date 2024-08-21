@@ -12,27 +12,27 @@ from users.tasks import send_email_task
 class UserRegistrationForm(UserCreationForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form_input',
-        'placeholder': 'Type your name',
+        'placeholder': 'Введите имя',
     }))
     last_name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form_input',
-        'placeholder': 'Type your surname',
+        'placeholder': 'Введите фамилию',
     }))
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form_input',
-        'placeholder': 'Come up with a username',
+        'placeholder': 'Придумайте имя пользователя',
     }))
     email = forms.EmailField(widget=forms.EmailInput(attrs={
         'class': 'form_input',
-        'placeholder': 'Type your email',
+        'placeholder': 'Введите адрес электронной почты',
     }))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form_input',
-        'placeholder': 'Come up with a password',
+        'placeholder': 'Придумайте пароль',
     }))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form_input',
-        'placeholder': 'Repeat your password',
+        'placeholder': 'Повторите пароль',
     }))
 
     class Meta:
@@ -48,10 +48,10 @@ class UserRegistrationForm(UserCreationForm):
 
 class UserAuthForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'placeholder': 'Come up with a username'
+        'placeholder': 'Введите имя пользователя'
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'placeholder': 'Repeat your password'
+        'placeholder': 'Введите пароль'
     }))
 
     class Meta:

@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_extensions',
     'debug_toolbar',
+    'django_dump_load_utf8',
 
     'news',
     'users',
@@ -107,6 +108,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'news.context_processors.choosed_categories',
                 'news.context_processors.show_type',
+                'news.context_processors.screen_width',
                 'users.context_processors.get_type',
             ],
         },
@@ -173,16 +175,13 @@ LANGUAGES = [
     ("en", "English"),
 ]
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
 STATIC_URL = 'static/'
 if DEBUG:
     STATICFILES_DIRS = [
         BASE_DIR / "static"
     ]
 else:
-    STATIC_ROOT = BASE_DIR / 'static'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = BASE_DIR / 'media/'
 MEDIA_URL = 'media/'
@@ -230,11 +229,11 @@ from datetime import timedelta
 
 CELERY_BEAT_SCHEDULE = {
     'run-parser-every-1-hour': {
-        'task': 'news.tasks.parsing_playground_games',
-        'schedule': timedelta(seconds=60),
+        'task': 'news.tasks.call_playground',
+        'schedule': timedelta(hours=1),
     },
     'run-parser-every-1-day': {
         'task': 'news.tasks.call_womanhit',
-        'schedule': timedelta(seconds=120),
+        'schedule': timedelta(hours=12),
     },
 }

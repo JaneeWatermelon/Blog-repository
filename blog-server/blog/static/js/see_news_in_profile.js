@@ -1,3 +1,5 @@
+
+
 $(document).ready(function(){
     $(".like").on('click', function(){
         console.log('clicked');
@@ -11,7 +13,7 @@ $(document).ready(function(){
             see_type = 'like';
         }
         $.ajax({
-           url: "http://127.0.0.1:8000/users/see_news_in_profile",
+           url: `${domain_name}/users/see_news_in_profile`,
            type: "GET",
            data: {
                 type: see_type,
@@ -36,7 +38,7 @@ $(document).ready(function(){
             see_type = 'view';
         }
         $.ajax({
-           url: "http://127.0.0.1:8000/users/see_news_in_profile",
+           url: `${domain_name}/users/see_news_in_profile`,
            type: "GET",
            data: {
                 type: see_type,

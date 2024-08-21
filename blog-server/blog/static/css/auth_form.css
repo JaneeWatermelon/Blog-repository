@@ -1,27 +1,13 @@
-
 a {
     text-decoration: none;
-    color: #0F4C75 !important;
+    color: var(--dark-blue) !important;
 }
 
-p {
-    font-family: 'normal';
-    font-size: 18px;
-    margin: 0;
-}
-
-h3 {
-    color: white;
+main h1 {
+    margin: 16px;
+    font-size: 2.5em;
     -webkit-text-stroke: 1.5px black;
-    font-size: 40px;
-    font-family: 'second';
-    margin: 0;
-}
-
-h5 {
-    font-size: 25px;
-    font-family: 'normal';
-    margin: 0;
+    text-shadow: 0 6px 4px rgba(0, 0, 0, 0.25);
 }
 
 .auth_card {
@@ -29,6 +15,8 @@ h5 {
     background-color: white;
     overflow: auto;
     transform: scale(0.8);
+    height: fit-content;
+    max-height: 84vh;
 }
 
 .card_header {
@@ -53,7 +41,7 @@ h5 {
 }
 
 .auth_card, .input_bar, .sign_in > button {
-    border: 2px solid #3282B8;
+    border: 2px solid var(--normal-blue);
     border-radius: 10px;
 }
 
@@ -97,12 +85,39 @@ h5 {
     width: 319px;
 }
 
-.sign_in > button > h5 {
-    font-weight: normal;
-}
-
 .card_footer {
     display: flex;
     justify-content: center;
     margin: 20px 0;
+}
+
+@media (max-width:768px) {
+    .auth_card {
+        width: 100%;
+        transform: scale(1);
+    }
+    .input_div {
+        max-width: 100%;
+    }
+    .input_bar {
+        height: auto;
+    }
+    main h1 {
+        margin: 10px;
+        font-size: 2em;
+    }
+    main h4 {
+        font-size: 1.25em;
+    }
+    .card_footer {
+        margin: 20px 16px;
+        max-width: -webkit-fill-available;
+        text-align: center;
+    }
+    .sign_in, .sign_in > button {
+        max-width: 100%;
+    }
+    .input_bar > input {
+        font-size: inherit;
+    }
 }

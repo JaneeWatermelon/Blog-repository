@@ -1,27 +1,6 @@
-
 a {
     text-decoration: none;
-    color: #3282B8;
-}
-
-p {
-    font-family: 'normal';
-    font-size: 18px;
-    margin: 0;
-}
-
-h3 {
-    color: white;
-    -webkit-text-stroke: 1.5px black;
-    font-size: 40px;
-    font-family: 'second';
-    margin: 0;
-}
-
-h5 {
-    font-size: 25px;
-    font-family: 'normal';
-    margin: 0;
+    color: var(--normal-blue);
 }
 
 .donate_card {
@@ -37,8 +16,10 @@ h5 {
     justify-content: center;
 }
 
-.card_header > h3 {
-    margin: 10px;
+.card_header > h1 {
+    margin: 16px;
+    font-size: 2.5em;
+    -webkit-text-stroke: 1.5px black;
     text-shadow: 0 6px 4px rgba(0, 0, 0, 0.25);
 }
 
@@ -56,7 +37,7 @@ h5 {
     align-self: flex-start;
 }
 
-.title > h5 {
+.title > h4 {
     margin: 10px;
 }
 
@@ -67,7 +48,7 @@ h5 {
 }
 
 .donate_card, .choose_bar, .input_bar, .card_footer > button {
-    border: 2px solid #3282B8;
+    border: 2px solid var(--normal-blue);
     border-radius: 10px;
 }
 
@@ -83,10 +64,6 @@ h5 {
 
 .choose_bar:active {
     transform: scale(0.9);
-}
-
-.choose_bar > h5 {
-    font-weight: bold;
 }
 
 
@@ -127,11 +104,15 @@ h5 {
 }
 
 .card_footer > button {
-    background-color: #D9EE58;
+    background-color: var(--success-color);
     height: 59px;
     width: 319px;
 }
 
-.card_footer > button > h5 {
-    font-weight: bold;
+@media (max-width:768px) {
+    .donate_card {
+        width: 100%;
+        transform: scale(1);
+        margin-top: 10px;
+    }
 }

@@ -1,32 +1,32 @@
 <form class="donate_card" action="{% url 'donate:form' %}" method="post">
     {% csrf_token %}
     <div class="card_header">
-        <h3>Donate</h3>
+        <h1>Donate</h1>
     </div>
     <div class="card_body">
         <div class="title">
-            <h5>Введите сумму или выберите из списка</h5>
+            <h4>Введите сумму или выберите из списка</h4>
         </div>
         <div class="choose_bar_group">
             <button class="choose_bar">
-                <h5>50 р</h5>
+                <h4>50 р</h4>
             </button>
             <button class="choose_bar">
-                <h5>100 р</h5>
+                <h4>100 р</h4>
             </button>
             <button class="choose_bar">
-                <h5>250 р</h5>
+                <h4>250 р</h4>
             </button>
         </div>
         <div class="choose_bar_group">
             <button class="choose_bar">
-                <h5>500 р</h5>
+                <h4>500 р</h4>
             </button>
             <button class="choose_bar">
-                <h5>1000 р</h5>
+                <h4>1000 р</h4>
             </button>
             <button class="choose_bar">
-                <h5>1500 р</h5>
+                <h4>1500 р</h4>
             </button>
         </div>
         <div class="input_bar">
@@ -35,7 +35,7 @@
     </div>
     <div class="card_footer">
         <button type="submit">
-            <h5>Перейти к оплате</h5>
+            <h4>Перейти к оплате</h4>
         </button>
     </div>
 </form>

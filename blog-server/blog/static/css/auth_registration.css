@@ -1,0 +1,20 @@
+body {
+    overflow-y: hidden;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: -16vh;
+    height: 100vh;
+}
+
+@media (max-width:768px) {
+    main {
+        align-items: inherit;
+        top: 0;
+        height: 84vh;
+    }
+}

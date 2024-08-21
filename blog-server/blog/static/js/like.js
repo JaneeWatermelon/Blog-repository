@@ -1,3 +1,5 @@
+
+
 $(document).ready(function(){
     $(".foot_comments").on('click', '.like', function(){
         console.log('clicked');
@@ -20,7 +22,7 @@ $(document).ready(function(){
             $(this).siblings().html(Number(prev_likes_count)+1);
         }
         $.ajax({
-           url: "http://127.0.0.1:8000/news/rate_comment",
+           url: `${domain_name}/news/rate_comment`,
            type: "GET",
            data: {
                 id: comment_id,
@@ -57,7 +59,7 @@ $(document).ready(function(){
             }
         }
         $.ajax({
-           url: "http://127.0.0.1:8000/news/rate_comment",
+           url: `${domain_name}/news/rate_comment`,
            type: "GET",
            data: {
                 id: comment_id,

@@ -1,32 +1,25 @@
+body {
+    overflow-y: hidden;
+}
+
 main {
     display: flex;
-}
-
-main > div:first-child {
-    margin-right: calc(13*0.8px);
-}
-
-main > div:last-child {
-    margin-left: calc(13*0.8px);
+    height: 80vh;
 }
 
 .profile_adds {
     display: flex;
     width: 40%;
     flex-wrap: wrap;
+    margin-left: 7px;
+    height: 100%;
 }
 
 .profile_info {
     width: 60%;
     float: left;
-}
-
-.cards_div {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    height: 68vh;
-    overflow: overlay;
+    height: auto;
+    margin-right: 7px;
 }
 
 .cards_div::-webkit-scrollbar {
@@ -36,5 +29,29 @@ main > div:last-child {
 .news_card {
     width: 49%;
     margin: 0;
-    margin-bottom: calc(10*0.8px);
+    margin-bottom: 8px;
+}
+
+@media (max-width:768px) {
+    body {
+        overflow-y: auto;
+    }
+    h5 {
+        font-size: 1em;
+    }
+    main {
+        flex-direction: column;
+        height: auto;
+    }
+    .profile_adds, .profile_info {
+        width: 100%;
+        margin-bottom: 14px;
+    }
+    main > div:first-child {
+        margin-right: 0;
+    }
+
+    main > div:last-child {
+        margin-left: 0;
+    }
 }

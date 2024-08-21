@@ -10,6 +10,7 @@
 
 {% block main %}
 <div class="news_card" data-object-id="{{ object.id }}">
+    {% if screen_width > 768 %}
     <div class="card_header">
         <img src="{{ object.image.url }}" alt="news_image">
         <div class="card_bottom_icons">
@@ -19,29 +20,29 @@
                 {% else %}
                 <img id="like_{{ object.id }}" class="heart_icon" src="{% static 'svg/heart.svg' %}" alt="heart_icon">
                 {% endif %}
-                <h6>{{ object.likes }}</h6>
+                <p>{{ object.likes }}</p>
             </div>
             <div class="view_div">
                 <img class="view_icon" src="{% static 'svg/view.svg' %}" alt="view_icon">
-                <h6>{{ object.views }}</h6>
+                <p>{{ object.views }}</p>
             </div>
             <div class="comment_div">
                 <img class="comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
-                <h6>{{ object.comments_count }}</h6>
+                <p>{{ object.comments_count }}</p>
             </div>
         </div>
     </div>
     <div class="card_body">
         <div class="time_and_url">
-            <p>Published: {{ object.time.date }}</p>
+            <p>Опубликовано: {{ object.time.date }}</p>
             <a href="{{ object.url }}"><p>Ссылка на источник</p></a>
         </div>
         <div class="category">
-            <p>Category: {{ object.category.name }}</p>
+            <p>Категория: {{ object.category.name }}</p>
             <a href="{{ object.base_url }}"><p>Главная страница источника</p></a>
         </div>
         <div class="name">
-            <h3>{{ object.name }}</h3>
+            <h4>{{ object.name }}</h4>
         </div>
         <div class="description">
             {{ object.description_for_html|safe }}
@@ -49,7 +50,7 @@
     </div>
     <div class="card_footer">
         <button type="button" class="comment_shower">
-            <h3>Comments</h3>
+            <h5>Комментарии</h5>
             <img class="comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
         </button>
         <div class="foot_comments">
@@ -94,15 +95,105 @@
                 {% endfor %}
             </div>
             <button type="button" class="see_more_button" data-page="1">
-                <p>See More</p>
+                <p>Читать дальше</p>
             </button>
         </div>
     </div>
+    {% else %}
+    <div class="card_header">
+        <div class="time_and_url">
+            <p>Опубликовано: {{ object.time.date }}</p>
+            <a href="{{ object.url }}"><p>Ссылка на источник</p></a>
+        </div>
+        <div class="category">
+            <p>Категория: {{ object.category.name }}</p>
+            <a href="{{ object.base_url }}"><p>Главная страница источника</p></a>
+        </div>
+        <img src="{{ object.image.url }}" alt="news_image">
+        <div class="card_bottom_icons">
+            <div class="heart_div">
+                {% if user.is_authenticated and object|is_heart:user %}
+                <img id="like_{{ object.id }}" class="heart_icon is_heart" src="{% static 'svg/heart_filled.svg' %}" alt="filled_heart_icon">
+                {% else %}
+                <img id="like_{{ object.id }}" class="heart_icon" src="{% static 'svg/heart.svg' %}" alt="heart_icon">
+                {% endif %}
+                <p>{{ object.likes }}</p>
+            </div>
+            <div class="view_div">
+                <img class="view_icon" src="{% static 'svg/view.svg' %}" alt="view_icon">
+                <p>{{ object.views }}</p>
+            </div>
+            <div class="comment_div">
+                <img class="comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
+                <p>{{ object.comments_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="card_body">
+        <div class="name">
+            <h4>{{ object.name }}</h4>
+        </div>
+        <div class="description">
+            {{ object.description_for_html|safe }}
+        </div>
+    </div>
+    <div class="card_footer">
+        <button type="button" class="comment_shower">
+            <h5>Комментарии</h5>
+            <img class="comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
+        </button>
+        <div class="foot_comments">
+            <div class="leave_comment">
+                <div>
+                    <textarea id="comment_input_{{ object.id }}" placeholder="Введите комментарий" maxlength="1000" rows="1"></textarea>
+                </div>
+                <span></span>
+                <button type="submit">
+                    <p>Оставить комментарий</p>
+                </button>
+            </div>
+            <div class="all_comments">
+                {% for comment in comments %}
+                <div class="comment" style="display: none;">
+                    <div class="comment_header">
+                        <img src="{{ comment.user.image.url }}" alt="comment_user_image">
+                        <p>@{{ comment.user.username }}</p>
+                        <p>{{ comment.time|naturaltime }}</p>
+                    </div>
+                    <div class="comment_body">
+                        <p>{{ comment.text }}</p>
+                    </div>
+                    <div class="comment_footer">
+                        <div class="like_or_dislike_block">
+                            {% if user.is_authenticated and comment|is_liked:user %}
+                            <img class="like is_rate" data-comment-id="{{ comment.id }}" src="{% static 'svg/like_filled.svg' %}" alt="filled_like_icon">
+                            {% else %}
+                            <img class="like" data-comment-id="{{ comment.id }}" src="{% static 'svg/like.svg' %}" alt="like_icon">
+                            {% endif %}
+                            <p>{{ comment.likes }}</p>
+                        </div>
+                        <div class="like_or_dislike_block">
+                            {% if user.is_authenticated and comment|is_disliked:user %}
+                            <img class="dislike is_rate" data-comment-id="{{ comment.id }}" src="{% static 'svg/like_filled.svg' %}" alt="filled_dislike_icon">
+                            {% else %}
+                            <img class="dislike" data-comment-id="{{ comment.id }}" src="{% static 'svg/like.svg' %}" alt="dislike_icon">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button type="button" class="see_more_button" data-page="1">
+                <p>Читать дальше</p>
+            </button>
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'js/heart.js' %}"></script>
+    <script src="{% static 'js/heart_full.js' %}"></script>
     <script src="{% static 'js/check_view.js' %}"></script>
     <script src="{% static 'js/textarea.js' %}"></script>
     <script src="{% static 'js/leave_comment.js' %}"></script>

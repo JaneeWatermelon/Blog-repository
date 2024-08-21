@@ -18,13 +18,13 @@
                 <p>{{ news.category }}</p>
             </div>
             <div class="name">
-                <h3>{{ news.name }}</h3>
+                <h5>{{ news.name }}</h5>
             </div>
             <div class="description">
-                <p>{{ news.description }}</p>
+                <h6>{{ news.description }}</h6>
             </div>
             <div class="read_more">
-                <p>Read more</p>
+                <p>Читать дальше</p>
             </div>
         </div>
     </a>
@@ -35,15 +35,15 @@
             {% else %}
             <img id="like_{{ news.id }}" class="heart_icon" src="{% static 'svg/heart.svg' %}" alt="heart_icon">
             {% endif %}
-            <h6>{{ news.likes }}</h6>
+            <p>{{ news.likes }}</p>
         </div>
         <div>
             <img class="view_icon" src="{% static 'svg/view.svg' %}" alt="view_icon">
-            <h6>{{ news.views }}</h6>
+            <p>{{ news.views }}</p>
         </div>
         <div>
             <img class="comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
-            <h6>{{ news.comments_count }}</h6>
+            <p>{{ news.comments_count }}</p>
         </div>
     </div>
 </div>

@@ -35,12 +35,12 @@ body {
     display: flex;
     justify-content: center;
     margin: 10px auto;
+    padding: 10px;
 }
 
 .pagination {
     list-style: none;
     padding: 0;
-    width: 50%;
     margin: auto;
 }
 
@@ -68,7 +68,7 @@ body {
 }
 
 .no_recommends_div > img {
-    height: calc(150*0.8px);
+    height: 120px;
 }
 
 .no_recommends_div > div {
@@ -77,4 +77,41 @@ body {
 
 .no_recommends_div h5 {
     color: rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width:768px) {
+    .no_recommends_div {
+        width: auto;
+    }
+    .all_cards {
+        margin-left: 0;
+        height: 90vh;
+    }
+    .news_card {
+        margin: 0 0 8px 0;
+    }
+    .paginator_block {
+        display: block;
+        margin-bottom: 10px;
+        overflow-y: overlay;
+        padding-bottom: 5px;
+        position: relative;
+        top: 2vh;
+    }
+
+    .paginator_block::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+    .paginator_block::-webkit-scrollbar-track {
+        background-color: none;
+    }
+    .paginator_block::-webkit-scrollbar-thumb {
+        background-color: var(--normal-blue);
+        border-radius: 5px;
+    }
+    .page-link.active {
+        background-color: var(--normal-blue);
+        border-color: var(--normal-blue);
+    }
 }

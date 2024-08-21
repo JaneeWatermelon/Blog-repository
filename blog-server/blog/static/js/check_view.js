@@ -1,7 +1,7 @@
 $(document).ready(function(){
     setTimeout(function() {
         $.ajax({
-           url: "http://127.0.0.1:8000/news/check_view",
+           url: `${domain_name}/news/check_view`,
            type: "GET",
            data: {
                 id: $(".news_card").attr('data-object-id')

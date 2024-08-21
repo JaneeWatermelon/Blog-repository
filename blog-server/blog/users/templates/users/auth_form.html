@@ -1,17 +1,17 @@
 <form action="{% url 'users:login' %}" method="post" class="auth_card">
     {% csrf_token %}
     <div class="card_header">
-        <h3>Authorization</h3>
+        <h1>Авторизация</h1>
     </div>
     <div class="card_body">
         <div class="input_div">
-            <label for="{{ form.username.id_for_label }}"><h5>Username or Email</h5></label>
+            <label for="{{ form.username.id_for_label }}"><h4>Имя пользователя</h4></label>
             <div class="input_bar">
                 {{ form.username }}
             </div>
         </div>
         <div class="input_div">
-            <label for="{{ form.password.id_for_label }}"><h5>Password</h5></label>
+            <label for="{{ form.password.id_for_label }}"><h4>Пароль</h4></label>
             <div class="input_bar">
                 {{ form.password }}
             </div>
@@ -19,13 +19,13 @@
 
         <div class="sign_in">
             <button type="submit">
-                <h5>Sign In</h5>
+                <h4>Войти</h4>
             </button>
         </div>
     </div>
     <div class="card_footer">
         <a href="{% url 'users:registration' %}">
-            <p>Don’t have an account? Sign up here</p>
+            <h5>Ещё нет аккаунта? Зарегистрируйтесь здесь</h5>
         </a>
     </div>
 </form>
