@@ -9,6 +9,17 @@
 
 {% block main %}
 <main>
+    {% if messages or form.non_field_errors %}
+        <div class="alert {% if messages %} alert-success {% else %} alert-warning {% endif %}">
+            {% if messages %}
+                {% for message in messages %}
+                    <strong>{{ message }}</strong>
+                {% endfor %}
+            {% else %}
+                <strong>{{ form.non_field_errors }}</strong>
+            {% endif %}
+        </div>
+    {% endif %}
     {% include 'users/auth_form.html' %}
 </main>
 {% endblock %}

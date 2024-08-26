@@ -5,15 +5,25 @@
 {% block css_link %}
     <link href="{% static 'css/registration_form.css' %}" rel="stylesheet" />
     <link href="{% static 'css/auth_registration.css' %}" rel="stylesheet" />
+    <style>
+        main {
+            flex-direction: row;
+        }
+        @media (max-width:768px) {
+            main {
+                flex-direction: column;
+            }
+        }
+    </style>
 {% endblock %}
 
 {% block main %}
 <main>
     {% if form.errors %}
-        <div class="alert">
+        <div class="alert {% if messages %} alert-success {% else %} alert-warning {% endif %}">
             {% for field, errors in form.errors.items %}
                 {% for error in errors %}
-                    <strong><p>{{ error }}</p></strong>
+                    <strong>{{ error }}<br></strong>
                 {% endfor %}
             {% endfor %}
         </div>

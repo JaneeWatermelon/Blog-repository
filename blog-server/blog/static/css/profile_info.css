@@ -1,12 +1,5 @@
-
-
 span {
     color: var(--normal-blue);
-}
-
-a {
-    text-decoration: none;
-    color: var(--dark-blue) !important;
 }
 
 .profile_info_card {

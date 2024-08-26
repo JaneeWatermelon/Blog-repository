@@ -17,7 +17,7 @@
 
 {% block main %}
 <main>
-    {% if user.is_authenticated and object_list.exists %}
+    {% if user.is_authenticated and object_list.exists or is_paginated %}
         <div class="all_cards">
             {% for news in object_list %}
                 {% cache 60 sidebar user news news.likes news.views news.comments %}

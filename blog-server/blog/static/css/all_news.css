@@ -1,3 +1,7 @@
+body {
+    overflow-y: hidden;
+}
+
 main {
     display: flex;
 }
@@ -111,15 +115,43 @@ main {
 }
 
 @media (max-width:768px) {
+    body {
+        overflow-y: auto;
+    }
+    main {
+        display: flex;
+        flex-direction: column;
+    }
     .category_div {
-        width: 40%;
-        height: 90vh;
+        width: 100%;
+        height: fit-content;
+        top: 0;
+        padding: 0;
+        padding-bottom: 0;
     }
     .all_cards {
-        width: 60%;
-        height: 90vh;
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+        margin-left: 0;
+        overflow: unset;
+        top: 0;
+        padding-bottom: 0;
+    }
+    .all_cards .news_card {
+        top: 0;
+        margin: 0 0 8px 0;
     }
     .show_variants {
         display: none;
+    }
+    .footer_info {
+        margin-bottom: 8vh;
+    }
+    .category_name {
+        flex-basis: 90%;
+    }
+    .name_and_star > img {
+        flex-basis: 5%;
     }
 }

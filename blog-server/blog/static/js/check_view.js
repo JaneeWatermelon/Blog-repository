@@ -8,7 +8,7 @@ $(document).ready(function(){
            },
            success: function(response) {
                 console.log('view + 1');
-                $(".view_div").load(window.location.href + " .view_div > *");
+                $(".view_div").load(window.location.href + " .desktop .view_div > *");
            },
            error: function(xhr, status, error) {
                console.log("category changed with error");

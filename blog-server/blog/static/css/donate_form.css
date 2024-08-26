@@ -114,5 +114,26 @@ a {
         width: 100%;
         transform: scale(1);
         margin-top: 10px;
+        max-height: 84vh;
+    }
+    .input_div {
+        max-width: 100%;
+    }
+    .input_bar {
+        height: auto;
+    }
+    main h4 {
+        font-size: 1.25em;
+    }
+    .card_footer {
+        margin: 20px 16px;
+        max-width: -webkit-fill-available;
+        text-align: center;
+    }
+    .sign_in, .sign_in > button {
+        max-width: 100%;
+    }
+    .input_bar > input {
+        font-size: inherit;
     }
 }

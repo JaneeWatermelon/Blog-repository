@@ -2,11 +2,6 @@ span {
     color: var(--normal-blue);
 }
 
-a {
-    text-decoration: none;
-    color: var(--dark-blue) !important;
-}
-
 .profile_adds_card {
     width: 100%;
     display: flex;
@@ -27,6 +22,11 @@ a {
     justify-content: space-between;
     height: 100%;
     overflow: overlay;
+}
+
+.profile_adds_card_middle .news_card {
+    width: 49%;
+    margin: 0 0 8px 0;
 }
 
 .top_bar {
@@ -78,5 +78,8 @@ a {
 @media (max-width:768px) {
     .profile_adds_card_body {
         height: 30vh;
+    }
+    .profile_adds_card_middle .news_card {
+        width: 100%;
     }
 }

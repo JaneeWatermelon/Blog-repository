@@ -22,7 +22,6 @@ main h1 {
     overflow: auto;
     transform: scale(0.8);
     height: fit-content;
-    max-height: 84vh;
 }
 
 .card_header {
@@ -111,6 +110,10 @@ main h1 {
     .registration_card {
         width: 100%;
         transform: scale(1);
+        max-height: 84vh;
+    }
+    .input_group {
+        flex-direction: column;
     }
     .input_div {
         width: 461px;
@@ -119,6 +122,9 @@ main h1 {
     }
     .input_div:first-child {
         margin-right: 0;
+    }
+    .input_div:last-child {
+        margin-left: 0;
     }
     .input_bar {
         height: auto;

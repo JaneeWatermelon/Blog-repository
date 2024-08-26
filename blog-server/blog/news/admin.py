@@ -10,9 +10,10 @@ class CommentAdmin(admin.TabularInline):
     extra = 0
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'likes', 'views', 'time', 'category')
+    list_display = ('id', 'likes', 'views', 'name', 'time', 'category')
     readonly_fields = ('time',)
     search_fields = ('time',)
+    ordering = ('name',)
     inlines = (CommentAdmin,)
 
 @admin.register(Category)

@@ -16,7 +16,6 @@ main h1 {
     overflow: auto;
     transform: scale(0.8);
     height: fit-content;
-    max-height: 84vh;
 }
 
 .card_header {
@@ -95,6 +94,7 @@ main h1 {
     .auth_card {
         width: 100%;
         transform: scale(1);
+        max-height: 84vh;
     }
     .input_div {
         max-width: 100%;

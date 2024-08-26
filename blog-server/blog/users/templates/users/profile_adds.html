@@ -45,6 +45,22 @@
             </div>
             {% endif %}
         {% else %}
+            {% if user.is_verified %}
+            <div class="profile_adds_card_body">
+                <div>
+                    <h5>Ваш аккаунт подтверждён!</h5>
+                </div>
+                <img src="{% static 'svg/happy_smile.svg' %}" alt="happy_smile_icon">
+            </div>
+            {% else %}
+            <div class="profile_adds_card_body">
+                <div>
+                    <h5>Кажется ваш аккаунт ещё не подтверждён.</h5>
+                    <h5>Мы отправили вам письмо со ссылкой на электронную почту.</h5>
+                </div>
+                <img src="{% static 'svg/sad_smile.svg' %}" alt="sad_smile_icon">
+            </div>
+            {% endif %}
         {% endif %}
     </div>
 </div>

@@ -71,16 +71,22 @@ $(document).ready(function(){
            url: `${domain_name}/news/change_category`,
            type: "GET",
            data: {
-                id: category_id
+                id: category_id,
+                page: $(".paginator_block").attr('data-page')
            },
            success: function(response) {
-                $(".all_cards").load(window.location.href + " .all_cards > *", function(){
-                    check_show_type();
-                });
-                if ($(".paginator_block")) {
-                    console.log('paginated');
-                    $(".paginator_block").load(window.location.href + " .paginator_block > *");
+                if (response['redirect']) {
+                    $(location).prop('href', domain_name);
+                } else {
+                    $(".all_cards").load(window.location.href + " .all_cards > *", function(){
+                        check_show_type();
+                    });
+                    if ($(".paginator_block")) {
+                        console.log('paginated');
+                        $(".paginator_block").load(window.location.href + " .desktop.paginator_block > *");
+                    };
                 };
+
            },
            error: function(xhr, status, error) {
                console.log("category changed with error");

@@ -35,10 +35,12 @@ def parsing_playground(adds_url, category_id):
 
     for news in all_news:
         try:
-            news_link = news.find('div', class_='post-title').find('a')['href']
+            post_title_a = news.find('div', class_='post-title').find('a')
+            news_link = post_title_a['href']
+            name = post_title_a.text.strip()
         except Exception:
             continue
-        if not News.objects.filter(url=news_link):
+        if (not News.objects.filter(url=news_link)) and (not News.objects.filter(name=name)):
             full_news = requests.get(news_link)
             full_soup = BeautifulSoup(full_news.text, 'lxml')
 
@@ -53,7 +55,7 @@ def parsing_playground(adds_url, category_id):
             image_file = ContentFile(image_bytes, name=image_name)
             saved_image_path = default_storage.save(f'news_images/{category.name}/{image_name}', image_file)
 
-            name = full_soup.find('h1', class_='post-title').text.strip()
+
             description = article_content.text.strip()
 
             for fig in article_content.find_all('figure'):

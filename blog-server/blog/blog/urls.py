@@ -11,6 +11,7 @@ from news.views import (All_News_View,
                         parsing_playground_games,
                         parsing_womanhit,
                         fill_categories,)
+from donate.views import my_webhook_handler
 
 static_urlpatterns = [
     re_path(r"^media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
@@ -23,6 +24,7 @@ urlpatterns = [
     path('news/', include('news.urls', namespace='news')),
     path('donate/', include('donate.urls', namespace='donate')),
     path('users/', include('users.urls', namespace='users')),
+    path('yookassa/webhook/', my_webhook_handler, name='yookassa_webhook'),
     path('', include(static_urlpatterns)),
 ]
 

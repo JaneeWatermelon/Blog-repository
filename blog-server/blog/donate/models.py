@@ -6,4 +6,6 @@ from users.models import User
 class Donate(models.Model):
     price = models.PositiveIntegerField(default=50)
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    payment_id = models.CharField(default='')
+    status = models.CharField(default='')
 

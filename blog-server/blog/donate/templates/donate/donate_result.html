@@ -8,25 +8,24 @@
 
 {% block main %}
 <main>
+    {% if status == 'succeeded' %}
     <div class="verification_div">
         <div>
-            <h5>Оплата прошла успешно! (Наверное)</h5>
-            <h5>Благодарим за поддержку! (Функция платежа ещё в разработке)</h5>
+            <h5>Оплата прошла успешно!</h5>
+            <h5>Благодарим за поддержку!</h5>
             <h5><a href="/">Вернуться на главную</a></h5>
         </div>
         <img src="{% static 'svg/happy_smile.svg' %}" alt="happy_smile_icon">
     </div>
-<!--    {% if status == 'succeeded' %}-->
-
-<!--    {% else %}-->
-<!--    <div class="verification_div">-->
-<!--        <div>-->
-<!--            <h5>Ой, кажется что-то пошло не так.</h5>-->
-<!--            <h5>Платёж был отменён.</h5>-->
-<!--            <h5><a href="/">Вернуться на главную</a></h5>-->
-<!--        </div>-->
-<!--        <img src="{% static 'svg/sad_smile.svg' %}" alt="sad_smile_icon">-->
-<!--    </div>-->
-<!--    {% endif %}-->
+    {% else %}
+    <div class="verification_div">
+        <div>
+            <h5>Ой, кажется что-то пошло не так.</h5>
+            <h5>Платёж был отменён.</h5>
+            <h5><a href="/">Вернуться на главную</a></h5>
+        </div>
+        <img src="{% static 'svg/sad_smile.svg' %}" alt="sad_smile_icon">
+    </div>
+    {% endif %}
 </main>
 {% endblock %}

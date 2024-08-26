@@ -26,12 +26,6 @@ main {
     width: 0;
 }
 
-.news_card {
-    width: 49%;
-    margin: 0;
-    margin-bottom: 8px;
-}
-
 @media (max-width:768px) {
     body {
         overflow-y: auto;

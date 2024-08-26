@@ -4,17 +4,25 @@ body {
 
 main {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
-    top: -16vh;
-    height: 100vh;
+    height: 84vh;
+}
+
+main > .alert {
+    text-align: center;
+}
+
+main > .alert ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 @media (max-width:768px) {
     main {
-        align-items: inherit;
-        top: 0;
+        justify-content: inherit;
         height: 84vh;
     }
 }

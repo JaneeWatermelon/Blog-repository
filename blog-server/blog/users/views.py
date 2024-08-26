@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import HttpResponseRedirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView
 
 from common.views import TitleMixin
 from news.models import News
@@ -79,6 +79,7 @@ def UserProfileView(request, pk):
         for view_id in user.viewed_news_id:
             viewed_news = viewed_news.union(News.objects.filter(pk=view_id))
         context = {
+            'title': 'Profile Page',
             'form': ProfileForm(instance=request.user),
             'liked_news': liked_news,
             'viewed_news': viewed_news,

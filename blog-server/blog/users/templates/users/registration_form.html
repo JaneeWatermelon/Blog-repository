@@ -3,8 +3,8 @@
     <div class="card_header">
         <h1>Регистрация</h1>
     </div>
+
     <div class="card_body">
-        {% if screen_width > 768 %}
         <div class="input_group">
             <div class="input_div">
                 <label for="{{ form.first_name.id_for_label }}"><h4>Имя</h4></label>
@@ -47,50 +47,13 @@
                 </div>
             </div>
         </div>
-        {% else %}
-        <div class="input_div">
-            <label for="{{ form.first_name.id_for_label }}"><h4>Имя</h4></label>
-            <div class="input_bar">
-                {{ form.first_name }}
-            </div>
-        </div>
-        <div class="input_div">
-            <label for="{{ form.last_name.id_for_label }}"><h4>Фамилия</h4></label>
-            <div class="input_bar">
-                {{ form.last_name }}
-            </div>
-        </div>
-        <div class="input_div">
-            <label for="{{ form.email.id_for_label }}"><h4>Электронная почта</h4></label>
-            <div class="input_bar">
-                {{ form.email }}
-            </div>
-        </div>
-        <div class="input_div">
-            <label for="{{ form.username.id_for_label }}"><h4>Имя пользователя</h4></label>
-            <div class="input_bar">
-                {{ form.username }}
-            </div>
-        </div>
-        <div class="input_div">
-            <label for="{{ form.password1.id_for_label }}"><h4>Пароль</h4></label>
-            <div class="input_bar">
-                {{ form.password1 }}
-            </div>
-        </div>
-        <div class="input_div">
-            <label for="{{ form.password2.id_for_label }}"><h4>Повторный пароль</h4></label>
-            <div class="input_bar">
-                {{ form.password2 }}
-            </div>
-        </div>
-        {% endif %}
         <div class="sign_up">
             <button type="submit">
                 <h4>Зарегистрироваться</h4>
             </button>
         </div>
     </div>
+
     <div class="card_footer">
         <a href="{% url 'users:login' %}">
             <h5>Уже есть аккаунт? Войдите здесь</h5>

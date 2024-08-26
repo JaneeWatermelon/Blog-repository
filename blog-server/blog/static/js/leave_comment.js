@@ -48,7 +48,7 @@ $(document).ready(function(){
                     $(".see_more_button").attr('data-page', 1);
                     make_base_comments();
                 });
-                $(".comment_div").load(window.location.href + " .comment_div > *");
+                $(".comment_div").load(window.location.href + " .desktop .comment_div > *");
            },
            error: function(xhr, status, error) {
                console.log("category changed with error");

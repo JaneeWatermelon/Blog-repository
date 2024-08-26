@@ -1,14 +1,9 @@
-
-from django.conf import settings
-from django.conf.urls.static import static
-from django.contrib import admin
-from django.contrib.auth.decorators import login_required
 from django.urls import include, path
 
 from news.views import (All_News_View, Full_Card_View, New_News_View,
                         Popular_News_View, Recommended_News_View,
                         change_category, change_star, check_view, heart_news,
-                        leave_comment, rate_comment, change_show_type, get_screen_width)
+                        leave_comment, rate_comment, change_show_type)
 
 app_name = 'news'
 
@@ -21,10 +16,8 @@ urlpatterns = [
     path('popular/page/<int:page>', Popular_News_View.as_view(), name='paginator_popular'),
     path('new', New_News_View.as_view(), name='new'),
     path('new/page/<int:page>', New_News_View.as_view(), name='paginator_new'),
-
     path('full_card/<int:pk>', Full_Card_View.as_view(), name='full_card'),
 
-    path('get_screen_width', get_screen_width, name='get_screen_width'),
     path('change_category', change_category, name='change_category'),
     path('change_star', change_star, name='change_star'),
     path('like_news', heart_news, name='like_news'),

@@ -1,20 +1,18 @@
-import difflib
+from difflib import SequenceMatcher
 import re
 import time
-from functools import wraps
+from functools import wraps, lru_cache
 from django.utils.timezone import now, timedelta
 
 import fake_useragent
 import requests
 from bs4 import BeautifulSoup
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.http import JsonResponse
 from django.shortcuts import HttpResponse, HttpResponseRedirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from rutermextract import TermExtractor
@@ -24,8 +22,7 @@ from selenium.webdriver.common.by import By
 from common.views import TitleMixin
 from news.models import Category, Comment, News
 from users.models import User
-
-from django.utils.translation import gettext
+from django.core.paginator import Paginator
 
 per_page = 24
 
@@ -68,32 +65,51 @@ class Recommended_News_View(TitleMixin, ListView):
     title = 'Recommended News'
     model = News
     paginate_by = per_page
+
     def get_queryset(self):
         queryset = super().get_queryset()
         user = self.request.user
-        result = queryset.filter(pk=0)
 
         if user.is_authenticated:
             sorted_user_tags = {k: v for k, v in sorted(user.recommended_tags.items(), key=lambda item: item[1], reverse=True)}
-            all_news = News.objects.all()
+            user_tags = list(sorted_user_tags.keys())[:15]
 
-            maybe_news = {}
-            for user_tag in list(sorted_user_tags.keys())[:15]:
-                for news in all_news:
-                    news_id = news.id
-                    for news_tag in news.tags:
-                        print(f'user_tag - {user_tag} | news_tag - {news_tag}')
-                        matcher_result = difflib.SequenceMatcher(isjunk=None, a=user_tag, b=news_tag, autojunk=True).quick_ratio()
-                        if matcher_result >= 0.7:
-                            try:
-                                maybe_news[news_id] += 1
-                            except Exception:
-                                maybe_news[news_id] = 1
-                            print(f'user_tag - {user_tag} | news_tag - {news_tag}')
-                            if maybe_news[news_id] >= 2:
-                                result = result.union(all_news.filter(pk=news_id))
-                                all_news = all_news.exclude(pk=news_id)
-                                break
+            if user_tags:
+                result = self.get_recommended_news(user_tags)
+            else:
+                result = queryset.none()
+
+            return result
+
+        return queryset.none()
+
+    def get_recommended_news(self, user_tags):
+        all_news = News.objects.all()
+        result = all_news.filter(pk=0)
+
+        @lru_cache(maxsize=1024)
+        def get_matcher_result(tag1, tag2):
+            return SequenceMatcher(None, tag1, tag2).quick_ratio()
+
+        for news in all_news:
+            is_break = False
+            news_id = news.id
+            matches = 0
+
+            for user_tag in user_tags:
+                for news_tag in news.tags:
+                    matcher_result = get_matcher_result(user_tag, news_tag)
+
+                    if matcher_result >= 0.7:
+                        matches += 1
+
+                        if matches >= 2:
+                            result = result.union(all_news.filter(pk=news_id))
+                            is_break = True
+                            break
+                if is_break:
+                    break
+
         return result
 
 class Popular_News_View(TitleMixin, ListView):
@@ -124,6 +140,12 @@ class Full_Card_View(TitleMixin, DetailView):
         context = super().get_context_data()
         context['comments'] = Comment.objects.filter(news=self.object).order_by('-time')
         return context
+
+def all_paginator(request):
+    queryset = All_News_View(request=request).get_queryset()
+    paginate_by = per_page
+    paginator = Paginator(queryset, paginate_by)
+    return paginator
 
 @ajax_login_required
 def heart_news(request):
@@ -164,6 +186,8 @@ def heart_news(request):
 
 def change_category(request):
     if request.method == 'GET':
+        prev_page_number = int(request.GET['page'])
+        print(prev_page_number)
         category_id = request.GET['id']
         active_categories = request.session['active_categories']
 
@@ -174,11 +198,13 @@ def change_category(request):
         else:
             active_categories.remove(int(category_id))
         request.session['active_categories'] = active_categories
-        data = {
-            'active_categories': active_categories
-        }
         current_list_view = All_News_View(request=request)
         current_list_view.reload_queryset()
+        print('changed')
+        data = {'redirect': False}
+        if all_paginator(request).num_pages < prev_page_number:
+            print('in if after change')
+            data['redirect'] = True
         return JsonResponse(data)
 @ajax_login_required
 def change_star(request):
@@ -616,7 +642,3 @@ def fill_categories(request):
         category.save()
     return HttpResponseRedirect(reverse('all_news'))
 
-def get_screen_width(request):
-    if request.method == "GET":
-        request.session['screen_width'] = request.GET['width']
-        return JsonResponse({})

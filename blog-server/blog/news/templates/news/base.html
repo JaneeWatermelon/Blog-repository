@@ -5,11 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>{{ title }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="{% static 'css/base.css' %}" rel="stylesheet" />
-    {% block css_link %}
-    {% endblock %}
     <style>
         @font-face {
             font-family: "cool_font";
@@ -30,6 +28,8 @@
             --success-color: #D9EE58;
         }
     </style>
+    {% block css_link %}
+    {% endblock %}
 </head>
 <body>
     <section id="background_section">
@@ -38,47 +38,47 @@
     </section>
     <section id="main_section">
         <div class="top_gradient_div">
-            {% if screen_width <= 768 %}
-                <div class="top_frame_group">
-                    <a href="{% url 'all_news' %}"><img id="blogus_svg" src="{% static 'svg/blogus.svg' %}" alt="blogus_icon"></a>
-                    <a href="{% url 'all_news' %}"><h1>Blogus</h1></a>
-                    <a href="{% url 'donate:form' %}"><img id="dollar_svg" src="{% static 'svg/dollar.svg' %}" alt="donate_icon"></a>
-                    <a href="{% url 'donate:form' %}"><h1>Donate</h1></a>
-                    {% if user.is_authenticated %}
-                    <a href="{% url 'users:profile' user.id %}"><img id="profile_svg" style="width: calc(50*0.7px); height: calc(50*0.7px); object-fit: cover; outline: 2px solid #3282B8; border-radius: 50%;" src="{{ user.image.url }}" alt="profile_icon"></a>
-                    {% else %}
-                    <a href="{% url 'users:login' %}"><img id="profile_svg" src="{% static 'svg/profile.svg' %}" alt="login_icon"></a>
-                    {% endif %}
-                </div>
-                <div class="top_frame_group">
-                    <a id="all_news" href="{% url 'all_news' %}"><h2>Все</h2></a>
-                    <a id="recommended" href="{% url 'news:recommended' %}"><h2>Рекомендованные</h2></a>
-                </div>
-                <div class="top_frame_group">
-                    <a id="popular" href="{% url 'news:popular' %}"><h2>Популярные</h2></a>
-                    <a id="new" href="{% url 'news:new' %}"><h2>Новые</h2></a>
-                </div>
-            {% else %}
-                <div class="top_frame_group">
-                    <a href="{% url 'all_news' %}"><img id="blogus_svg" src="{% static 'svg/blogus.svg' %}" alt="blogus_icon"></a>
-                    <a href="{% url 'all_news' %}"><h1>Blogus</h1></a>
-                </div>
-                <div class="top_frame_group">
-                    <a href="{% url 'donate:form' %}"><img id="dollar_svg" src="{% static 'svg/dollar.svg' %}" alt="donate_icon"></a>
-                    <a href="{% url 'donate:form' %}"><h1>Donate</h1></a>
-                </div>
-                <div class="top_frame_group">
-                    <a id="all_news" href="{% url 'all_news' %}"><h2>Все</h2></a>
-                    <a id="recommended" href="{% url 'news:recommended' %}"><h2>Рекомендованные</h2></a>
-                    <a id="popular" href="{% url 'news:popular' %}"><h2>Популярные</h2></a>
-                    <a id="new" href="{% url 'news:new' %}"><h2>Новые</h2></a>
-                    {% if user.is_authenticated %}
-                    <a href="{% url 'users:profile' user.id %}"><img id="profile_svg" style="width: calc(50*0.7px); height: calc(50*0.7px); object-fit: cover; outline: 2px solid #3282B8; border-radius: 50%;" src="{{ user.image.url }}" alt="profile_icon"></a>
-                    {% else %}
-                    <a href="{% url 'users:login' %}"><img id="profile_svg" src="{% static 'svg/profile.svg' %}" alt="login_icon"></a>
-                    {% endif %}
-                </div>
-            {% endif %}
+
+            <div class="mobile top_frame_group">
+                <a href="{% url 'all_news' %}"><img id="blogus_svg" src="{% static 'svg/blogus.svg' %}" alt="blogus_icon"></a>
+                <a href="{% url 'all_news' %}"><h1>Blogus</h1></a>
+                <a href="{% url 'donate:form' %}"><img id="dollar_svg" src="{% static 'svg/dollar.svg' %}" alt="donate_icon"></a>
+                <a href="{% url 'donate:form' %}"><h1>Donate</h1></a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'users:profile' user.id %}"><img id="profile_svg" style="width: calc(50*0.7px); height: calc(50*0.7px); object-fit: cover; outline: 2px solid #3282B8; border-radius: 50%;" src="{{ user.image.url }}" alt="profile_icon"></a>
+                {% else %}
+                <a href="{% url 'users:login' %}"><img id="profile_svg" src="{% static 'svg/profile.svg' %}" alt="login_icon"></a>
+                {% endif %}
+            </div>
+            <div class="mobile top_frame_group">
+                <a id="all_news" href="{% url 'all_news' %}"><h2>Все</h2></a>
+                <a id="recommended" href="{% url 'news:recommended' %}"><h2>Рекомендованные</h2></a>
+            </div>
+            <div class="mobile top_frame_group">
+                <a id="popular" href="{% url 'news:popular' %}"><h2>Популярные</h2></a>
+                <a id="new" href="{% url 'news:new' %}"><h2>Новые</h2></a>
+            </div>
+
+            <div class="desktop top_frame_group">
+                <a href="{% url 'all_news' %}"><img id="blogus_svg" src="{% static 'svg/blogus.svg' %}" alt="blogus_icon"></a>
+                <a href="{% url 'all_news' %}"><h1>Blogus</h1></a>
+            </div>
+            <div class="desktop top_frame_group">
+                <a href="{% url 'donate:form' %}"><img id="dollar_svg" src="{% static 'svg/dollar.svg' %}" alt="donate_icon"></a>
+                <a href="{% url 'donate:form' %}"><h1>Donate</h1></a>
+            </div>
+            <div class="desktop top_frame_group">
+                <a id="all_news" href="{% url 'all_news' %}"><h2>Все</h2></a>
+                <a id="recommended" href="{% url 'news:recommended' %}"><h2>Рекомендованные</h2></a>
+                <a id="popular" href="{% url 'news:popular' %}"><h2>Популярные</h2></a>
+                <a id="new" href="{% url 'news:new' %}"><h2>Новые</h2></a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'users:profile' user.id %}"><img id="profile_svg" style="width: calc(50*0.7px); height: calc(50*0.7px); object-fit: cover; outline: 2px solid #3282B8; border-radius: 50%;" src="{{ user.image.url }}" alt="profile_icon"></a>
+                {% else %}
+                <a href="{% url 'users:login' %}"><img id="profile_svg" src="{% static 'svg/profile.svg' %}" alt="login_icon"></a>
+                {% endif %}
+            </div>
+
         </div>
         <div class="news_hider"></div>
         {% block main %}

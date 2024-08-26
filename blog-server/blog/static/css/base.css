@@ -131,6 +131,12 @@ h1, h2 {
         position: relative;
         z-index: 1;
     }
+    .news_card h5 {
+        font-size: 1.25em;
+    }
+    .news_card h6 {
+        font-size: 1rem;
+    }
     .top_frame_group {
         display: flex;
         align-items: center;
