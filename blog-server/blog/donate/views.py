@@ -15,8 +15,6 @@ from donate.forms import DonateForm
 from django.views.decorators.csrf import csrf_exempt
 
 from django.conf import settings
-from donate.models import Donate
-from django.http import JsonResponse
 
 
 class DonateView(TitleMixin, CreateView):

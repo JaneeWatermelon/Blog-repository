@@ -23,9 +23,7 @@
             <div class="description">
                 <h6>{{ news.description }}</h6>
             </div>
-            <div class="read_more">
-                <p>Читать дальше</p>
-            </div>
+            <div class="read_more"></div>
         </div>
     </a>
     <div class="news_card_footer">
@@ -38,11 +36,11 @@
             <p>{{ news.likes }}</p>
         </div>
         <div>
-            <img class="view_icon" src="{% static 'svg/view.svg' %}" alt="view_icon">
+            <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %} view_icon" src="{% static 'svg/view.svg' %}" alt="view_icon">
             <p>{{ news.views }}</p>
         </div>
         <div>
-            <img class="comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
+            <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %} comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
             <p>{{ news.comments_count }}</p>
         </div>
     </div>

@@ -48,9 +48,11 @@ class UserRegistrationForm(UserCreationForm):
 
 class UserAuthForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form_input',
         'placeholder': 'Введите имя пользователя'
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form_input',
         'placeholder': 'Введите пароль'
     }))
 
@@ -59,15 +61,21 @@ class UserAuthForm(AuthenticationForm):
         fields = ['username', 'password']
 
 class ProfileForm(UserChangeForm):
-    first_name = forms.CharField(widget=forms.TextInput())
-    last_name = forms.CharField(widget=forms.TextInput())
+    first_name = forms.CharField(widget=forms.EmailInput(attrs={
+        'class': 'form_input',
+    }))
+    last_name = forms.CharField(widget=forms.EmailInput(attrs={
+        'class': 'form_input',
+    }))
     username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form_input',
         'readonly': True,
-        'style': 'color: rgba(0, 0, 0, 0.6);',
+        'style': 'color: rgba(var(--dark-font), 0.5);',
     }))
     email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class': 'form_input',
         'readonly': True,
-        'style': 'color: rgba(0, 0, 0, 0.6);',
+        'style': 'color: rgba(var(--dark-font), 0.5);',
     }))
     image = forms.ImageField(widget=forms.FileInput(attrs={
         'class': 'profile_info_photo',

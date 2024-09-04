@@ -6,3 +6,9 @@ def choosed_categories(request):
 def show_type(request):
     request.session.setdefault('show_type', 'type_4')
     return {'show_type': request.session['show_type']}
+
+def choosed_theme(request):
+    request.session.setdefault('choosed_theme', 'light')
+    print('in context_proc')
+    print(request.session['choosed_theme'])
+    return {'choosed_theme': request.session['choosed_theme']}

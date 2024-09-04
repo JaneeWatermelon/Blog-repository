@@ -5,14 +5,15 @@
 {% load custom_filters %}
 {% load cache %}
 
+{% block meta %}
+<meta name="description" content="Новости из разных категорий (игры, кино, сериалы, мода и т.п.)">
+{% endblock %}
+
 {% block css_link %}
     <link href="{% static 'css/category.css' %}" rel="stylesheet" />
     <link href="{% static 'css/card.css' %}" rel="stylesheet" />
     <link href="{% static 'css/all_news.css' %}" rel="stylesheet" />
     <style>
-        .news_card {
-            top: 4vh;
-        }
         #all_news h2 {
             font-size: 1.5625em;
         }
@@ -31,10 +32,10 @@
                 <h6>Вариант отображения</h6>
             </div>
             <button class="variant type_4 {% if show_type == 'type_4' %}choosed{% endif %}">
-                <img src="{% static 'svg/4x4.svg' %}">
+                <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %}" src="{% static 'svg/4x4.svg' %}" alt="4 columns">
             </button>
             <button class="variant type_3 {% if show_type == 'type_3' %}choosed{% endif %}">
-                <img src="{% static 'svg/3x3.svg' %}">
+                <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %}" src="{% static 'svg/3x3.svg' %}" alt="3 columns">
             </button>
         </div>
         {% if is_paginated %}
@@ -43,7 +44,7 @@
                 {% if page_obj.has_previous %}
                 <li class="page-item"><a class="page-link" href="{% url 'news:paginator_all' page_obj.previous_page_number %}"><i class="fa-solid fa-arrow-left"></i></a></li>
                 {% else %}
-                <li class="page-item disabled"><a class="page-link"><i class="fa-solid fa-arrow-left"></i></a></li>
+                <li class="page-item disabled"><a class="page-link" href="/"><i class="fa-solid fa-arrow-left"></i></a></li>
                 {% endif %}
 
                 {% for page in paginator.page_range %}
@@ -53,7 +54,7 @@
                 {% if page_obj.has_next %}
                 <li class="page-item"><a class="page-link" href="{% url 'news:paginator_all' page_obj.next_page_number %}"><i class="fa-solid fa-arrow-right"></i></a></li>
                 {% else %}
-                <li class="page-item disabled"><a class="page-link"><i class="fa-solid fa-arrow-right"></i></a></li>
+                <li class="page-item disabled"><a class="page-link" href="/"><i class="fa-solid fa-arrow-right"></i></a></li>
                 {% endif %}
             </ul>
         </div>
@@ -105,4 +106,5 @@
     <script src="{% static 'js/change_category.js' %}"></script>
     <script id="star_script" src="{% static 'js/star_categories.js' %}"></script>
     <script src="{% static 'js/heart_for_all.js' %}"></script>
+    <script src="{% static 'js/show_category.js' %}"></script>
 {% endblock %}

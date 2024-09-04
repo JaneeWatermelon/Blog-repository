@@ -3,11 +3,14 @@ $(document).ready(function(){
         if ($(window).width() > 768) {
             $(".news_card").css({
                 width: '24%',
-                top: '4vh',
+                transform: "translateY(4vh)",
+            });
+            $(".news_card_body").css({
+                'aspect-ratio': '1',
             });
             for (let i = 1; i < $(".all_cards").children().length; i+=2) {
                 $($(".all_cards").children()[i]).css({
-                    top: '12vh',
+                    transform: "translateY(12vh)",
                 });
                 console.log('done');
             };
@@ -19,11 +22,14 @@ $(document).ready(function(){
         if ($(window).width() > 768) {
             $(".news_card").css({
                 width: '32%',
-                top: '4vh',
+                transform: "translateY(4vh)",
+            });
+            $(".news_card_body").css({
+                'aspect-ratio': '1.5',
             });
             for (let i = 1; i < $(".all_cards").children().length; i+=3) {
                 $($(".all_cards").children()[i]).css({
-                    top: '12vh',
+                    transform: "translateY(12vh)",
                 });
                 console.log('done');
             };
@@ -45,14 +51,11 @@ $(document).ready(function(){
         let category_id = $(this).attr('id');
         if (category_id == '0') {
             $(".category_name").removeClass('choosed_div');
-            $(".category_name > p").removeClass('choosed_p');
             $(this).addClass('choosed_div');
-            $(this).children().addClass('choosed_p');
             n = 0;
         }
         else {
             $(this).toggleClass('choosed_div');
-            $(this).children().toggleClass('choosed_p');
             if ($(this).hasClass('choosed_div')) {
                 n++;
             } else {
@@ -60,10 +63,8 @@ $(document).ready(function(){
             }
             if (n==0) {
                 $("#0").addClass('choosed_div');
-                $("#0 > p").addClass('choosed_p');
             } else {
                 $("#0").removeClass('choosed_div');
-                $("#0 > p").removeClass('choosed_p');
             }
             console.log(n);
         }
@@ -75,11 +76,17 @@ $(document).ready(function(){
                 page: $(".paginator_block").attr('data-page')
            },
            success: function(response) {
+                console.log(response['choosed_theme'])
                 if (response['redirect']) {
                     $(location).prop('href', domain_name);
                 } else {
                     $(".all_cards").load(window.location.href + " .all_cards > *", function(){
                         check_show_type();
+                        if ($('.change_theme').attr('data-theme') == 'light') {
+                            $('.svg_icon').removeClass('inverted');
+                        } else {
+                            $('.svg_icon').addClass('inverted');
+                        };
                     });
                     if ($(".paginator_block")) {
                         console.log('paginated');

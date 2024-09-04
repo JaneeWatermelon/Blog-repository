@@ -108,6 +108,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'news.context_processors.choosed_categories',
                 'news.context_processors.show_type',
+                'news.context_processors.choosed_theme',
                 'users.context_processors.get_type',
             ],
         },

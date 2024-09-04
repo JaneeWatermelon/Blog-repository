@@ -1,8 +1,6 @@
 from django.db import models
 
 from users.models import User
-from django.utils.timezone import datetime
-
 
 class Category(models.Model):
     name = models.CharField(max_length=30)
@@ -18,6 +16,7 @@ class News(models.Model):
     description_for_html = models.TextField()
     category = models.ForeignKey(to=Category, on_delete=models.PROTECT)
     image = models.ImageField(upload_to=f'news_images/{category.name}', blank=True, null=True, default='/static/img/no_image.png')
+
     url = models.URLField()
     base_url = models.URLField()
     likes = models.PositiveIntegerField(default=0)

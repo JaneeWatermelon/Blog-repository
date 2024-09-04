@@ -1,8 +1,10 @@
 from difflib import SequenceMatcher
-import re
+import re, os
 import time
 from functools import wraps, lru_cache
 from django.utils.timezone import now, timedelta
+from PIL import Image
+from django.conf import settings
 
 import fake_useragent
 import requests
@@ -23,6 +25,7 @@ from common.views import TitleMixin
 from news.models import Category, Comment, News
 from users.models import User
 from django.core.paginator import Paginator
+# from news.tasks import change_images
 
 per_page = 24
 
@@ -130,7 +133,14 @@ class New_News_View(TitleMixin, ListView):
     paginate_by = per_page
     def get_queryset(self):
         queryset = super().get_queryset()
-        return queryset.filter(date=(now().date())).order_by('-time')
+        result = queryset.filter(pk=0)
+        time_ago = now()-timedelta(hours=24)
+        for news in queryset.order_by('-time'):
+            if news.time >= time_ago:
+                result = result.union(News.objects.filter(pk=news.id))
+            else:
+                break
+        return result.order_by('-time')
 class Full_Card_View(TitleMixin, DetailView):
     model = News
     title = 'Detail News'
@@ -201,7 +211,7 @@ def change_category(request):
         current_list_view = All_News_View(request=request)
         current_list_view.reload_queryset()
         print('changed')
-        data = {'redirect': False}
+        data = {'redirect': False, 'choosed_theme': request.session['choosed_theme']}
         if all_paginator(request).num_pages < prev_page_number:
             print('in if after change')
             data['redirect'] = True
@@ -642,3 +652,31 @@ def fill_categories(request):
         category.save()
     return HttpResponseRedirect(reverse('all_news'))
 
+def replace_all_news_images_to_webp(request):
+    news_items = News.objects.all()
+    for item in news_items:
+        if item.image:
+            image_path = os.path.join(settings.MEDIA_ROOT, item.image.name)
+            image = Image.open(image_path)
+            webp_image_path = image_path.replace('.jpg', '.webp')
+
+            image.save(webp_image_path, 'webp')
+
+            # Обновите путь к изображению в базе данных
+            item.image.name = item.image.name.replace('.jpg', '.webp')
+            item.save()
+
+            # Удалите старый файл
+            os.remove(image_path)
+    return HttpResponseRedirect(reverse('all_news'))
+
+def change_theme(request):
+    if request.method == "GET":
+        theme = request.session.setdefault('choosed_theme', 'light')
+        if theme == 'light':
+            request.session['choosed_theme'] = 'dark'
+        else:
+            request.session['choosed_theme'] = 'light'
+        print('in views')
+        print(request.session['choosed_theme'])
+        return JsonResponse({'choosed_theme': request.session['choosed_theme']})

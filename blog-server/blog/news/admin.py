@@ -13,7 +13,6 @@ class NewsAdmin(admin.ModelAdmin):
     list_display = ('id', 'likes', 'views', 'name', 'time', 'category')
     readonly_fields = ('time',)
     search_fields = ('time',)
-    ordering = ('name',)
     inlines = (CommentAdmin,)
 
 @admin.register(Category)

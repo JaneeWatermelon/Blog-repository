@@ -4,6 +4,10 @@
 {% load custom_filters %}
 {% load humanize %}
 
+{% block meta %}
+<meta name="description" content="{{ object.time.date }}">
+{% endblock %}
+
 {% block css_link %}
     <link href="{% static 'css/full_card.css' %}" rel="stylesheet" />
     <style>
@@ -28,11 +32,11 @@
                 <p>{{ object.likes }}</p>
             </div>
             <div class="view_div">
-                <img class="view_icon" src="{% static 'svg/view.svg' %}" alt="view_icon">
+                <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %} view_icon" src="{% static 'svg/view.svg' %}" alt="view_icon">
                 <p>{{ object.views }}</p>
             </div>
             <div class="comment_div">
-                <img class="comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
+                <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %} comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
                 <p>{{ object.comments_count }}</p>
             </div>
         </div>
@@ -40,11 +44,11 @@
     <div class="desktop card_body">
         <div class="time_and_url">
             <p>Опубликовано: {{ object.time.date }}</p>
-            <a href="{{ object.url }}"><p>Ссылка на источник</p></a>
+            <p><a href="{{ object.url }}">Ссылка на источник</a></p>
         </div>
         <div class="category">
             <p>Категория: {{ object.category.name }}</p>
-            <a href="{{ object.base_url }}"><p>Главная страница источника</p></a>
+            <p><a href="{{ object.base_url }}">Главная страница источника</a></p>
         </div>
         <div class="name">
             <h4>{{ object.name }}</h4>
@@ -74,11 +78,11 @@
                 <p>{{ object.likes }}</p>
             </div>
             <div class="view_div">
-                <img class="view_icon" src="{% static 'svg/view.svg' %}" alt="view_icon">
+                <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %} view_icon" src="{% static 'svg/view.svg' %}" alt="view_icon">
                 <p>{{ object.views }}</p>
             </div>
             <div class="comment_div">
-                <img class="comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
+                <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %} comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
                 <p>{{ object.comments_count }}</p>
             </div>
         </div>
@@ -94,7 +98,7 @@
     <div class="card_footer">
         <button type="button" class="comment_shower">
             <h5>Комментарии</h5>
-            <img class="comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
+            <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %} comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
         </button>
         <div class="foot_comments">
             <div class="leave_comment">

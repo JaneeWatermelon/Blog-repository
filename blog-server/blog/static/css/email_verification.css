@@ -4,7 +4,7 @@ main {
 }
 
 .verification_div {
-    background-color: white;
+    background-color: var(--blank-color);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -23,7 +23,7 @@ main {
 }
 
 .verification_div h5 {
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(var(--dark-font), 0.5);
 }
 
 @media (max-width:768px) {

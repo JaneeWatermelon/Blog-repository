@@ -27,5 +27,5 @@ function detectDevice() {
    }
 }
 
-window.onload = detectDevice;
+detectDevice();
 window.onresize = detectDevice;

@@ -60,8 +60,8 @@ main {
     margin: 0;
 }
 
-.paginator_block li {
-    background-color: white;
+.page-item {
+    background-color: var(--blank-color);
     border-radius: 10px;
     text-align: center;
     width: 100%;
@@ -95,13 +95,13 @@ main {
     width: 40%;
     padding: 10px;
     border-radius: 10px;
-    background-color: white;
+    background-color: var(--blank-color);
     display: flex;
     align-items: center;
 }
 
 .choosed {
-    background-color: white;
+    background-color: var(--blank-color);
 }
 
 .page-link.active {
@@ -139,7 +139,7 @@ main {
         padding-bottom: 0;
     }
     .all_cards .news_card {
-        top: 0;
+        transform: translateY(0);
         margin: 0 0 8px 0;
     }
     .show_variants {

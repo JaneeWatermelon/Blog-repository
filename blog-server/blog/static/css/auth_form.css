@@ -12,7 +12,7 @@ main h1 {
 
 .auth_card {
     width: 578px;
-    background-color: white;
+    background-color: var(--blank-color);
     overflow: auto;
     transform: scale(0.8);
     height: fit-content;
@@ -47,7 +47,7 @@ main h1 {
 .input_div {
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: var(--blank-color);
     width: 461px;
     margin-bottom: 16px;
 }
@@ -64,14 +64,19 @@ main h1 {
     height: 59px;
 }
 
-.input_bar > input {
+.form_input {
     width: 100%;
     outline: none;
     border: none;
     margin: 10px;
     font-size: 18px;
+    background-color: var(--blank-color);
+    color: rgba(var(--dark-font));
 }
 
+.form_input::-webkit-input-placeholder {
+    color: rgba(var(--dark-font), 0.5);
+}
 
 
 .sign_in {
@@ -79,7 +84,7 @@ main h1 {
 }
 
 .sign_in > button {
-    background-color: #BBE1FA;
+    background-color: var(--for-comment);
     height: 59px;
     width: 319px;
 }

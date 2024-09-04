@@ -5,8 +5,12 @@ import requests
 from bs4 import BeautifulSoup
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
-from news.views import try_get_key_words
+from rutermextract import TermExtractor
 import redis
+
+# import os
+# from PIL import Image
+# from django.conf import settings
 
 redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
 
@@ -21,7 +25,13 @@ def set_running(task_name):
 def clear_running(task_name):
     redis_client.delete(task_name)
 
-
+def try_get_key_words(title, description):
+    term_extractor = TermExtractor()
+    text = f'{title} {description}'
+    result_list = []
+    for term in term_extractor(text, nested=True):
+        result_list.append(term.normalized)
+    return result_list
 def parsing_playground(adds_url, category_id):
     # every 1 hour i think
     category = Category.objects.get(pk=category_id)
@@ -51,7 +61,7 @@ def parsing_playground(adds_url, category_id):
                 image_url = news.find('img')['src']
             image_bytes = requests.get(image_url).content
             next_id = 1 if not News.objects.last() else News.objects.last().id + 1
-            image_name = f'{next_id}.jpg'
+            image_name = f'{next_id}.webp'
             image_file = ContentFile(image_bytes, name=image_name)
             saved_image_path = default_storage.save(f'news_images/{category.name}/{image_name}', image_file)
 
@@ -122,7 +132,7 @@ def parsing_womanhit(adds_url, category_id):
                 image_url = f"{domain_url}{article_content.find('picture').find('img')['src']}"
             image_bytes = requests.get(image_url).content
             next_id = 1 if not News.objects.last() else News.objects.last().id + 1
-            image_name = f'{next_id}.jpg'
+            image_name = f'{next_id}.webp'
             image_file = ContentFile(image_bytes, name=image_name)
             saved_image_path = default_storage.save(f'news_images/{category.name}/{image_name}', image_file)
 
@@ -168,4 +178,23 @@ def call_womanhit():
     for i in range(4, 9):
         parsing_womanhit(adds_url[i-4], i)
     clear_running(task_name)
+
+# @shared_task
+# def change_images():
+#     news_items = News.objects.all()
+#     for item in news_items:
+#         if item.image:
+#             image_path = os.path.join(settings.MEDIA_ROOT, item.image.name)
+#             image = Image.open(image_path)
+#             webp_image_path = image_path.replace('.jpg', '.webp')
+#
+#             image.save(webp_image_path, 'webp')
+#
+#             # Обновите путь к изображению в базе данных
+#             item.image.name = item.image.name.replace('.jpg', '.webp')
+#             item.save()
+#
+#             # Удалите старый файл
+#             os.remove(image_path)
+#     print('Замена изображений завершена')
 

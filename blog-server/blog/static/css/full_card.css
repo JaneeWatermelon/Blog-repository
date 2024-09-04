@@ -1,11 +1,17 @@
 
+
 a {
     text-decoration: none;
-    color: var(--normal-blue);
 }
 
 .description p {
     margin: inherit;
+}
+
+.description li {
+    font-family: 'normal';
+    margin: 0;
+    color: rgba(var(--dark-font));
 }
 
 blockquote {
@@ -18,9 +24,10 @@ blockquote {
 .news_card {
     width: 100%;
     border-radius: 10px;
-    background-color: white;
+    background-color: var(--blank-color);
     overflow: auto;
     margin-bottom: 20px;
+
 }
 
 .card_header > img {
@@ -32,7 +39,6 @@ blockquote {
     margin: 16px;
     width: 25%;
     float: left;
-    background-color: white;
 }
 
 
@@ -73,7 +79,6 @@ blockquote {
 }
 
 .heart_icon {
-    /*height: 31px;*/
     width: 30%;
     transition: transform 0.5s ease;
 }
@@ -82,11 +87,9 @@ blockquote {
     transform: scale(1.1);
 }
 .view_icon {
-    /*height: 18px;*/
     width: 30%;
 }
 .comment_icon {
-    /*height: 32px;*/
     width: 30%;
 }
 
@@ -107,7 +110,7 @@ blockquote {
 }
 
 .comment_shower.choosed_comment {
-    background-color: var(--light-blue);
+    background-color: var(--for-comment);
 }
 
 .comment_shower {
@@ -115,15 +118,11 @@ blockquote {
     width: fit-content;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: var(--blank-color);
 }
 
 .comment_shower * {
     margin: 4px 8px;
-}
-
-.all_comments {
-
 }
 
 .leave_comment {
@@ -146,20 +145,26 @@ blockquote {
 .leave_comment > button {
     height: 38px;
     display: flex;
-    background-color: var(--light-blue);
+    background-color: var(--for-comment);
     width: fit-content;
     margin: 8px 0;
     border-radius: 10px;
     border: none;
 }
 
-.leave_comment > div > textarea {
+textarea {
     margin: 8px;
     border: none;
     outline: none;
     width: 100%;
     resize: none;
     overflow-y: hidden;
+    background-color: var(--blank-color);
+    color: rgba(var(--dark-font));
+}
+
+textarea::-webkit-input-placeholder {
+    color: rgba(var(--dark-font), 0.5);
 }
 
 .leave_comment > button > p {
@@ -167,7 +172,7 @@ blockquote {
 }
 
 .leave_comment > div:first-child > p, .comment_header > p {
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(var(--dark-font), 0.5);
 }
 
 .comment {
@@ -203,7 +208,7 @@ blockquote {
     display: flex;
 }
 
-.comment_footer > div > img {
+.like_or_dislike_block > img {
     height: 18px;
 }
 
@@ -230,7 +235,7 @@ blockquote {
 
 .see_more_button {
     display: none;
-    background-color: white;
+    background-color: var(--blank-color);
     margin: 16px;
     padding: 10px;
     border: 1px solid var(--dark-blue);

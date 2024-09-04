@@ -11,12 +11,12 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     is_verified = models.BooleanField(default=False)
 
-    liked_news_id = models.JSONField(default=list)
-    viewed_news_id = models.JSONField(default=list)
-    star_categories_id = models.JSONField(default=list)
-    liked_comments_id = models.JSONField(default=list)
-    disliked_comments_id = models.JSONField(default=list)
-    recommended_tags = models.JSONField(default=dict)
+    liked_news_id = models.JSONField(default=list, null=True, blank=True)
+    viewed_news_id = models.JSONField(default=list, null=True, blank=True)
+    star_categories_id = models.JSONField(default=list, null=True, blank=True)
+    liked_comments_id = models.JSONField(default=list, null=True, blank=True)
+    disliked_comments_id = models.JSONField(default=list, null=True, blank=True)
+    recommended_tags = models.JSONField(default=dict, null=True, blank=True)
 
 class EmailVerification(models.Model):
     code = models.UUIDField(unique=True)

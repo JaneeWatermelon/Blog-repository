@@ -8,7 +8,11 @@ body {
     overflow-y: hidden;
 }
 .news_card {
-    top: 4vh;
+    transform: translateY(4vh);
+}
+
+.news_card_body {
+    aspect-ratio: 1.5;
 }
 
 .all_cards {
@@ -43,7 +47,7 @@ body {
 
 .pagination li {
     margin: 10px 0;
-    background-color: white;
+    background-color: var(--blank-color);
     border-radius: 10px;
     text-align: center;
     width: 100%;
@@ -54,7 +58,7 @@ body {
 }
 
 .no_recommends_div {
-    background-color: white;
+    background-color: var(--blank-color);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -73,7 +77,7 @@ body {
 }
 
 .no_recommends_div h5 {
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(var(--dark-font), 0.5);
 }
 .paginator_block::-webkit-scrollbar {
     width: 10px;

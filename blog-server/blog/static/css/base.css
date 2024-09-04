@@ -15,8 +15,17 @@ body {
     margin: 0 28px;
 }
 
+.svg_icon {
+    filter: invert(0);
+}
+
+.svg_icon.inverted {
+    filter: invert(1);
+}
+
 a {
     text-decoration: none;
+    color: var(--normal-blue);
 }
 p {
     font-size: 0.9em;
@@ -46,12 +55,26 @@ h6 {
 p, h3, h4, h5, h6 {
     font-family: 'normal';
     margin: 0;
+    color: rgba(var(--dark-font));
 }
 
 h1, h2 {
     color: white;
     font-family: 'second';
     margin: 0 0 0 16px;
+}
+
+.change_theme {
+    background: none;
+    padding: 5px;
+    border-radius: 10px;
+    border: none;
+    margin: 0 0 0 1em;
+}
+
+.change_theme img {
+    width: 30px;
+    height: 30px;
 }
 
 .choosed_page {
@@ -61,7 +84,7 @@ h1, h2 {
 .top_gradient_div {
     display: flex;
     height: 12vh;
-    background: linear-gradient(var(--normal-blue), var(--light-blue));
+    background: linear-gradient(var(--for-gradient-div), var(--light-blue));
     align-items: center;
     justify-content: space-between;
     position: relative;
@@ -142,7 +165,7 @@ h1, h2 {
         align-items: center;
         justify-content: space-between;
     }
-    .top_frame_group > a:first-child h2 {
+    .no_margin {
         margin: 0;
     }
     h1 {

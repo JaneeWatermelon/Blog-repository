@@ -1,7 +1,6 @@
 from django.contrib import admin
 
 from donate.models import Donate
-from users.models import User
 
 
 class DonateAdmin(admin.TabularInline):

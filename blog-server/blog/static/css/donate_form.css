@@ -5,7 +5,7 @@ a {
 
 .donate_card {
     width: 706px;
-    background-color: white;
+    background-color: var(--blank-color);
     overflow: auto;
     transform: scale(0.8);
 }
@@ -59,7 +59,7 @@ a {
     flex-basis: 33%;
     margin: 0 8px;
     height: 59px;
-    background-color: white;
+    background-color: var(--blank-color);
 }
 
 .choose_bar:active {

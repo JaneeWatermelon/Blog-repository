@@ -1,15 +1,13 @@
 {% load static %}
 {% load custom_filters %}
 
-<div class="category_card">
-    <div class="category_card_header">
+<div class="category_card show">
+    <div class="category_card_header show">
         <h5>Категории</h5>
     </div>
     <div class="category_card_body" data-active-count="{{ choosed_categories|length }}">
         <div class="name_and_star">
-            <button type="button" id="0" style="background-color: #D9EE58;" class="category_name {% if choosed_categories|is_choosed_all_category %}choosed_div{% endif %}">
-                <p class="{% if choosed_categories|is_choosed_all_category %}choosed_p{% endif %}">Все</p>
-            </button>
+            <button type="button" id="0" class="category_name {% if choosed_categories|is_choosed_all_category %}choosed_div{% endif %}">Все</button>
             {% if user.is_authenticated and user|is_zero_star %}
             <img class="star_icon in_star" src="{% static 'svg/star_filled.svg' %}" alt="filled_star_icon">
             {% else %}
@@ -18,9 +16,7 @@
         </div>
         {% for category in categories %}
         <div class="name_and_star">
-            <button type="button" id="{{ category.id }}" class="category_name {% if category|is_choosed_category:choosed_categories %}choosed_div{% endif %}">
-                <p class="{% if category|is_choosed_category:choosed_categories %}choosed_p{% endif %}">{{ category.name }}</p>
-            </button>
+            <button type="button" id="{{ category.id }}" class="category_name {% if category|is_choosed_category:choosed_categories %}choosed_div{% endif %}">{{ category.name }}</button>
             {% if user.is_authenticated and category|is_star:user %}
             <img class="star_icon in_star" src="{% static 'svg/star_filled.svg' %}" alt="filled_star_icon">
             {% else %}
