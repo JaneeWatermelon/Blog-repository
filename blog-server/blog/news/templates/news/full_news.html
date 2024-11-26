@@ -5,7 +5,11 @@
 {% load humanize %}
 
 {% block meta %}
-<meta name="description" content="{{ object.time.date }}">
+<meta name="description" content="{{ object.name }}">
+<meta property="og:title" content="Blogus Новости"/>
+<meta property="og:description" content="{{ object.name }}"/>
+<meta property="og:image" content="{{ object.image.url }}"/>
+<meta property="og:url" content= "https://warer.ru{% url 'news:full_card' news.id %}" />
 {% endblock %}
 
 {% block css_link %}
@@ -39,7 +43,21 @@
                 <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %} comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
                 <p>{{ object.comments_count }}</p>
             </div>
+            <div class="share_div" style="position: relative;">
+                <button class="share-button">
+                    <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %} share_icon" src="{% static 'svg/share.svg' %}" alt="share_icon">
+                </button>
+                <div class="dropdown">
+                    <a onclick="Share.telegram('https://warer.ru{% url 'news:full_card' news.id %}','{{ news.name }}')">
+                        <img class="telegram_icon" src="{% static 'svg/telegram.svg' %}" alt="telegram_icon">
+                    </a>
+                    <a onclick="Share.vkontakte('https://warer.ru{% url 'news:full_card' news.id %}','Blogus Новости','{{ news.image.url }}','{{ news.name }}')">
+                        <img class="vk_icon" src="{% static 'svg/vk.svg' %}" alt="vk_icon">
+                    </a>
+                </div>
+            </div>
         </div>
+
     </div>
     <div class="desktop card_body">
         <div class="time_and_url">
@@ -84,6 +102,25 @@
             <div class="comment_div">
                 <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %} comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
                 <p>{{ object.comments_count }}</p>
+            </div>
+            <div class="share_div" style="position: relative;">
+                <button class="share-button">
+                    <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %} share_icon" src="{% static 'svg/share.svg' %}" alt="share_icon">
+                </button>
+                <div class="dropdown">
+                    <a onclick="Share.telegram('https://warer.ru{% url 'news:full_card' news.id %}','{{ news.name }}')">
+                        <img class="telegram_icon" src="{% static 'svg/telegram.svg' %}" alt="telegram_icon">
+                    </a>
+                    <a onclick="Share.vkontakte('https://warer.ru{% url 'news:full_card' news.id %}','Blogus Новости','{{ news.image.url }}','{{ news.name }}')">
+                        <img class="vk_icon" src="{% static 'svg/vk.svg' %}" alt="vk_icon">
+                    </a>
+                    <a onclick="Share.viber('https://warer.ru{% url 'news:full_card' news.id %}','{{ news.name }}')">
+                        <img class="viber_icon" src="{% static 'svg/viber.svg' %}" alt="viber_icon">
+                    </a>
+                    <a onclick="Share.whatsapp('https://warer.ru{% url 'news:full_card' news.id %}','{{ news.name }}')">
+                        <img class="whatsapp_icon" src="{% static 'svg/whatsapp.svg' %}" alt="whatsapp_icon">
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -156,4 +193,5 @@
     <script src="{% static 'js/textarea.js' %}"></script>
     <script src="{% static 'js/leave_comment.js' %}"></script>
     <script id="script_like" src="{% static 'js/like.js' %}"></script>
+    <script src="{% static 'js/share_for_full.js' %}"></script>
 {% endblock %}

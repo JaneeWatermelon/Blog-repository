@@ -86,13 +86,14 @@ blockquote {
     cursor: pointer;
     transform: scale(1.1);
 }
-.view_icon {
-    width: 30%;
-}
-.comment_icon {
+
+.view_icon, .comment_icon {
     width: 30%;
 }
 
+.share_icon {
+    width: 50%;
+}
 
 
 .card_footer {

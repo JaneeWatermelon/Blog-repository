@@ -5,11 +5,8 @@
 {% load custom_filters %}
 {% load cache %}
 
-{% block meta %}
-<meta name="description" content="Новости из разных категорий (игры, кино, сериалы, мода и т.п.)">
-{% endblock %}
-
 {% block css_link %}
+    <meta name="yandex-verification" content="da6b8a843a658d01" />
     <link href="{% static 'css/category.css' %}" rel="stylesheet" />
     <link href="{% static 'css/card.css' %}" rel="stylesheet" />
     <link href="{% static 'css/all_news.css' %}" rel="stylesheet" />
@@ -68,7 +65,7 @@
     </div>
     <div class="all_cards">
         {% for news in object_list %}
-            {% cache 120 sidebar user news news.likes news.views news.comments %}
+            {% cache 120 sidebar user news news.likes news.views news.comments choosed_theme %}
             {% include 'news/news_card.html' %}
             {% endcache %}
         {% endfor %}
@@ -107,4 +104,5 @@
     <script id="star_script" src="{% static 'js/star_categories.js' %}"></script>
     <script src="{% static 'js/heart_for_all.js' %}"></script>
     <script src="{% static 'js/show_category.js' %}"></script>
+    <script src="{% static 'js/share.js' %}"></script>
 {% endblock %}

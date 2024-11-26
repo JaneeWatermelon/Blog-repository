@@ -1,12 +1,13 @@
 from celery import shared_task
 
-from news.models import Category, News
+from news.models import Category, News, AllNewsURLs
 import requests
 from bs4 import BeautifulSoup
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from rutermextract import TermExtractor
 import redis
+from django.utils.timezone import timedelta, now
 
 # import os
 # from PIL import Image
@@ -24,6 +25,14 @@ def set_running(task_name):
 
 def clear_running(task_name):
     redis_client.delete(task_name)
+
+def delete_old_news():
+    now_time = now()
+    for news in News.objects.all().order_by('time'):
+        if news.time + timedelta(days=14) < now_time:
+            news.delete()
+        else:
+            break
 
 def try_get_key_words(title, description):
     term_extractor = TermExtractor()
@@ -43,6 +52,8 @@ def parsing_playground(adds_url, category_id):
     news_block = soup.find('div', id='postListContainer')
     all_news = news_block.find_all('div', class_='post')[::-1]
 
+    all_news_urls = AllNewsURLs.objects.first()
+
     for news in all_news:
         try:
             post_title_a = news.find('div', class_='post-title').find('a')
@@ -50,7 +61,7 @@ def parsing_playground(adds_url, category_id):
             name = post_title_a.text.strip()
         except Exception:
             continue
-        if (not News.objects.filter(url=news_link)) and (not News.objects.filter(name=name)):
+        if news_link not in all_news_urls.urls:
             full_news = requests.get(news_link)
             full_soup = BeautifulSoup(full_news.text, 'lxml')
 
@@ -86,6 +97,8 @@ def parsing_playground(adds_url, category_id):
                 tags=tags
             )
             result_news.save()
+            all_news_urls.urls += [news_link]
+            all_news_urls.save()
             print('saved')
 
 @shared_task
@@ -116,12 +129,13 @@ def parsing_womanhit(adds_url, category_id):
 
     all_news = soup.find_all('article', class_='card')[::-1]
 
+    all_news_urls = AllNewsURLs.objects.first()
     for news in all_news:
         try:
             news_link = f"{domain_url}{news.find('a')['href']}"
         except Exception:
             continue
-        if not News.objects.filter(url=news_link):
+        if news_link not in all_news_urls.urls:
             full_news = requests.get(news_link)
             full_soup = BeautifulSoup(full_news.text, 'lxml')
 
@@ -129,7 +143,7 @@ def parsing_womanhit(adds_url, category_id):
             try:
                 image_url = f"{domain_url}{article_content.find('picture').find('img')['src']}"
             except Exception:
-                image_url = f"{domain_url}{article_content.find('picture').find('img')['src']}"
+                continue
             image_bytes = requests.get(image_url).content
             next_id = 1 if not News.objects.last() else News.objects.last().id + 1
             image_name = f'{next_id}.webp'
@@ -160,6 +174,8 @@ def parsing_womanhit(adds_url, category_id):
                 tags=tags
             )
             result_news.save()
+            all_news_urls.urls += [news_link]
+            all_news_urls.save()
             print('saved')
 
 @shared_task
@@ -168,6 +184,7 @@ def call_womanhit():
     if is_running(task_name):
         return 'Task is already running'
     set_running(task_name)
+    delete_old_news()
     adds_url = [
         '/lifestyle/fashion/',
         '/at-home/food/',

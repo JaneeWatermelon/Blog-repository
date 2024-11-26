@@ -19,13 +19,13 @@ class UserRegistrationView(TitleMixin, SuccessMessageMixin, CreateView):
     model = User
     template_name = 'users/registration.html'
     form_class = UserRegistrationForm
-    title = 'Registration Page'
+    title = 'Страница регистрации пользователя Blogus'
     success_url = reverse_lazy('users:login')
     success_message = 'Поздравляем! Вы успешно зарегистрировались!'
 
 class EmailVerificationView(TitleMixin, TemplateView):
     template_name = 'users/verification_email.html'
-    title = 'Email Verification Page'
+    title = 'Подтверждение адреса электронной почты Blogus'
 
     def get_context_data(self, **kwargs):
         context = super(EmailVerificationView, self).get_context_data()
@@ -44,7 +44,7 @@ class EmailVerificationView(TitleMixin, TemplateView):
 class UserLoginView(TitleMixin, SuccessMessageMixin, LoginView):
     template_name = 'users/auth.html'
     form_class = UserAuthForm
-    title = 'Registration Page'
+    title = 'Страница авторизации пользователя Blogus'
     success_message = 'Поздравляем! Вы успешно вошли!'
 
     def get_success_url(self):
@@ -79,7 +79,7 @@ def UserProfileView(request, pk):
         for view_id in user.viewed_news_id:
             viewed_news = viewed_news.union(News.objects.filter(pk=view_id))
         context = {
-            'title': 'Profile Page',
+            'title': 'Профиль, личный кабинет пользователя Blogus',
             'form': ProfileForm(instance=request.user),
             'liked_news': liked_news,
             'viewed_news': viewed_news,

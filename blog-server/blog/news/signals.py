@@ -3,15 +3,20 @@ from django.dispatch import receiver
 
 from news.models import Comment, News
 from users.models import User
+import os
 
 
 @receiver(post_delete, sender=News)
 def post_delete_news(sender, instance, **kwargs):
-    print('in post_delete')
     users = User.objects.all()
     news_id = instance.id
     comments = Comment.objects.filter(news=instance)
     news_tags = instance.tags
+    if instance.image:
+        # Получаем путь к файлу изображения
+        if os.path.isfile(instance.image.path):
+            # Удаляем файл
+            os.remove(instance.image.path)
     for user in users:
         if news_id in user.liked_news_id:
             user.liked_news_id.remove(news_id)
@@ -29,7 +34,6 @@ def post_delete_news(sender, instance, **kwargs):
                 else:
                     user.recommended_tags[tag] -= 1
         user.save()
-        print('saved')
 
 @receiver(post_delete, sender=Comment)
 def post_delete_comment(sender, instance, **kwargs):

@@ -1,3 +1,4 @@
+import datetime
 from difflib import SequenceMatcher
 import re, os
 import time
@@ -40,7 +41,7 @@ def ajax_login_required(view):
 
 class All_News_View(TitleMixin, ListView):
     template_name = "news/all_news.html"
-    title = 'All News'
+    title = 'Новости из разных категорий Blogus'
     model = News
     paginate_by = per_page
 
@@ -51,13 +52,13 @@ class All_News_View(TitleMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        result = queryset.filter(pk=0)
         active_categories = self.request.session.setdefault('active_categories', [])
-
         if active_categories:
+            categories_ids = []
             for category_id in active_categories:
-                result = result.union(queryset.filter(category=Category.objects.get(pk=category_id)))
-            return result.order_by('-id')
+                categories_ids.append(category_id)
+            news_categories = Category.objects.filter(pk__in=categories_ids)
+            return queryset.filter(category__in=news_categories).order_by('-id')
         else:
             return queryset.order_by('-id')
     def reload_queryset(self):
@@ -65,7 +66,7 @@ class All_News_View(TitleMixin, ListView):
 
 class Recommended_News_View(TitleMixin, ListView):
     template_name = "news/recommendations.html"
-    title = 'Recommended News'
+    title = 'Рекомендованные новости для вас! Blogus'
     model = News
     paginate_by = per_page
 
@@ -88,11 +89,12 @@ class Recommended_News_View(TitleMixin, ListView):
 
     def get_recommended_news(self, user_tags):
         all_news = News.objects.all()
-        result = all_news.filter(pk=0)
 
         @lru_cache(maxsize=1024)
         def get_matcher_result(tag1, tag2):
             return SequenceMatcher(None, tag1, tag2).quick_ratio()
+
+        news_ids = []
 
         for news in all_news:
             is_break = False
@@ -107,48 +109,53 @@ class Recommended_News_View(TitleMixin, ListView):
                         matches += 1
 
                         if matches >= 2:
-                            result = result.union(all_news.filter(pk=news_id))
+                            news_ids.append(news_id)
                             is_break = True
                             break
                 if is_break:
                     break
-
+        result = all_news.filter(pk__in=news_ids)
         return result
 
 class Popular_News_View(TitleMixin, ListView):
     template_name = "news/popular.html"
-    title = 'Popular News'
+    title = 'Самые популярные новости Blogus'
     model = News
     paginate_by = per_page
     def get_queryset(self):
         queryset = super().get_queryset()
-        result = queryset.all()
+        result = queryset
         result = sorted(result, key=lambda p: p.get_popularity(), reverse=True)
         return result
 
 class New_News_View(TitleMixin, ListView):
     template_name = "news/new.html"
-    title = 'New News'
+    title = 'Свежие новости за последний день Blogus'
     model = News
     paginate_by = per_page
     def get_queryset(self):
         queryset = super().get_queryset()
-        result = queryset.filter(pk=0)
-        time_ago = now()-timedelta(hours=24)
-        for news in queryset.order_by('-time'):
+
+        time_ago = now() - timedelta(hours=24)
+        # Создаем список, чтобы хранить подходящие новости
+        news_ids = []
+        # Итерируемся по новостям
+        for news in queryset.order_by('-id'):
             if news.time >= time_ago:
-                result = result.union(News.objects.filter(pk=news.id))
+                news_ids.append(news.id)  # добавляем id в список
             else:
-                break
-        return result.order_by('-time')
-class Full_Card_View(TitleMixin, DetailView):
+                break  # если попалось время меньше, можно остановиться
+        # Получаем итоговый queryset из ids
+        result = News.objects.filter(pk__in=news_ids).order_by('-id')
+        return result
+class Full_Card_View(DetailView):
     model = News
-    title = 'Detail News'
     template_name = 'news/full_news.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['comments'] = Comment.objects.filter(news=self.object).order_by('-time')
+        context['title'] = self.object.name
         return context
 
 def all_paginator(request):
@@ -196,8 +203,7 @@ def heart_news(request):
 
 def change_category(request):
     if request.method == 'GET':
-        prev_page_number = int(request.GET['page'])
-        print(prev_page_number)
+        prev_page_number = int(request.GET.get('page', 1000))
         category_id = request.GET['id']
         active_categories = request.session['active_categories']
 
@@ -376,7 +382,7 @@ def parsing_genshin(request):
         url = news.find_element(By.TAG_NAME, 'a').get_attribute('href')
         if not News.objects.filter(url=url):
             news_info = news.find_element(By.CLASS_NAME, 'news__info')
-            name = gettext(news_info.find_element(By.TAG_NAME, 'h3').get_attribute('innerHTML'))
+            name = news_info.find_element(By.TAG_NAME, 'h3').get_attribute('innerHTML')
             description = news_info.find_element(By.TAG_NAME, 'p').get_attribute('innerHTML')
 
             image_url = news.find_element(By.TAG_NAME,'img').get_attribute('src')
@@ -563,7 +569,16 @@ def parsing_playground_games(request):
                 print('saved')
     return HttpResponseRedirect(reverse('all_news'))
 
+def delete_old_news():
+    now_time = now()
+    for news in News.objects.all().order_by('time'):
+        if news.time + timedelta(days=14) < now_time:
+            news.delete()
+        else:
+            break
+
 def parsing_womanhit(request):
+    delete_old_news()
 
     # every day i think
     domain_url = 'https://www.womanhit.ru'
@@ -611,10 +626,10 @@ def parsing_womanhit(request):
                 try:
                     image_url = f"{domain_url}{article_content.find('picture').find('img')['src']}"
                 except Exception:
-                    image_url = f"{domain_url}{article_content.find('picture').find('img')['src']}"
+                    continue
                 image_bytes = requests.get(image_url).content
                 next_id = 1 if not News.objects.last() else News.objects.last().id + 1
-                image_name = f'{next_id}.jpg'
+                image_name = f'{next_id}.webp'
                 image_file = ContentFile(image_bytes, name=image_name)
                 saved_image_path = default_storage.save(f'news_images/{category.name}/{image_name}', image_file)
 

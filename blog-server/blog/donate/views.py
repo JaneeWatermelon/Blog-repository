@@ -19,7 +19,7 @@ from django.conf import settings
 
 class DonateView(TitleMixin, CreateView):
     template_name = 'donate/donate.html'
-    title = 'Donate Page'
+    title = 'Пожертвования и донаты Blogus'
     form_class = DonateForm
     success_url = reverse_lazy('all_news')
 
@@ -51,7 +51,7 @@ class DonateView(TitleMixin, CreateView):
         return super().form_valid(form)
 
 class DonateResultView(TitleMixin, TemplateView):
-    title = 'Donate Result Page'
+    title = 'Результат оплаты Blogus'
     template_name = 'donate/donate_result.html'
 
     def get_context_data(self, **kwargs):
@@ -69,8 +69,6 @@ def my_webhook_handler(request):
     event_json = json.loads(request.body)
     notification_object = WebhookNotification(event_json)
     payment_id = notification_object.object.status
-    # request.session.setdefault('status', payment_id)
-    # request.session['status'] = payment_id
     return HttpResponse(status=200)
 
 

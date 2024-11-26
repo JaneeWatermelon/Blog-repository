@@ -85,11 +85,12 @@
 .heart_icon:hover {
     transform: scale(1.2);
 }
-.view_icon {
+.view_icon, .comment_icon {
     width: 35%;
 }
-.comment_icon {
-    width: 35%;
+
+.share_icon {
+    width: 50%;
 }
 
 @media (max-width:768px) {
@@ -98,5 +99,8 @@
     }
     .news_card_footer p {
         font-size: 0.9em;
+    }
+    .news_card_body {
+        aspect-ratio: 1.5;
     }
 }

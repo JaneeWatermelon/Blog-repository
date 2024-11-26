@@ -91,6 +91,8 @@ a {
     border: none;
     margin: 10px;
     font-size: 18px;
+    background-color: var(--blank-color);
+    color: rgba(var(--dark-font));
 }
 
 .card_footer, .card_footer > div {
@@ -104,7 +106,7 @@ a {
 }
 
 .card_footer > button {
-    background-color: var(--success-color);
+    background-color: var(--for-comment);
     height: 59px;
     width: 319px;
 }

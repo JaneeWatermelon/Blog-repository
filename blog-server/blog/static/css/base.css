@@ -64,6 +64,32 @@ h1, h2 {
     margin: 0 0 0 16px;
 }
 
+.share-button {
+    border: none;
+    border-radius: 5px;
+    background: none;
+}
+.dropdown {
+    display: none;
+    position: absolute;
+    bottom: 50px;
+    flex-direction: column-reverse;
+    background: var(--blank-color);
+    border-radius: 10px;
+    z-index: 100;
+    width: 5vw;
+}
+.dropdown a {
+    display: flex;
+    color: black;
+    text-decoration: none;
+    margin: 5px;
+}
+
+.telegram_icon, .vk_icon, .viber_icon, .whatsapp_icon {
+    width: 100%;
+}
+
 .change_theme {
     background: none;
     padding: 5px;
@@ -179,5 +205,15 @@ h1, h2 {
     }
     #blogus_svg, #dollar_svg, #profile_svg {
         height: 2em;
+    }
+    .dropdown {
+        display: none;
+        position: absolute;
+        bottom: 50px;
+        flex-direction: column-reverse;
+        background: var(--blank-color);
+        border-radius: 10px;
+        z-index: 1;
+        width: 15vw;
     }
 }

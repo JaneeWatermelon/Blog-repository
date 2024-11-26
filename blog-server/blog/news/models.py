@@ -2,6 +2,10 @@ from django.db import models
 
 from users.models import User
 
+
+class AllNewsURLs(models.Model):
+    urls = models.JSONField(default=list, blank=True, null=True)
+
 class Category(models.Model):
     name = models.CharField(max_length=30)
     description = models.TextField(blank=True, null=True)
@@ -25,7 +29,7 @@ class News(models.Model):
     time = models.DateTimeField(auto_now_add=True)
     date = models.DateField(auto_now_add=True)
 
-    tags = models.JSONField(default=list)
+    tags = models.JSONField(default=list, blank=True, null=True)
 
     def __str__(self):
         return str(self.id)

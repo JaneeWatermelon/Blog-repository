@@ -33,9 +33,9 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += debug_toolbar_urls()
-    urlpatterns += [path('parsing/', parsing_playground_games, name='parsing')]
+    urlpatterns += [path('parsing/', parsing_womanhit, name='parsing')]
     urlpatterns += [path('clear_hearts/', clear_hearts_from_users_and_news, name='clear_hearts')]
     urlpatterns += [path('try_words/', try_get_key_words, name='try_words')]
     urlpatterns += [path('fill_categories/', fill_categories, name='fill_categories')]

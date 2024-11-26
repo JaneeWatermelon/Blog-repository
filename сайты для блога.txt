@@ -1,0 +1,44 @@
+https://www.playground.ru/news (Можно использовать с прямой ссылкой)
+https://vgtimes.ru/gaming-news/
+
+Туризм - https://www.tourister.ru/news
+https://lindeal.com/
+Мода - https://www.womanhit.ru/
+
+Категории:
+
+Наука и исследования - https://lindeal.com/research
+Мероприятия - https://lindeal.com/events
+Рейтинги - https://lindeal.com/rating
+История успеха - https://lindeal.com/success-stories
+Инвестиции - https://lindeal.com/investment
+
+Подборка книг:
+https://lindeal.com/books 
+https://lindeal.com/book
+
+Мода - https://www.womanhit.ru/lifestyle/fashion/
+Еда - https://www.womanhit.ru/at-home/food/
+Интерьер - https://www.womanhit.ru/at-home/interier/
+Дача - https://www.womanhit.ru/at-home/dacha/
+Красота - https://www.womanhit.ru/health-and-beauty/
+-- Здоровье - https://www.womanhit.ru/bud-zdorova/
+Туризм - https://www.tourister.ru/news
+
+Игры:
+https://vgtimes.ru/gaming-news/
+https://www.playground.ru/news/pc
+https://www.playground.ru/news/industry
+https://www.playground.ru/news/consoles
+
+Железо:
+https://vgtimes.ru/tech-and-hardware/
+https://www.playground.ru/news/hardware
+
+Кино и сериалы:
+https://vgtimes.ru/movies-and-tv-series/
+https://www.playground.ru/news/movies
+
+Для доступа к Ubuntu
+логин: root
+пароль: t4e11hcm6x

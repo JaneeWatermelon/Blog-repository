@@ -43,5 +43,25 @@
             <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %} comment_icon" src="{% static 'svg/comment.svg' %}" alt="comment_icon">
             <p>{{ news.comments_count }}</p>
         </div>
+
+        <div class="share_div" style="position: relative;">
+            <button class="share-button">
+                <img class="svg_icon {% if choosed_theme == 'dark' %}inverted{% endif %} share_icon" src="{% static 'svg/share.svg' %}" alt="share_icon">
+            </button>
+            <div class="dropdown">
+                <a onclick="Share.telegram('https://warer.ru{% url 'news:full_card' news.id %}','{{ news.name }}')">
+                    <img class="telegram_icon" src="{% static 'svg/telegram.svg' %}" alt="telegram_icon">
+                </a>
+                <a onclick="Share.vkontakte('https://warer.ru{% url 'news:full_card' news.id %}','Blogus Новости','{{ news.image.url }}','{{ news.name }}')">
+                    <img class="vk_icon" src="{% static 'svg/vk.svg' %}" alt="vk_icon">
+                </a>
+                <a class="mobile" onclick="Share.viber('https://warer.ru{% url 'news:full_card' news.id %}','{{ news.name }}')">
+                    <img class="viber_icon" src="{% static 'svg/viber.svg' %}" alt="viber_icon">
+                </a>
+                <a class="mobile" onclick="Share.whatsapp('https://warer.ru{% url 'news:full_card' news.id %}','{{ news.name }}')">
+                    <img class="whatsapp_icon" src="{% static 'svg/whatsapp.svg' %}" alt="whatsapp_icon">
+                </a>
+            </div>
+        </div>
     </div>
 </div>
